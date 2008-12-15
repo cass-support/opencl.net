@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("OpenCL.NET")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription(".NET wrapper for OpenCL standard.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Company for Advanced Supercomputing Solutions Ltd.")]
 [assembly: AssemblyProduct("OpenCL.NET")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2008")]
+[assembly: AssemblyCopyright("Copyright © Company for Advanced Supercomputing Solutions Ltd. 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

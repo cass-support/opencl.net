@@ -7,7 +7,7 @@
     <ProjectGuid>{FAAF7CDF-7B4D-4CF1-AA9B-5F0CC8589419}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OpenCL.NET</RootNamespace>
+    <RootNamespace>GASS.OpenCL</RootNamespace>
     <AssemblyName>OpenCL.NET</AssemblyName>
     
     
@@ -22,6 +22,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\OpenCL.NET.XML</DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,7 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Driver\OpenCLGLDriver.cs" />
+    <Compile Include="Driver\OpenCLDriver.cs" />
+    <Compile Include="Driver\Types.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
