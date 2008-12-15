@@ -1,0 +1,20 @@
+
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCL.NET", "OpenCL.NET\OpenCL.NET.csproj", "{FAAF7CDF-7B4D-4CF1-AA9B-5F0CC8589419}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FAAF7CDF-7B4D-4CF1-AA9B-5F0CC8589419}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAAF7CDF-7B4D-4CF1-AA9B-5F0CC8589419}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAAF7CDF-7B4D-4CF1-AA9B-5F0CC8589419}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAAF7CDF-7B4D-4CF1-AA9B-5F0CC8589419}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
