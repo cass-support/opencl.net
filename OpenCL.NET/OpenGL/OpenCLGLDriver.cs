@@ -8,17 +8,17 @@ namespace GASS.OpenCL
     #region Enums
     public enum CLGLObjectType
     {
-        CL_GL_OBJECT_BUFFER = 0x2000,
-        CL_GL_OBJECT_TEXTURE2D = 0x2001,
-        CL_GL_OBJECT_TEXTURE_RECTANGLE = 0x2002,
-        CL_GL_OBJECT_TEXTURE3D = 0x2003,
-        CL_GL_OBJECT_RENDERBUFFER = 0x2004,
+        Buffer = 0x2000,
+        Texture2D = 0x2001,
+        TextureRectangle = 0x2002,
+        Texture3D = 0x2003,
+        RenderBuffer = 0x2004,
     }
 
     public enum CLGLTextureInfo
     {
-        CL_GL_TEXTURE_TARGET = 0x2005,
-        CL_GL_MIPMAP_LEVEL = 0x2006,
+        TextureTarget = 0x2005,
+        MipMapLevel = 0x2006,
     }
     #endregion
 
