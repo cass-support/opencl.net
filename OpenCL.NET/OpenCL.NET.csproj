@@ -39,9 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Driver\OpenCLGLDriver.cs" />
+    <Compile Include="OpenGL\OpenCLGLDriver.cs" />
     <Compile Include="Driver\OpenCLDriver.cs" />
     <Compile Include="Driver\Types.cs" />
+    <Compile Include="OpenGL\Types.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
