@@ -304,16 +304,16 @@ namespace GASS.OpenCL
         public static extern CLProgram clCreateProgramWithSource(
             CLContext context,
             uint count,
-            [In] IntPtr[] strings,
-            [MarshalAs(UnmanagedType.SysUInt),In] uint[] lengths,
+            [In] string[] strings,
+            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt),In] uint[] lengths,
             out CLError errcode_ret);
 
         [DllImport("opencl")]
         public static extern CLProgram clCreateProgramWithSource(
             CLContext context,
             uint count,
-            [In] IntPtr[] strings,
-            [MarshalAs(UnmanagedType.SysUInt), In] ulong[] lengths,
+            [In] string[] strings,
+            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt),In] ulong[] lengths,
             out CLError errcode_ret);
 
         [DllImport("opencl")]
@@ -321,7 +321,7 @@ namespace GASS.OpenCL
             CLContext context,
             uint num_devices,
             [In] CLDeviceID[] device_list,
-            [MarshalAs(UnmanagedType.SysUInt), In] uint[] lengths,
+            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt),In] uint[] lengths,
             [In] IntPtr[] binaries,
             [In] int[] binary_status,
             out CLError errcode_ret);
@@ -331,7 +331,7 @@ namespace GASS.OpenCL
             CLContext context,
             uint num_devices,
             [In] CLDeviceID[] device_list,
-            [MarshalAs(UnmanagedType.SysUInt), In] ulong[] lengths,
+            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt), In] ulong[] lengths,
             [In] IntPtr[] binaries,
             [In] int[] binary_status,
             out CLError errcode_ret);
@@ -361,7 +361,7 @@ namespace GASS.OpenCL
             CLProgramInfo param_name,
             [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)]out uint param_value_size_ret);
+            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
 
         [DllImport("opencl")]
         public static extern CLError clGetProgramInfo(
