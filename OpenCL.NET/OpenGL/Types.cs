@@ -9,15 +9,14 @@ namespace GASS.OpenCL.OpenGL
     {
         Buffer = 0x2000,
         Texture2D = 0x2001,
-        TextureRectangle = 0x2002,
-        Texture3D = 0x2003,
-        RenderBuffer = 0x2004,
+        Texture3D = 0x2002,
+        RenderBuffer = 0x2003,
     }
 
     public enum CLGLTextureInfo
     {
-        TextureTarget = 0x2005,
-        MipMapLevel = 0x2006,
+        TextureTarget = 0x2004,
+        MipMapLevel = 0x2005,
     }
     #endregion
 }
