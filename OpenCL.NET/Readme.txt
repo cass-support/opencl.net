@@ -10,11 +10,14 @@ For more information you may take a look at: http://www.khronos.org/opencl
 
 Releases
 --------
+Release 1.0.43.1:
+	* Better support for 32/64 bit platforms.
+
 Release 1.0.43:
-	Various changes to conform to 1.0.43 revision of OpenCL.
+	* Various changes to conform to 1.0.43 revision of OpenCL.
 	
 Release 1.0:
-	Initial implementation of the library, conforms to version 1.0 of OpenCL.
+	* Initial implementation of the library, conforms to version 1.0 of OpenCL.
 	
 License Agreement, rights and privacy
 -------------------------------------
