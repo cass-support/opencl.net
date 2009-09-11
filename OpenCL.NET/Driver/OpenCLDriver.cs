@@ -16,16 +16,16 @@ namespace GASS.OpenCL
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetPlatformInfo(
             CLPlatformInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             [Out] byte[] param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetPlatformInfo(
             CLPlatformInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             [Out] byte[] param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
         #endregion
 
         #region Device APIs
@@ -40,28 +40,28 @@ namespace GASS.OpenCL
         public static extern CLError clGetDeviceInfo(
             CLDeviceID device,
             CLDeviceInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetDeviceInfo(
             CLDeviceID device,
             CLDeviceInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
         #endregion
 
         #region Context APIs
         public delegate void LoggingFunction(byte[] errinfo, 
             IntPtr private_info,
-            [MarshalAs(UnmanagedType.SysUInt)] uint cb, 
+            uint cb, 
             IntPtr user_data);
 
         public delegate void LoggingFunction64(byte[] errinfo,
             IntPtr private_info,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong cb,
+            ulong cb,
             IntPtr user_data);
 
         [DllImport(OPENCL_DLL_NAME)]
@@ -108,17 +108,17 @@ namespace GASS.OpenCL
         public static extern CLError clGetContextInfo(
             CLContext context,
             CLContextInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetContextInfo(
             CLContext context,
             CLContextInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
         #endregion
 
         #region Command Queue APIs
@@ -139,17 +139,17 @@ namespace GASS.OpenCL
         public static extern CLError clGetCommandQueueInfo(
             CLCommandQueue command_queue,
             CLCommandQueueInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetCommandQueueInfo(
             CLCommandQueue command_queue,
             CLCommandQueueInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetCommandQueueProperty(
@@ -164,7 +164,7 @@ namespace GASS.OpenCL
         public static extern CLMem clCreateBuffer(
             CLContext context,
             CLMemFlags flags,
-            [MarshalAs(UnmanagedType.SysUInt)] uint size,
+            uint size,
             IntPtr host_ptr,
             out CLError errcode_ret);
 
@@ -172,7 +172,7 @@ namespace GASS.OpenCL
         public static extern CLMem clCreateBuffer(
             CLContext context,
             CLMemFlags flags,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong size,
+            ulong size,
             IntPtr host_ptr,
             out CLError errcode_ret);
 
@@ -181,9 +181,9 @@ namespace GASS.OpenCL
             CLContext context,
             CLMemFlags flags,
             ref CLImageFormat image_format,
-            [MarshalAs(UnmanagedType.SysUInt)] uint image_width,
-            [MarshalAs(UnmanagedType.SysUInt)] uint image_height,
-            [MarshalAs(UnmanagedType.SysUInt)] uint image_row_pitch,
+            uint image_width,
+            uint image_height,
+            uint image_row_pitch,
             IntPtr host_ptr,
             out CLError errcode_ret);
 
@@ -192,9 +192,9 @@ namespace GASS.OpenCL
             CLContext context,
             CLMemFlags flags,
             ref CLImageFormat image_format,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong image_width,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong image_height,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong image_row_pitch,
+            ulong image_width,
+            ulong image_height,
+            ulong image_row_pitch,
             IntPtr host_ptr,
             out CLError errcode_ret);
 
@@ -203,11 +203,11 @@ namespace GASS.OpenCL
             CLContext context,
             CLMemFlags flags,
             ref CLImageFormat image_format,
-            [MarshalAs(UnmanagedType.SysUInt)] uint image_width,
-            [MarshalAs(UnmanagedType.SysUInt)] uint image_height,
-            [MarshalAs(UnmanagedType.SysUInt)] uint image_depth,
-            [MarshalAs(UnmanagedType.SysUInt)] uint image_row_pitch,
-            [MarshalAs(UnmanagedType.SysUInt)] uint image_slice_pitch,
+            uint image_width,
+            uint image_height,
+            uint image_depth,
+            uint image_row_pitch,
+            uint image_slice_pitch,
             IntPtr host_ptr,
             out CLError errcode_ret);
 
@@ -216,11 +216,11 @@ namespace GASS.OpenCL
             CLContext context,
             CLMemFlags flags,
             ref CLImageFormat image_format,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong image_width,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong image_height,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong image_depth,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong image_row_pitch,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong image_slice_pitch,
+            ulong image_width,
+            ulong image_height,
+            ulong image_depth,
+            ulong image_row_pitch,
+            ulong image_slice_pitch,
             IntPtr host_ptr,
             out CLError errcode_ret);
 
@@ -243,33 +243,33 @@ namespace GASS.OpenCL
         public static extern CLError clGetMemObjectInfo(
             CLMem memobj,
             CLMemInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetMemObjectInfo(
             CLMem memobj,
             CLMemInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetImageInfo(
             CLMem image,
             CLImageInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetImageInfo(
             CLMem image,
             CLImageInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
         #endregion
 
         #region Sampler APIs
@@ -291,17 +291,17 @@ namespace GASS.OpenCL
         public static extern CLError clGetSamplerInfo(
             CLSampler sampler,
             CLSamplerInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetSamplerInfo(
             CLSampler sampler,
             CLSamplerInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
         #endregion
 
         #region Program Object APIs
@@ -310,7 +310,7 @@ namespace GASS.OpenCL
             CLContext context,
             uint count,
             [In] string[] strings,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt),In] uint[] lengths,
+            [In] uint[] lengths,
             out CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
@@ -318,7 +318,7 @@ namespace GASS.OpenCL
             CLContext context,
             uint count,
             [In] string[] strings,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt),In] ulong[] lengths,
+            [In] ulong[] lengths,
             out CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
@@ -326,7 +326,7 @@ namespace GASS.OpenCL
             CLContext context,
             uint num_devices,
             [In] CLDeviceID[] device_list,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt),In] uint[] lengths,
+            [In] uint[] lengths,
             [In] IntPtr[] binaries,
             [In] int[] binary_status,
             out CLError errcode_ret);
@@ -336,7 +336,7 @@ namespace GASS.OpenCL
             CLContext context,
             uint num_devices,
             [In] CLDeviceID[] device_list,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt), In] ulong[] lengths,
+            [In] ulong[] lengths,
             [In] IntPtr[] binaries,
             [In] int[] binary_status,
             out CLError errcode_ret);
@@ -364,35 +364,35 @@ namespace GASS.OpenCL
         public static extern CLError clGetProgramInfo(
             CLProgram program,
             CLProgramInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetProgramInfo(
             CLProgram program,
             CLProgramInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetProgramBuildInfo(
             CLProgram program,
             CLDeviceID device,
             CLProgramBuildInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetProgramBuildInfo(
             CLProgram program,
             CLDeviceID device,
             CLProgramBuildInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
         #endregion
 
         #region Kernel Object APIs
@@ -419,49 +419,49 @@ namespace GASS.OpenCL
         public static extern CLError clSetKernelArg(
             CLKernel kernel,
             uint arg_index,
-            [MarshalAs(UnmanagedType.SysUInt)] uint arg_size,
+            uint arg_size,
             IntPtr arg_value);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
             CLKernel kernel,
             uint arg_index,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong arg_size,
+            ulong arg_size,
             IntPtr arg_value);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelInfo(
             CLKernel kernel,
             CLKernelInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelInfo(
             CLKernel kernel,
             CLKernelInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelWorkGroupInfo(
             CLKernel kernel,
             CLDeviceID device,
             CLKernelWorkGroupInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelWorkGroupInfo(
             CLKernel kernel,
             CLDeviceID device,
             CLKernelWorkGroupInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
         #endregion
 
         #region Event Object APIs
@@ -474,17 +474,17 @@ namespace GASS.OpenCL
         public static extern CLError clGetEventInfo(
             CLEvent e,
             CLEventInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetEventInfo(
             CLEvent e,
             CLEventInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainEvent(CLEvent e);
@@ -498,17 +498,17 @@ namespace GASS.OpenCL
         public static extern CLError clGetEventProfilingInfo(
             CLEvent e,
             CLProfilingInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] uint param_value_size,
+            uint param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint param_value_size_ret);
+            out uint param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetEventProfilingInfo(
             CLEvent e,
             CLProfilingInfo param_name,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong param_value_size,
+            ulong param_value_size,
             IntPtr param_value,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong param_value_size_ret);
+            out ulong param_value_size_ret);
         #endregion
 
         #region Flush and Finish APIs
@@ -524,8 +524,8 @@ namespace GASS.OpenCL
         public static extern CLError clEnqueueReadBuffer(CLCommandQueue command_queue,
             CLMem buffer,
             CLBool blocking_read,
-            [MarshalAs(UnmanagedType.SysUInt)] uint offset,
-            [MarshalAs(UnmanagedType.SysUInt)] uint cb,
+            uint offset,
+            uint cb,
             IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
@@ -535,8 +535,8 @@ namespace GASS.OpenCL
         public static extern CLError clEnqueueReadBuffer(CLCommandQueue command_queue,
             CLMem buffer,
             CLBool blocking_read,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong offset,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong cb,
+            ulong offset,
+            ulong cb,
             IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
@@ -546,8 +546,8 @@ namespace GASS.OpenCL
         public static extern CLError clEnqueueWriteBuffer(CLCommandQueue command_queue,
             CLMem buffer,
             CLBool blocking_write,
-            [MarshalAs(UnmanagedType.SysUInt)] uint offset,
-            [MarshalAs(UnmanagedType.SysUInt)] uint cb,
+            uint offset,
+            uint cb,
             IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
@@ -557,8 +557,8 @@ namespace GASS.OpenCL
         public static extern CLError clEnqueueWriteBuffer(CLCommandQueue command_queue,
             CLMem buffer,
             CLBool blocking_write,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong offset,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong cb,
+            ulong offset,
+            ulong cb,
             IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
@@ -568,9 +568,9 @@ namespace GASS.OpenCL
         public static extern CLError clEnqueueCopyBuffer(CLCommandQueue command_queue,
             CLMem src_buffer,
             CLMem dst_buffer,
-            [MarshalAs(UnmanagedType.SysUInt)] uint src_offset,
-            [MarshalAs(UnmanagedType.SysUInt)] uint dst_offset,
-            [MarshalAs(UnmanagedType.SysUInt)] uint cb,
+            uint src_offset,
+            uint dst_offset,
+            uint cb,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e);
@@ -579,9 +579,9 @@ namespace GASS.OpenCL
         public static extern CLError clEnqueueCopyBuffer(CLCommandQueue command_queue,
             CLMem src_buffer,
             CLMem dst_buffer,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong src_offset,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong dst_offset,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong cb,
+            ulong src_offset,
+            ulong dst_offset,
+            ulong cb,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e);
@@ -591,10 +591,10 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             CLMem image,
             CLBool blocking_read,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] region,
-            [MarshalAs(UnmanagedType.SysUInt)] uint row_pitch,
-            [MarshalAs(UnmanagedType.SysUInt)] uint slice_pitch,
+            uint[] origin,
+            uint[] region,
+            uint row_pitch,
+            uint slice_pitch,
             IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
@@ -605,10 +605,10 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             CLMem image,
             CLBool blocking_read,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] region,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong row_pitch,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong slice_pitch,
+            ulong[] origin,
+            ulong[] region,
+            ulong row_pitch,
+            ulong slice_pitch,
             IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
@@ -619,10 +619,10 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             CLMem image,
             CLBool blocking_write,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] region,
-            [MarshalAs(UnmanagedType.SysUInt)] uint input_row_pitch,
-            [MarshalAs(UnmanagedType.SysUInt)] uint input_slice_pitch,
+            uint[] origin,
+            uint[] region,
+            uint input_row_pitch,
+            uint input_slice_pitch,
             IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
@@ -633,10 +633,10 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             CLMem image,
             CLBool blocking_write,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] region,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong input_row_pitch,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong input_slice_pitch,
+            ulong[] origin,
+            ulong[] region,
+            ulong input_row_pitch,
+            ulong input_slice_pitch,
             IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
@@ -647,9 +647,9 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             CLMem src_image,
             CLMem dst_image,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] src_origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] dst_origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] region,
+            uint[] src_origin,
+            uint[] dst_origin,
+            uint[] region,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e);
@@ -659,9 +659,9 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             CLMem src_image,
             CLMem dst_image,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] src_origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] dst_origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] region,
+            ulong[] src_origin,
+            ulong[] dst_origin,
+            ulong[] region,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e);
@@ -671,9 +671,9 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             CLMem src_image,
             CLMem dst_buffer,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] src_origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] region,
-            [MarshalAs(UnmanagedType.SysUInt)] uint dst_offset,
+            uint[] src_origin,
+            uint[] region,
+            uint dst_offset,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e);
@@ -683,9 +683,9 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             CLMem src_image,
             CLMem dst_buffer,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] src_origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] region,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong dst_offset,
+            ulong[] src_origin,
+            ulong[] region,
+            ulong dst_offset,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e);
@@ -695,9 +695,9 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             CLMem src_buffer,
             CLMem dst_image,
-            [MarshalAs(UnmanagedType.SysUInt)] uint src_offset,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] dst_origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] region,
+            uint src_offset,
+            uint[] dst_origin,
+            uint[] region,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e);
@@ -707,9 +707,9 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             CLMem src_buffer,
             CLMem dst_image,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong src_offset,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] dst_origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] region,
+            ulong src_offset,
+            ulong[] dst_origin,
+            ulong[] region,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e);
@@ -720,8 +720,8 @@ namespace GASS.OpenCL
             CLMem buffer,
             CLBool blocking_map,
             CLMapFlags map_flags,
-            [MarshalAs(UnmanagedType.SysUInt)] uint offset,
-            [MarshalAs(UnmanagedType.SysUInt)] uint cb,
+            uint offset,
+            uint cb,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e,
@@ -733,8 +733,8 @@ namespace GASS.OpenCL
             CLMem buffer,
             CLBool blocking_map,
             CLMapFlags map_flags,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong offset,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong cb,
+            ulong offset,
+            ulong cb,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e,
@@ -746,10 +746,10 @@ namespace GASS.OpenCL
             CLMem image,
             CLBool blocking_map,
             CLMapFlags map_flags,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] uint[] region,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint image_row_pitch,
-            [MarshalAs(UnmanagedType.SysUInt)] out uint image_slice_pitch,
+            uint[] origin,
+            uint[] region,
+            out uint image_row_pitch,
+            out uint image_slice_pitch,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e,
@@ -761,10 +761,10 @@ namespace GASS.OpenCL
             CLMem image,
             CLBool blocking_map,
             CLMapFlags map_flags,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] origin,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt)] ulong[] region,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong image_row_pitch,
-            [MarshalAs(UnmanagedType.SysUInt)] out ulong image_slice_pitch,
+            ulong[] origin,
+            ulong[] region,
+            out ulong image_row_pitch,
+            out ulong image_slice_pitch,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e,
@@ -784,9 +784,9 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             CLKernel kernel,
             uint work_dim,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt), In] uint[] global_work_offset,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt), In] uint[] global_work_size,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt), In] uint[] local_work_size,
+            [In] uint[] global_work_offset,
+            [In] uint[] global_work_size,
+            [In] uint[] local_work_size,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e);
@@ -796,9 +796,9 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             CLKernel kernel,
             uint work_dim,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt), In] ulong[] global_work_offset,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt), In] ulong[] global_work_size,
-            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.SysUInt), In] ulong[] local_work_size,
+            [In] ulong[] global_work_offset,
+            [In] ulong[] global_work_size,
+            [In] ulong[] local_work_size,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             out CLEvent e);
@@ -817,7 +817,7 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             UserFunction user_func,
             [In] IntPtr[] args,
-            [MarshalAs(UnmanagedType.SysUInt)] uint cb_args,
+            uint cb_args,
             uint num_mem_objects,
             [In] CLMem[] mem_list,
             [In] IntPtr[] args_mem_loc,
@@ -830,7 +830,7 @@ namespace GASS.OpenCL
             CLCommandQueue command_queue,
             UserFunction user_func,
             [In] IntPtr[] args,
-            [MarshalAs(UnmanagedType.SysUInt)] ulong cb_args,
+            ulong cb_args,
             uint num_mem_objects,
             [In] CLMem[] mem_list,
             [In] IntPtr[] args_mem_loc,
