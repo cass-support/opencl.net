@@ -10,6 +10,9 @@ For more information you may take a look at: http://www.khronos.org/opencl
 
 Releases
 --------
+Release 1.0.43.2:
+	* Added SizeT structure for transparent compatibility between 32/64 bit systems.
+
 Release 1.0.43.1:
 	* Better support for 32/64 bit platforms.
 
