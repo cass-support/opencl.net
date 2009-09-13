@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
+using GASS.Types;
 
 namespace GASS.OpenCL.OpenGL
 {
@@ -53,9 +54,9 @@ namespace GASS.OpenCL.OpenGL
         public static extern CLError clGetGLTextureInfo(
             CLMem memobj,
             uint param_name,
-            uint param_value_size,
+            SizeT param_value_size,
             IntPtr param_value,
-            out uint param_value_size_ret);
+            out SizeT param_value_size_ret);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueAcquireGLObjects(
