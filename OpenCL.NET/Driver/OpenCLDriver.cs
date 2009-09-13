@@ -19,7 +19,7 @@ namespace GASS.OpenCL
             CLPlatformInfo param_name,
             SizeT param_value_size,
             [Out] byte[] param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
         #endregion
 
         #region Device APIs
@@ -28,7 +28,7 @@ namespace GASS.OpenCL
             CLDeviceType device_type,
             uint num_entries,
             [Out] CLDeviceID[] devices,
-            out uint num_devices);
+            ref uint num_devices);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetDeviceInfo(
@@ -36,7 +36,7 @@ namespace GASS.OpenCL
             CLDeviceInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
         #endregion
 
         #region Context APIs
@@ -52,7 +52,7 @@ namespace GASS.OpenCL
             [In] CLDeviceID[] devices,
             LoggingFunction pfn_notify,
             IntPtr user_data,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLContext clCreateContextFromType(
@@ -60,7 +60,7 @@ namespace GASS.OpenCL
             CLDeviceType device_type,
             LoggingFunction pfn_notify,
             IntPtr user_data,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainContext(CLContext context);
@@ -74,7 +74,7 @@ namespace GASS.OpenCL
             CLContextInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
         #endregion
 
         #region Command Queue APIs
@@ -83,7 +83,7 @@ namespace GASS.OpenCL
             CLContext context,
             CLDeviceID device,
             CLCommandQueueProperties properties,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainCommandQueue(CLCommandQueue command_queue);
@@ -97,14 +97,14 @@ namespace GASS.OpenCL
             CLCommandQueueInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetCommandQueueProperty(
             CLCommandQueue command_queue,
             CLCommandQueueProperties properties,
             CLBool enable,
-            out CLCommandQueueProperties old_properties);
+            ref CLCommandQueueProperties old_properties);
         #endregion
 
         #region Memory Object APIs
@@ -114,7 +114,7 @@ namespace GASS.OpenCL
             CLMemFlags flags,
             SizeT size,
             IntPtr host_ptr,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clCreateImage2D(
@@ -125,7 +125,7 @@ namespace GASS.OpenCL
             SizeT image_height,
             SizeT image_row_pitch,
             IntPtr host_ptr,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clCreateImage3D(
@@ -138,7 +138,7 @@ namespace GASS.OpenCL
             SizeT image_row_pitch,
             SizeT image_slice_pitch,
             IntPtr host_ptr,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainMemObject(CLMem memobj);
@@ -153,7 +153,7 @@ namespace GASS.OpenCL
             CLMemObjectType image_type,
             uint num_entries,
             [Out] CLImageFormat[] image_formats,
-            out uint num_image_formats);
+            ref uint num_image_formats);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetMemObjectInfo(
@@ -161,7 +161,7 @@ namespace GASS.OpenCL
             CLMemInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetImageInfo(
@@ -169,7 +169,7 @@ namespace GASS.OpenCL
             CLImageInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
         #endregion
 
         #region Sampler APIs
@@ -179,7 +179,7 @@ namespace GASS.OpenCL
             CLBool normalized_coords,
             CLAddressingMode addressing_mode,
             CLFilterMode filter_mode,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainSampler(CLSampler sampler);
@@ -193,7 +193,7 @@ namespace GASS.OpenCL
             CLSamplerInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
         #endregion
 
         #region Program Object APIs
@@ -203,7 +203,7 @@ namespace GASS.OpenCL
             uint count,
             [In] string[] strings,
             [In] SizeT[] lengths,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLProgram clCreateProgramWithBinary(
@@ -213,7 +213,7 @@ namespace GASS.OpenCL
             [In] SizeT[] lengths,
             [In] IntPtr[] binaries,
             [In] int[] binary_status,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainProgram(CLProgram program);
@@ -240,7 +240,7 @@ namespace GASS.OpenCL
             CLProgramInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetProgramBuildInfo(
@@ -249,7 +249,7 @@ namespace GASS.OpenCL
             CLProgramBuildInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
         #endregion
 
         #region Kernel Object APIs
@@ -257,14 +257,14 @@ namespace GASS.OpenCL
         public static extern CLKernel clCreateKernel(
             CLProgram program,
             string kernel_name,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clCreateKernelsInProgram(
             CLProgram program,
             uint num_kernels,
             [Out] CLKernel[] kernels,
-            out uint num_kernels_ret);
+            ref uint num_kernels_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainKernel(CLKernel kernel);
@@ -285,7 +285,7 @@ namespace GASS.OpenCL
             CLKernelInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelWorkGroupInfo(
@@ -294,7 +294,7 @@ namespace GASS.OpenCL
             CLKernelWorkGroupInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
         #endregion
 
         #region Event Object APIs
@@ -309,7 +309,7 @@ namespace GASS.OpenCL
             CLEventInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainEvent(CLEvent e);
@@ -325,7 +325,7 @@ namespace GASS.OpenCL
             CLProfilingInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
         #endregion
 
         #region Flush and Finish APIs
@@ -346,7 +346,7 @@ namespace GASS.OpenCL
             IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWriteBuffer(CLCommandQueue command_queue,
@@ -357,7 +357,7 @@ namespace GASS.OpenCL
             IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyBuffer(CLCommandQueue command_queue,
@@ -368,7 +368,7 @@ namespace GASS.OpenCL
             SizeT cb,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueReadImage(
@@ -382,7 +382,7 @@ namespace GASS.OpenCL
             IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWriteImage(
@@ -396,7 +396,7 @@ namespace GASS.OpenCL
             IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyImage(
@@ -408,7 +408,7 @@ namespace GASS.OpenCL
             SizeT[] region,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyImageToBuffer(
@@ -420,7 +420,7 @@ namespace GASS.OpenCL
             SizeT dst_offset,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyBufferToImage(
@@ -432,7 +432,7 @@ namespace GASS.OpenCL
             SizeT[] region,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clEnqueueMapBuffer(
@@ -444,8 +444,8 @@ namespace GASS.OpenCL
             SizeT cb,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e,
-            out CLError errcode_ret);
+            ref CLEvent e,
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clEnqueueMapImage(
@@ -455,12 +455,12 @@ namespace GASS.OpenCL
             CLMapFlags map_flags,
             SizeT[] origin,
             SizeT[] region,
-            out SizeT image_row_pitch,
-            out SizeT image_slice_pitch,
+            ref SizeT image_row_pitch,
+            ref SizeT image_slice_pitch,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e,
-            out CLError errcode_ret);
+            ref CLEvent e,
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueUnmapMemObject(
@@ -469,7 +469,7 @@ namespace GASS.OpenCL
             IntPtr mapped_ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueNDRangeKernel(
@@ -481,7 +481,7 @@ namespace GASS.OpenCL
             [In] SizeT[] local_work_size,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueTask(
@@ -489,7 +489,7 @@ namespace GASS.OpenCL
             CLKernel kernel,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         public delegate void UserFunction(IntPtr[] args);
         [DllImport(OPENCL_DLL_NAME)]
@@ -503,12 +503,12 @@ namespace GASS.OpenCL
             [In] IntPtr[] args_mem_loc,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueMarker(
             CLCommandQueue command_queue,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWaitForEvents(

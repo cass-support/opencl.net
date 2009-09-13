@@ -17,7 +17,7 @@ namespace GASS.OpenCL.OpenGL
             CLContext context,
             CLMemFlags flags,
             uint bufobj,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clCreateFromGLTexture2D(
@@ -26,7 +26,7 @@ namespace GASS.OpenCL.OpenGL
             int target,
             int miplevel,
             uint texture,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clCreateFromGLTexture3D(
@@ -35,20 +35,20 @@ namespace GASS.OpenCL.OpenGL
             int target,
             int miplevel,
             uint texture,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clCreateFromGLRenderbuffer(
             CLContext context,
             CLMemFlags flags,
             uint renderbuffer,
-            out CLError errcode_ret);
+            ref CLError errcode_ret);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clGetGLObjectInfo(
             CLMem memobj,
-            out uint gl_object_type,
-            out uint gl_object_name);
+            ref uint gl_object_type,
+            ref uint gl_object_name);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clGetGLTextureInfo(
@@ -56,7 +56,7 @@ namespace GASS.OpenCL.OpenGL
             uint param_name,
             SizeT param_value_size,
             IntPtr param_value,
-            out SizeT param_value_size_ret);
+            ref SizeT param_value_size_ret);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueAcquireGLObjects(
@@ -65,7 +65,7 @@ namespace GASS.OpenCL.OpenGL
             [In] CLMem[] mem_objects,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueReleaseGLObjects(
@@ -74,6 +74,6 @@ namespace GASS.OpenCL.OpenGL
             [In] CLMem[] mem_objects,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
-            out CLEvent e);
+            ref CLEvent e);
     }
 }
