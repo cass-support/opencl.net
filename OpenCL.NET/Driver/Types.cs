@@ -5,6 +5,11 @@ using System.Text;
 namespace GASS.OpenCL
 {
     #region Driver Types
+    public struct CLPlatformID
+    {
+        public IntPtr Value;
+    }
+
     public struct CLDeviceID
     {
         public IntPtr Value;
@@ -47,8 +52,8 @@ namespace GASS.OpenCL
 
     public struct CLImageFormat
     {
-        CLChannelOrder image_channel_order;
-        CLChannelType image_channel_data_type;
+        public CLChannelOrder image_channel_order;
+        public CLChannelType image_channel_data_type;
     }
     #endregion
 
@@ -67,38 +72,43 @@ namespace GASS.OpenCL
         MemCopyOverlap = -8,
         ImageFormatMismatch = -9,
         ImageFormatNotSupported = -10,
+        BuildProgramFailure = -11,
+        MapFailure = -12,
 
         InvalidValue = -30,
         InvalidDeviceType = -31,
-        InvalidDevice = -32,
-        InvalidContext = -33,
-        InvalidQueueProperties = -34,
-        InvalidCommandQueue = -35,
-        InvalidHostPtr = -36,
-        InvalidMemObject = -37,
-        InvalidImageFormatDescriptor = -38,
-        InvalidImageSize = -39,
-        InvalidSampler = -40,
-        InvalidBinary = -41,
-        InvalidBuildOptions = -42,
-        InvalidProgram = -43,
-        InvalidProgramExecutable = -44,
-        InvalidKernelName = -45,
-        InvalidKernelDefinition = -46,
-        InvalidKernel = -47,
-        InvalidArgIndex = -48,
-        InvalidArgValue = -49,
-        InvalidArgSize = -50,
-        InvalidKernelArgs = -51,
-        InvalidWorkDimension = -52,
-        InvalidWorkGroupSize = -53,
-        InvalidWorkItemSize = -54,
-        InvalidGlobalOffset = -55,
-        InvalidEventWaitList = -56,
-        InvalidEvent = -57,
-        InvalidOperation = -58,
-        InvalidGLObject = -59,
-        InvalidBufferSize = -60,
+        InvalidPlatform = -32,
+        InvalidDevice = -33,
+        InvalidContext = -34,
+        InvalidQueueProperties = -35,
+        InvalidCommandQueue = -36,
+        InvalidHostPtr = -37,
+        InvalidMemObject = -38,
+        InvalidImageFormatDescriptor = -39,
+        InvalidImageSize = -40,
+        InvalidSampler = -41,
+        InvalidBinary = -42,
+        InvalidBuildOptions = -43,
+        InvalidProgram = -44,
+        InvalidProgramExecutable = -45,
+        InvalidKernelName = -46,
+        InvalidKernelDefinition = -47,
+        InvalidKernel = -48,
+        InvalidArgIndex = -49,
+        InvalidArgValue = -50,
+        InvalidArgSize = -51,
+        InvalidKernelArgs = -52,
+        InvalidWorkDimension = -53,
+        InvalidWorkGroupSize = -54,
+        InvalidWorkItemSize = -55,
+        InvalidGlobalOffset = -56,
+        InvalidEventWaitList = -57,
+        InvalidEvent = -58,
+        InvalidOperation = -59,
+        InvalidGLObject = -60,
+        InvalidBufferSize = -61,
+        InvalidMipLevel = -62,
+        InvalidGlobalWorkSize = -63,
     }
 
     // OpenCL Version    
@@ -119,6 +129,9 @@ namespace GASS.OpenCL
     {
         Profile = 0x0900,
         Version = 0x0901,
+        Name = 0x0902,
+        Vender = 0x0903,
+        Extensions = 0x0904,
     }
 
     // cl_device_type - bitfield
@@ -183,8 +196,8 @@ namespace GASS.OpenCL
         Profile = 0x102E,
         Version = 0x102F,
         Extensions = 0x1030,
+        Platform = 0x1031,
     }
-
 
     // cl_device_address_info - bitfield
     public enum CLDeviceAddressInfo : ulong
@@ -223,7 +236,7 @@ namespace GASS.OpenCL
     public enum CLDeviceExecCapabilities : ulong
     {
         Kernel = (1 << 0),
-        NativeFNAsKernel = (1 << 1),
+        NativeKernel = (1 << 1),
     }
     
     // cl_command_queue_properties - bitfield
@@ -237,9 +250,14 @@ namespace GASS.OpenCL
     public enum CLContextInfo : uint
     {
         ReferenceCount = 0x1080,
-        NumDevices = 0x1081,
-        Devices = 0x1082,
-        Properties = 0x1083,
+        Devices = 0x1081,
+        Properties = 0x1082,
+    }
+
+    // cl_context_properties
+    public enum CLContextProperties : uint
+    {
+        Platform = 0x1084,
     }
 
     // cl_command_queue_info
@@ -274,6 +292,8 @@ namespace GASS.OpenCL
         RGBA = 0x10B5,
         BGRA = 0x10B6,
         ARGB = 0x10B7,
+        Intensity = 0x10B8,
+        Luminance = 0x10B9,
     }
 
     // cl_channel_type
@@ -405,6 +425,7 @@ namespace GASS.OpenCL
     {
         WorkGroupSize = 0x11B0,
         CompileWithWorkGroupSize = 0x11B1,
+        LocalMemSize = 0x11B2,
     }
 
     // cl_event_info
@@ -413,7 +434,7 @@ namespace GASS.OpenCL
         CommandQueue = 0x11D0,
         CommandType = 0x11D1,
         ReferenceCount = 0x11D2,
-        ExecutionStatus = 0x11D3,
+        CommandExecutionStatus = 0x11D3,
     }
 
     // cl_command_type
@@ -434,10 +455,8 @@ namespace GASS.OpenCL
         MapImage = 0x11FC,
         UnmapMemObject = 0x11FD,
         Marker = 0x11FE,
-        WaitForEvents = 0x11FF,
-        Barrier = 0x1200,
-        AcquireGLObjects = 0x1201,
-        ReleaseGLObjects = 0x1202,
+        AcquireGLObjects = 0x11FF,
+        ReleaseGLObjects = 0x1200,
     }
 
     // command execution status
