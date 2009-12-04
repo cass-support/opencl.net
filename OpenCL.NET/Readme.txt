@@ -10,6 +10,9 @@ For more information you may take a look at: http://www.khronos.org/opencl
 
 Releases
 --------
+Release 1.0.48:
+	* Added support for OpenCL 1.0.48 standard revision.
+
 Release 1.0.43.2:
 	* Added SizeT structure for transparent compatibility between 32/64 bit systems.
 
