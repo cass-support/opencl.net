@@ -15,20 +15,58 @@ namespace GASS.OpenCL
 
         #region Platform API
         [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clGetPlatformIDs(
+            uint num_entries,
+            [Out] CLPlatformID[] platforms,
+            ref uint num_platforms);
+
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clGetPlatformIDs(
+            uint num_entries,
+            IntPtr platforms,
+            ref uint num_platforms);
+
+        [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetPlatformInfo(
+            CLPlatformID platform,
             CLPlatformInfo param_name,
             SizeT param_value_size,
             [Out] byte[] param_value,
+            ref SizeT param_value_size_ret);
+
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clGetPlatformInfo(
+            CLPlatformID platform,
+            CLPlatformInfo param_name,
+            SizeT param_value_size,
+            IntPtr param_value,
             ref SizeT param_value_size_ret);
         #endregion
 
         #region Device APIs
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetDeviceIDs(
+            CLPlatformID platform_id,
             CLDeviceType device_type,
             uint num_entries,
             [Out] CLDeviceID[] devices,
             ref uint num_devices);
+
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clGetDeviceIDs(
+            CLPlatformID platform_id,
+            CLDeviceType device_type,
+            uint num_entries,
+            IntPtr devices,
+            ref uint num_devices);
+
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clGetDeviceInfo(
+            CLDeviceID device,
+            CLDeviceInfo param_name,
+            SizeT param_value_size,
+            [Out] byte[] param_value,
+            ref SizeT param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetDeviceInfo(
@@ -40,14 +78,15 @@ namespace GASS.OpenCL
         #endregion
 
         #region Context APIs
-        public delegate void LoggingFunction(byte[] errinfo, 
+        public delegate void LoggingFunction(
+            IntPtr errinfo, 
             IntPtr private_info,
             SizeT cb, 
             IntPtr user_data);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLContext clCreateContext(
-            ulong properties,
+            ref SizeT properties,
             uint num_devices,
             [In] CLDeviceID[] devices,
             LoggingFunction pfn_notify,
@@ -56,7 +95,7 @@ namespace GASS.OpenCL
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLContext clCreateContextFromType(
-            ulong properties,
+            ref SizeT properties,
             CLDeviceType device_type,
             LoggingFunction pfn_notify,
             IntPtr user_data,
@@ -117,7 +156,7 @@ namespace GASS.OpenCL
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern IntPtr clCreateImage2D(
+        public static extern CLMem clCreateImage2D(
             CLContext context,
             CLMemFlags flags,
             ref CLImageFormat image_format,
@@ -128,7 +167,7 @@ namespace GASS.OpenCL
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern IntPtr clCreateImage3D(
+        public static extern CLMem clCreateImage3D(
             CLContext context,
             CLMemFlags flags,
             ref CLImageFormat image_format,
@@ -153,6 +192,15 @@ namespace GASS.OpenCL
             CLMemObjectType image_type,
             uint num_entries,
             [Out] CLImageFormat[] image_formats,
+            ref uint num_image_formats);
+
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clGetSupportedImageFormats(
+            CLContext context,
+            CLMemFlags flags,
+            CLMemObjectType image_type,
+            uint num_entries,
+            IntPtr image_formats,
             ref uint num_image_formats);
 
         [DllImport(OPENCL_DLL_NAME)]
@@ -206,6 +254,22 @@ namespace GASS.OpenCL
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLProgram clCreateProgramWithSource(
+            CLContext context,
+            uint count,
+            string strings,
+            [In] SizeT[] lengths,
+            ref CLError errcode_ret);
+
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLProgram clCreateProgramWithSource(
+            CLContext context,
+            uint count,
+            IntPtr strings,
+            [In] SizeT[] lengths,
+            ref CLError errcode_ret);
+
+        [DllImport(OPENCL_DLL_NAME)]
         public static extern CLProgram clCreateProgramWithBinary(
             CLContext context,
             uint num_devices,
@@ -222,12 +286,22 @@ namespace GASS.OpenCL
         public static extern CLError clReleaseProgram(CLProgram program);
 
         public delegate void NotifyFunction(CLProgram program, IntPtr user_data);
+
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clBuildProgram(
             CLProgram program,
             uint num_devices,
             [In] CLDeviceID[] device_list,
             string options,
+            NotifyFunction func,
+            IntPtr user_data);
+
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clBuildProgram(
+            CLProgram program,
+            uint num_devices,
+            [In] CLDeviceID[] device_list,
+            IntPtr options,
             NotifyFunction func,
             IntPtr user_data);
 
@@ -338,7 +412,8 @@ namespace GASS.OpenCL
 
         #region Enqueued Commands APIs
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(CLCommandQueue command_queue,
+        public static extern CLError clEnqueueReadBuffer(
+            CLCommandQueue command_queue,
             CLMem buffer,
             CLBool blocking_read,
             SizeT offset,
@@ -349,7 +424,8 @@ namespace GASS.OpenCL
             ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(CLCommandQueue command_queue,
+        public static extern CLError clEnqueueWriteBuffer(
+            CLCommandQueue command_queue,
             CLMem buffer,
             CLBool blocking_write,
             SizeT offset,
@@ -360,7 +436,8 @@ namespace GASS.OpenCL
             ref CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueCopyBuffer(CLCommandQueue command_queue,
+        public static extern CLError clEnqueueCopyBuffer(
+            CLCommandQueue command_queue,
             CLMem src_buffer,
             CLMem dst_buffer,
             SizeT src_offset,
@@ -492,6 +569,7 @@ namespace GASS.OpenCL
             ref CLEvent e);
 
         public delegate void UserFunction(IntPtr[] args);
+
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueNativeKernel(
             CLCommandQueue command_queue,
@@ -518,6 +596,11 @@ namespace GASS.OpenCL
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueBarrier(CLCommandQueue command_queue);
+        #endregion
+
+        #region Extension function access
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern IntPtr clGetExtensionFunctionAddress(string func_name);
         #endregion
     }
 }
