@@ -86,7 +86,15 @@ namespace GASS.OpenCL
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLContext clCreateContext(
-            ref SizeT properties,
+            [In] SizeT[] properties,
+            uint num_devices,
+            [In] CLDeviceID[] devices,
+            LoggingFunction pfn_notify,
+            IntPtr user_data,
+            ref CLError errcode_ret);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLContext clCreateContext(
+            [In] IntPtr[] properties,
             uint num_devices,
             [In] CLDeviceID[] devices,
             LoggingFunction pfn_notify,
@@ -95,7 +103,14 @@ namespace GASS.OpenCL
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLContext clCreateContextFromType(
-            ref SizeT properties,
+            [In] SizeT[] properties,
+            CLDeviceType device_type,
+            LoggingFunction pfn_notify,
+            IntPtr user_data,
+            ref CLError errcode_ret);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLContext clCreateContextFromType(
+            [In] IntPtr[] properties,
             CLDeviceType device_type,
             LoggingFunction pfn_notify,
             IntPtr user_data,
