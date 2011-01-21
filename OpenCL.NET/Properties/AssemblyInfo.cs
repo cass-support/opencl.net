@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Company for Advanced Supercomputing Solutions Ltd.")]
 [assembly: AssemblyProduct("OpenCL.NET")]
-[assembly: AssemblyCopyright("Copyright © 2009-2010")]
+[assembly: AssemblyCopyright("Copyright © 2008-2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
