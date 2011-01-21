@@ -10,6 +10,9 @@ For more information you may take a look at: http://www.khronos.org/opencl
 
 Releases
 --------
+Release 1.0.48.3:
+	* Added extended API for clSetKernelArg and clCreateProgramWithSource.
+
 Release 1.0.48.2:
 	* Fixed clCreateContext* context properties parameter.
 
