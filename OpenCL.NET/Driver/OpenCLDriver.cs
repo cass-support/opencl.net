@@ -515,6 +515,17 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueReadBuffer(
+            CLCommandQueue command_queue,
+            CLMem buffer,
+            CLBool blocking_read,
+            SizeT offset,
+            SizeT cb,
+            IntPtr ptr,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWriteBuffer(
@@ -527,6 +538,17 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueWriteBuffer(
+            CLCommandQueue command_queue,
+            CLMem buffer,
+            CLBool blocking_write,
+            SizeT offset,
+            SizeT cb,
+            IntPtr ptr,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyBuffer(
@@ -539,6 +561,17 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueCopyBuffer(
+            CLCommandQueue command_queue,
+            CLMem src_buffer,
+            CLMem dst_buffer,
+            SizeT src_offset,
+            SizeT dst_offset,
+            SizeT cb,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueReadImage(
@@ -553,6 +586,19 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueReadImage(
+            CLCommandQueue command_queue,
+            CLMem image,
+            CLBool blocking_read,
+            SizeT[] origin,
+            SizeT[] region,
+            SizeT row_pitch,
+            SizeT slice_pitch,
+            IntPtr ptr,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWriteImage(
@@ -567,6 +613,19 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueWriteImage(
+            CLCommandQueue command_queue,
+            CLMem image,
+            CLBool blocking_write,
+            SizeT[] origin,
+            SizeT[] region,
+            SizeT input_row_pitch,
+            SizeT input_slice_pitch,
+            IntPtr ptr,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyImage(
@@ -579,6 +638,17 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueCopyImage(
+            CLCommandQueue command_queue,
+            CLMem src_image,
+            CLMem dst_image,
+            SizeT[] src_origin,
+            SizeT[] dst_origin,
+            SizeT[] region,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyImageToBuffer(
@@ -591,6 +661,17 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueCopyImageToBuffer(
+            CLCommandQueue command_queue,
+            CLMem src_image,
+            CLMem dst_buffer,
+            SizeT[] src_origin,
+            SizeT[] region,
+            SizeT dst_offset,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueCopyBufferToImage(
@@ -603,6 +684,17 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueCopyBufferToImage(
+            CLCommandQueue command_queue,
+            CLMem src_buffer,
+            CLMem dst_image,
+            SizeT src_offset,
+            SizeT[] dst_origin,
+            SizeT[] region,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clEnqueueMapBuffer(
@@ -615,6 +707,18 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e,
+            ref CLError errcode_ret);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern IntPtr clEnqueueMapBuffer(
+            CLCommandQueue command_queue,
+            CLMem buffer,
+            CLBool blocking_map,
+            CLMapFlags map_flags,
+            SizeT offset,
+            SizeT cb,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e,
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
@@ -631,6 +735,20 @@ namespace GASS.OpenCL
             [In] CLEvent[] event_wait_list,
             ref CLEvent e,
             ref CLError errcode_ret);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern IntPtr clEnqueueMapImage(
+            CLCommandQueue command_queue,
+            CLMem image,
+            CLBool blocking_map,
+            CLMapFlags map_flags,
+            SizeT[] origin,
+            SizeT[] region,
+            ref SizeT image_row_pitch,
+            ref SizeT image_slice_pitch,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e,
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueUnmapMemObject(
@@ -640,6 +758,14 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueUnmapMemObject(
+            CLCommandQueue command_queue,
+            CLMem memobj,
+            IntPtr mapped_ptr,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueNDRangeKernel(
@@ -652,6 +778,17 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueNDRangeKernel(
+            CLCommandQueue command_queue,
+            CLKernel kernel,
+            uint work_dim,
+            [In] SizeT[] global_work_offset,
+            [In] SizeT[] global_work_size,
+            [In] SizeT[] local_work_size,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueTask(
@@ -660,6 +797,13 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueTask(
+            CLCommandQueue command_queue,
+            CLKernel kernel,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
 
         public delegate void UserFunction(IntPtr[] args);
 
@@ -675,6 +819,18 @@ namespace GASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueNativeKernel(
+            CLCommandQueue command_queue,
+            UserFunction user_func,
+            [In] IntPtr[] args,
+            SizeT cb_args,
+            uint num_mem_objects,
+            [In] CLMem[] mem_list,
+            [In] IntPtr[] args_mem_loc,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueMarker(
