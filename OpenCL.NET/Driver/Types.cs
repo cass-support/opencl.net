@@ -1,5 +1,7 @@
 using System;
 
+using CASS.Types;
+
 namespace CASS.OpenCL
 {
     #region Driver Types
@@ -52,6 +54,13 @@ namespace CASS.OpenCL
     {
         public CLChannelOrder image_channel_order;
         public CLChannelType image_channel_data_type;
+    }
+
+    /* 1.1 */
+    public struct CLBufferRegion
+    {
+        public SizeT origin;
+        public SizeT size;
     }
     #endregion
 
