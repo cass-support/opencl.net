@@ -18,5 +18,11 @@ namespace CASS.OpenCL.OpenGL
         TextureTarget = 0x2004,
         MipMapLevel = 0x2005,
     }
+
+    public enum CLGLContextInfo
+    {
+        CurrentDeviceForGLContextKHR = 0x2006,
+        DevicesForGLContextKHR = 0x2007,
+    }
     #endregion
 }

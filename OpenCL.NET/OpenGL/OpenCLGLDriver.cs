@@ -75,5 +75,21 @@ namespace CASS.OpenCL.OpenGL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+
+        /* cl_khr_gl_sharing extension */
+        [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
+        public static extern CLError clGetGLContextInfoKHR(
+            [In] SizeT[] properties,
+            CLGLContextInfo param_name,
+            SizeT param_value_size,
+            IntPtr param_value,
+            ref SizeT param_value_size_ret);
+
+        /* cl_khr_gl_event extension */
+        [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
+        public static extern CLEvent clCreateEventFromGLsyncKHR(
+            CLContext context,
+            IntPtr cl_GLsync,
+            ref CLError errcode_ret);
     }
 }

@@ -109,6 +109,9 @@ namespace CASS.OpenCL
         InvalidBufferSize = -61,
         InvalidMipLevel = -62,
         InvalidGlobalWorkSize = -63,
+
+        /* cl_khr_gl_sharing extension */
+        InvalidGLShareGroupReferenceKHR = -1000,
     }
 
     // OpenCL Version    
@@ -258,6 +261,13 @@ namespace CASS.OpenCL
     public enum CLContextProperties : uint
     {
         Platform = 0x1084,
+
+        /* cl_khr_gl_sharing extension */
+        GLContextKHR = 0x2008,
+        EGLDisplayKHR = 0x2009,
+        GLXDisplayKHR = 0x200A,
+        WGLHDCKHR = 0x200B,
+        CGLShareGroupKHR = 0x200C,
     }
 
     // cl_command_queue_info
@@ -457,6 +467,9 @@ namespace CASS.OpenCL
         Marker = 0x11FE,
         AcquireGLObjects = 0x11FF,
         ReleaseGLObjects = 0x1200,
+
+        /* cl_khr_gl_event extension */
+        GLFenceSyncObjectKHR = 0x200D,
     }
 
     // command execution status
