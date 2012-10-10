@@ -69,14 +69,6 @@ namespace CASS.OpenCL
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLContext clCreateContext(
-            [In] SizeT[] properties,
-            uint num_devices,
-            [In] CLDeviceID[] devices,
-            LoggingFunction pfn_notify,
-            IntPtr user_data,
-            ref CLError errcode_ret);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLContext clCreateContext(
             [In] IntPtr[] properties,
             uint num_devices,
             [In] CLDeviceID[] devices,
@@ -84,13 +76,6 @@ namespace CASS.OpenCL
             IntPtr user_data,
             ref CLError errcode_ret);
 
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLContext clCreateContextFromType(
-            [In] SizeT[] properties,
-            CLDeviceType device_type,
-            LoggingFunction pfn_notify,
-            IntPtr user_data,
-            ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLContext clCreateContextFromType(
             [In] IntPtr[] properties,
