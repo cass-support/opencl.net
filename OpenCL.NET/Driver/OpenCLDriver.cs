@@ -20,20 +20,6 @@ namespace CASS.OpenCL
             ref uint num_platforms);
 
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clGetPlatformIDs(
-            uint num_entries,
-            IntPtr platforms,
-            ref uint num_platforms);
-
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clGetPlatformInfo(
-            CLPlatformID platform,
-            CLPlatformInfo param_name,
-            SizeT param_value_size,
-            [Out] byte[] param_value,
-            ref SizeT param_value_size_ret);
-
-        [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetPlatformInfo(
             CLPlatformID platform,
             CLPlatformInfo param_name,
