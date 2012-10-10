@@ -112,6 +112,12 @@ namespace CASS.OpenCL
 
         /* cl_khr_gl_sharing extension */
         InvalidGLShareGroupReferenceKHR = -1000,
+
+        /* cl_khr_d3d10_sharing */
+        InvalidD3D10Device = -1002,
+        InvalidD3D10Resource = -1003,
+        D3D10ResourceAlreadyAcquired = -1004,
+        D3D10ResourceNotAcquired = -1005,
     }
 
     // OpenCL Version    
@@ -255,6 +261,10 @@ namespace CASS.OpenCL
         ReferenceCount = 0x1080,
         Devices = 0x1081,
         Properties = 0x1082,
+
+        /* cl_khr_d3d10_sharing */
+        D3D10Device = 0x4014,
+        D3D10PreferSharedResources = 0x402C,
     }
 
     // cl_context_properties
@@ -344,6 +354,9 @@ namespace CASS.OpenCL
         MapCount = 0x1104,
         ReferenceCount = 0x1105,
         Context = 0x1106,
+
+        /* cl_khr_d3d10_sharing */
+        D3D10Resource = 0x4015,
     }
 
     // cl_image_info
@@ -356,6 +369,9 @@ namespace CASS.OpenCL
         Width = 0x1114,
         Height = 0x1115,
         Depth = 0x1116,
+
+        /* cl_khr_d3d10_sharing */
+        D3D10SubResource = 0x4016,
     }
 
     // cl_addressing_mode
@@ -470,6 +486,10 @@ namespace CASS.OpenCL
 
         /* cl_khr_gl_event extension */
         GLFenceSyncObjectKHR = 0x200D,
+
+        /* cl_khr_d3d10_sharing */
+        AcquireD3D10Objects = 0x4017,
+        ReleaseD3D10Objects = 0x4018,
     }
 
     // command execution status
