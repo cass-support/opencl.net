@@ -10,6 +10,12 @@ For more information you may take a look at: http://www.khronos.org/opencl
 
 Releases
 --------
+Release 1.0.48.5:
+	* Added extended API for clEnqueueReadBuffer and clEnqueueWriteBuffer.
+
+Release 1.0.48.4:
+	* Added support for null events in functions that operate on queues.
+
 Release 1.0.48.3:
 	* Added extended API for clSetKernelArg and clCreateProgramWithSource.
 
