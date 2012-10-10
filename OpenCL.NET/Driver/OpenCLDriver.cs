@@ -375,7 +375,7 @@ namespace CASS.OpenCL
             CLKernel kernel,
             uint arg_index,
             SizeT arg_size,
-            byte[] arg_value);
+            [In] byte[] arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
             CLKernel kernel,
@@ -387,7 +387,7 @@ namespace CASS.OpenCL
             CLKernel kernel,
             uint arg_index,
             SizeT arg_size,
-            short[] arg_value);
+            [In] short[] arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
             CLKernel kernel,
@@ -399,7 +399,7 @@ namespace CASS.OpenCL
             CLKernel kernel,
             uint arg_index,
             SizeT arg_size,
-            int[] arg_value);
+            [In] int[] arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
             CLKernel kernel,
@@ -411,7 +411,7 @@ namespace CASS.OpenCL
             CLKernel kernel,
             uint arg_index,
             SizeT arg_size,
-            long[] arg_value);
+            [In] long[] arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
             CLKernel kernel,
@@ -423,7 +423,7 @@ namespace CASS.OpenCL
             CLKernel kernel,
             uint arg_index,
             SizeT arg_size,
-            float[] arg_value);
+            [In] float[] arg_value);
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetKernelArg(
             CLKernel kernel,
@@ -435,7 +435,7 @@ namespace CASS.OpenCL
             CLKernel kernel,
             uint arg_index,
             SizeT arg_size,
-            double[] arg_value);
+            [In] double[] arg_value);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelInfo(
