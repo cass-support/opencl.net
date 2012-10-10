@@ -534,135 +534,36 @@ namespace CASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             IntPtr e);
+
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(
+        public static extern CLError clEnqueueReadBufferRect(
             CLCommandQueue command_queue,
             CLMem buffer,
             CLBool blocking_read,
-            SizeT offset,
-            SizeT cb,
-            [Out] byte[] ptr,
+            [In] SizeT[] buffer_origin,
+            [In] SizeT[] host_origin,
+            [In] SizeT[] region,
+            SizeT buffer_row_pitch,
+            SizeT buffer_slice_pitch,
+            SizeT host_row_pitch,
+            SizeT host_slice_pitch,
+            IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(
+        public static extern CLError clEnqueueReadBufferRect(
             CLCommandQueue command_queue,
             CLMem buffer,
             CLBool blocking_read,
-            SizeT offset,
-            SizeT cb,
-            [Out] byte[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            IntPtr e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_read,
-            SizeT offset,
-            SizeT cb,
-            [Out] short[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_read,
-            SizeT offset,
-            SizeT cb,
-            [Out] short[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            IntPtr e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_read,
-            SizeT offset,
-            SizeT cb,
-            [Out] int[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_read,
-            SizeT offset,
-            SizeT cb,
-            [Out] int[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            IntPtr e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_read,
-            SizeT offset,
-            SizeT cb,
-            [Out] long[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_read,
-            SizeT offset,
-            SizeT cb,
-            [Out] long[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            IntPtr e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_read,
-            SizeT offset,
-            SizeT cb,
-            [Out] float[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_read,
-            SizeT offset,
-            SizeT cb,
-            [Out] float[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            IntPtr e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_read,
-            SizeT offset,
-            SizeT cb,
-            [Out] double[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueReadBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_read,
-            SizeT offset,
-            SizeT cb,
-            [Out] double[] ptr,
+            [In] SizeT[] buffer_origin,
+            [In] SizeT[] host_origin,
+            [In] SizeT[] region,
+            SizeT buffer_row_pitch,
+            SizeT buffer_slice_pitch,
+            SizeT host_row_pitch,
+            SizeT host_slice_pitch,
+            IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             IntPtr e);
@@ -689,135 +590,36 @@ namespace CASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             IntPtr e);
+
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(
+        public static extern CLError clEnqueueWriteBufferRect(
             CLCommandQueue command_queue,
             CLMem buffer,
-            CLBool blocking_write,
-            SizeT offset,
-            SizeT cb,
-            [In] byte[] ptr,
+            CLBool blocking_read,
+            [In] SizeT[] buffer_origin,
+            [In] SizeT[] host_origin,
+            [In] SizeT[] region,
+            SizeT buffer_row_pitch,
+            SizeT buffer_slice_pitch,
+            SizeT host_row_pitch,
+            SizeT host_slice_pitch,
+            IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(
+        public static extern CLError clEnqueueWriteBufferRect(
             CLCommandQueue command_queue,
             CLMem buffer,
-            CLBool blocking_write,
-            SizeT offset,
-            SizeT cb,
-            [In] byte[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            IntPtr e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_write,
-            SizeT offset,
-            SizeT cb,
-            [In] short[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_write,
-            SizeT offset,
-            SizeT cb,
-            [In] short[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            IntPtr e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_write,
-            SizeT offset,
-            SizeT cb,
-            [In] int[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_write,
-            SizeT offset,
-            SizeT cb,
-            [In] int[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            IntPtr e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_write,
-            SizeT offset,
-            SizeT cb,
-            [In] long[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_write,
-            SizeT offset,
-            SizeT cb,
-            [In] long[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            IntPtr e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_write,
-            SizeT offset,
-            SizeT cb,
-            [In] float[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_write,
-            SizeT offset,
-            SizeT cb,
-            [In] float[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            IntPtr e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_write,
-            SizeT offset,
-            SizeT cb,
-            [In] double[] ptr,
-            uint num_events_in_wait_list,
-            [In] CLEvent[] event_wait_list,
-            ref CLEvent e);
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLError clEnqueueWriteBuffer(
-            CLCommandQueue command_queue,
-            CLMem buffer,
-            CLBool blocking_write,
-            SizeT offset,
-            SizeT cb,
-            [In] double[] ptr,
+            CLBool blocking_read,
+            [In] SizeT[] buffer_origin,
+            [In] SizeT[] host_origin,
+            [In] SizeT[] region,
+            SizeT buffer_row_pitch,
+            SizeT buffer_slice_pitch,
+            SizeT host_row_pitch,
+            SizeT host_slice_pitch,
+            IntPtr ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             IntPtr e);
@@ -841,6 +643,37 @@ namespace CASS.OpenCL
             SizeT src_offset,
             SizeT dst_offset,
             SizeT cb,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
+
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueCopyBufferRect(
+            CLCommandQueue command_queue,
+            CLMem src_buffer,
+            CLMem dst_buffer,
+            [In] SizeT[] src_origin,
+            [In] SizeT[] dst_origin,
+            [In] SizeT[] region,
+            SizeT src_row_pitch,
+            SizeT src_slice_pitch,
+            SizeT dst_row_pitch,
+            SizeT dst_slice_pitch,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueCopyBufferRect(
+            CLCommandQueue command_queue,
+            CLMem src_buffer,
+            CLMem dst_buffer,
+            [In] SizeT[] src_origin,
+            [In] SizeT[] dst_origin,
+            [In] SizeT[] region,
+            SizeT src_row_pitch,
+            SizeT src_slice_pitch,
+            SizeT dst_row_pitch,
+            SizeT dst_slice_pitch,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             IntPtr e);
