@@ -10,6 +10,9 @@ For more information you may take a look at: http://www.khronos.org/opencl
 
 Releases
 --------
+Release 1.1.44.0:
+	* Supporting OpenCL(TM) 1.1 driver API.
+
 Release 1.0.48.5:
 	* Added extended API for clEnqueueReadBuffer and clEnqueueWriteBuffer.
 
