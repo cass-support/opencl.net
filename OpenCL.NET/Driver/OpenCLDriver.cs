@@ -121,7 +121,7 @@ namespace CASS.OpenCL
             IntPtr param_value,
             ref SizeT param_value_size_ret);
 
-        [DllImport(OPENCL_DLL_NAME)]
+        [DllImport(OPENCL_DLL_NAME), Obsolete("These APIs are unsupported and untested in OpenCL 1.1!")]
         public static extern CLError clSetCommandQueueProperty(
             CLCommandQueue command_queue,
             CLCommandQueueProperties properties,
