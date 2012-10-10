@@ -1,8 +1,8 @@
 Readme file for OpenCL.NET
 ------------------------
-http://www.hoopoe-cloud.com/Solutions/opencl.net
+http://www.cass-hpc.com/solutions/libraries/opencl-net
 
-OpenCL.NET provides access to OpenCL functionality from .NET based applications
+OpenCL.NET provides access to OpenCL(TM) functionality from .NET based applications
 on windows, linux and other supported systems.
 
 OpenCL is a computing language developed by the Khronos Group.
@@ -42,14 +42,17 @@ Release 1.0:
 	
 License Agreement, rights and privacy
 -------------------------------------
-The library is free for use. You may distribute it with your applications.
+OpenCL.NET is provided free of charge, for private, academic, research or commercial use.
+The library is provided as is, without warranty or support of any kind.
 Please add the relevant details on a credit if possible.
+For support or development services: support@cass-hpc.com.
 
 Company details:
 ----------------
 Company for Advanced Supercomputing Solutions Ltd
-Bosmat 2a St., 60850, Shoham
-Israel
-support@hoopoe-cloud.com
+Bosmat 2a St.
+Shoham, Israel 60850
+P.O.B 3133
+support@cass-hpc.com
 
-All rights reserved (c) 2009
+All rights reserved (c) 2008 - 2012
