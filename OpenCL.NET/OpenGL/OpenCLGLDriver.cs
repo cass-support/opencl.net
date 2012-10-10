@@ -78,7 +78,7 @@ namespace CASS.OpenCL.OpenGL
         /* cl_khr_gl_sharing extension */
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clGetGLContextInfoKHR(
-            [In] SizeT[] properties,
+            [In] IntPtr[] properties,
             CLGLContextInfo param_name,
             SizeT param_value_size,
             IntPtr param_value,
