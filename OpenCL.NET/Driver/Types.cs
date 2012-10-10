@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CASS.OpenCL
 {
@@ -212,6 +210,20 @@ namespace CASS.OpenCL
         Version = 0x102F,
         Extensions = 0x1030,
         Platform = 0x1031,
+
+        /* 1.1 */
+        /* 0x1032 reserved for CL_DEVICE_DOUBLE_FP_CONFIG */
+        /* 0x1033 reserved for CL_DEVICE_HALF_FP_CONFIG */
+        PreferredVectorWidthHalf = 0x1034,
+        HostUnifiedMemory = 0x1035,
+        NativeVectorWidthChar = 0x1036,
+        NativeVectorWidthShort = 0x1037,
+        NativeVectorWidthInt = 0x1038,
+        NativeVectorWidthLong = 0x1039,
+        NativeVectorWidthFloat = 0x103A,
+        NativeVectorWidthDouble = 0x103B,
+        NativeVectorWidthHalf = 0x103C,
+        OpenCLCVersion = 0x103D,
     }
 
     // cl_device_address_info - bitfield
@@ -230,6 +242,8 @@ namespace CASS.OpenCL
         RoundToZero = (1 << 3),
         RoundToInf = (1 << 4),
         FMA = (1 << 5),
+        /* 1.1 */
+        SoftFloat = (1 << 6),
     }
 
     // cl_device_mem_cache_type
@@ -267,6 +281,8 @@ namespace CASS.OpenCL
         ReferenceCount = 0x1080,
         Devices = 0x1081,
         Properties = 0x1082,
+        /* 1.1 */
+        NumDevices = 0x1083,
 
         /* cl_khr_d3d10_sharing */
         D3D10Device = 0x4014,
@@ -320,6 +336,10 @@ namespace CASS.OpenCL
         ARGB = 0x10B7,
         Intensity = 0x10B8,
         Luminance = 0x10B9,
+        /* 1.1 */
+        Rx = 0x10BA,
+        RGx = 0x10BB,
+        RGBx = 0x10BC,
     }
 
     // cl_channel_type
@@ -360,6 +380,9 @@ namespace CASS.OpenCL
         MapCount = 0x1104,
         ReferenceCount = 0x1105,
         Context = 0x1106,
+        /* 1.1 */
+        AssociatedMemObject = 0x1107,
+        Offset = 0x1108,
 
         /* cl_khr_d3d10_sharing */
         D3D10Resource = 0x4015,
@@ -387,6 +410,8 @@ namespace CASS.OpenCL
         ClampToEdge = 0x1131,
         Clamp = 0x1132,
         Repeat = 0x1133,
+        /* 1.1 */
+        MirroredRepeat = 0x1134,
     }
 
     // cl_filter_mode
@@ -458,6 +483,9 @@ namespace CASS.OpenCL
         WorkGroupSize = 0x11B0,
         CompileWithWorkGroupSize = 0x11B1,
         LocalMemSize = 0x11B2,
+        /* 1.1 */
+        PreferredWorkGroupSizeMultiple = 0x11B3,
+        PrivateMemSize = 0x11B4,
     }
 
     // cl_event_info
@@ -467,6 +495,8 @@ namespace CASS.OpenCL
         CommandType = 0x11D1,
         ReferenceCount = 0x11D2,
         CommandExecutionStatus = 0x11D3,
+        /* 1.1 */
+        Context = 0x11D4,
     }
 
     // cl_command_type
@@ -489,6 +519,11 @@ namespace CASS.OpenCL
         Marker = 0x11FE,
         AcquireGLObjects = 0x11FF,
         ReleaseGLObjects = 0x1200,
+        /* 1.1 */
+        ReadBufferRect = 0x1201,
+        WriteBufferRect = 0x1202,
+        CopyBufferRect = 0x1203,
+        User = 0x1204,
 
         /* cl_khr_gl_event extension */
         GLFenceSyncObject = 0x200D,
@@ -505,6 +540,12 @@ namespace CASS.OpenCL
         Running = 0x1,
         Submitted = 0x2,
         Queued = 0x3,
+    }
+
+    /* cl_buffer_create_type */
+    public enum CLBufferCreateType : uint
+    {
+        Region = 0x1220,
     }
 
     // cl_profiling_info
