@@ -257,23 +257,21 @@ namespace CASS.OpenCL
         public static extern CLProgram clCreateProgramWithSource(
             CLContext context,
             uint count,
-            [In] string[] strings,
-            [In] SizeT[] lengths,
-            ref CLError errcode_ret);
-
-        [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLProgram clCreateProgramWithSource(
-            CLContext context,
-            uint count,
             IntPtr strings,
             [In] SizeT[] lengths,
             ref CLError errcode_ret);
-
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLProgram clCreateProgramWithSource(
             CLContext context,
             uint count,
-            IntPtr[] strings,
+            [In] string[] strings,
+            [In] SizeT[] lengths,
+            ref CLError errcode_ret);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLProgram clCreateProgramWithSource(
+            CLContext context,
+            uint count,
+            [In] IntPtr[] strings,
             [In] SizeT[] lengths,
             ref CLError errcode_ret);
 
