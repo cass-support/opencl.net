@@ -74,6 +74,9 @@ namespace CASS.OpenCL
         ImageFormatNotSupported = -10,
         BuildProgramFailure = -11,
         MapFailure = -12,
+        /* 1.1 */
+        MisalignedSubBufferOffset = -13,
+        ExecStatusErrorForEventsInWaitList = -14,
 
         InvalidValue = -30,
         InvalidDeviceType = -31,
@@ -109,6 +112,8 @@ namespace CASS.OpenCL
         InvalidBufferSize = -61,
         InvalidMipLevel = -62,
         InvalidGlobalWorkSize = -63,
+        /* 1.1 */
+        InvalidProperty = -64,
 
         /* cl_khr_gl_sharing extension */
         InvalidGLShareGroupReference = -1000,
@@ -124,6 +129,7 @@ namespace CASS.OpenCL
     public enum OpenCLVersion : uint
     {
         Version_1_0 = 1,
+        Version_1_1 = 1,
     }
 
     // cl_bool
