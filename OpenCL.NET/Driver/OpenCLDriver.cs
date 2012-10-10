@@ -139,6 +139,22 @@ namespace CASS.OpenCL
             ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLMem clCreateSubBuffer(
+            CLMem buffer,
+            CLMemFlags flags,
+            CLBufferCreateType buffer_create_type,
+            IntPtr buffer_create_info,
+            ref CLError errcode_ret);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLMem clCreateSubBuffer(
+            CLMem buffer,
+            CLMemFlags flags,
+            CLBufferCreateType buffer_create_type,
+            [MarshalAs(UnmanagedType.LPStruct)]
+            CLBufferRegion buffer_create_info,
+            ref CLError errcode_ret);
+
+        [DllImport(OPENCL_DLL_NAME)]
         public static extern CLMem clCreateImage2D(
             CLContext context,
             CLMemFlags flags,
@@ -174,16 +190,15 @@ namespace CASS.OpenCL
             CLMemFlags flags,
             CLMemObjectType image_type,
             uint num_entries,
-            [Out] CLImageFormat[] image_formats,
+            IntPtr image_formats,
             ref uint num_image_formats);
-
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetSupportedImageFormats(
             CLContext context,
             CLMemFlags flags,
             CLMemObjectType image_type,
             uint num_entries,
-            IntPtr image_formats,
+            [Out] CLImageFormat[] image_formats,
             ref uint num_image_formats);
 
         [DllImport(OPENCL_DLL_NAME)]
@@ -201,6 +216,16 @@ namespace CASS.OpenCL
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
+
+        public delegate void DestructionFunction(
+            CLMem memobj, 
+            IntPtr user_data);
+
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clSetMemObjectDestructorCallback(
+            CLMem memobj,
+            DestructionFunction pfn_notify,
+            IntPtr user_data);
         #endregion
 
         #region Sampler APIs
