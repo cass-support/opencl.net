@@ -19,8 +19,8 @@ namespace CASS.OpenCL.OpenGL
 
     public enum CLGLContextInfo
     {
-        CurrentDeviceForGLContextKHR = 0x2006,
-        DevicesForGLContextKHR = 0x2007,
+        CurrentDeviceForGLContext = 0x2006,
+        DevicesForGLContext = 0x2007,
     }
     #endregion
 }

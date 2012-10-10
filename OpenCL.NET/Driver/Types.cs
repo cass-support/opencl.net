@@ -111,7 +111,7 @@ namespace CASS.OpenCL
         InvalidGlobalWorkSize = -63,
 
         /* cl_khr_gl_sharing extension */
-        InvalidGLShareGroupReferenceKHR = -1000,
+        InvalidGLShareGroupReference = -1000,
 
         /* cl_khr_d3d10_sharing */
         InvalidD3D10Device = -1002,
@@ -273,11 +273,11 @@ namespace CASS.OpenCL
         Platform = 0x1084,
 
         /* cl_khr_gl_sharing extension */
-        GLContextKHR = 0x2008,
-        EGLDisplayKHR = 0x2009,
-        GLXDisplayKHR = 0x200A,
-        WGLHDCKHR = 0x200B,
-        CGLShareGroupKHR = 0x200C,
+        GLContext = 0x2008,
+        EGLDisplay = 0x2009,
+        GLXDisplay = 0x200A,
+        WGLHDC = 0x200B,
+        CGLShareGroup = 0x200C,
     }
 
     // cl_command_queue_info
@@ -485,7 +485,7 @@ namespace CASS.OpenCL
         ReleaseGLObjects = 0x1200,
 
         /* cl_khr_gl_event extension */
-        GLFenceSyncObjectKHR = 0x200D,
+        GLFenceSyncObject = 0x200D,
 
         /* cl_khr_d3d10_sharing */
         AcquireD3D10Objects = 0x4017,
