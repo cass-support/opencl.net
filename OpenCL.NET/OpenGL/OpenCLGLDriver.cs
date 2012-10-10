@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
-using GASS.Types;
+using CASS.Types;
 
-namespace GASS.OpenCL.OpenGL
+namespace CASS.OpenCL.OpenGL
 {
     /// <summary>
     /// This class provides the driver interface for OpenGL interoperability

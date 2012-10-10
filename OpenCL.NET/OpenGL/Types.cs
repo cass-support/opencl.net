@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GASS.OpenCL.OpenGL
+namespace CASS.OpenCL.OpenGL
 {
     #region Enums
     public enum CLGLObjectType

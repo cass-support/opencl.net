@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GASS.OpenCL
+namespace CASS.OpenCL
 {
     #region Driver Types
     public struct CLPlatformID

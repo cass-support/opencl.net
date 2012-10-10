@@ -1,6 +1,6 @@
 using System;
 
-namespace GASS.Types
+namespace CASS.Types
 {
     /// <summary>
     /// Used to represent a platform dependent sized variable.
