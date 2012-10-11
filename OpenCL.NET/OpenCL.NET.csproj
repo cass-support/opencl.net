@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="D3D10\OpenCLD3D10Driver.cs" />
     <Compile Include="D3D10\Types.cs" />
+    <Compile Include="OpenCL.cs" />
+    <Compile Include="OpenCLException.cs" />
     <Compile Include="OpenGL\OpenCLGLDriver.cs" />
     <Compile Include="Driver\OpenCLDriver.cs" />
     <Compile Include="Driver\Types.cs" />
