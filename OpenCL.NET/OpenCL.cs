@@ -39,6 +39,12 @@ namespace CASS.OpenCL
             return platforms;
         }
 
+        /// <summary>
+        /// Returns requested information about a platform.
+        /// </summary>
+        /// <param name="platform">Platform ID to query.</param>
+        /// <param name="info">Requested information.</param>
+        /// <returns>Value which depends on the type of information requested.</returns>
         public static object GetPlatformInfo(CLPlatformID platform, CLPlatformInfo info)
         {
             CLError err = CLError.Success;
