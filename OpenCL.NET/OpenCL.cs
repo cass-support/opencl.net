@@ -97,8 +97,6 @@ namespace CASS.OpenCL
                 Marshal.FreeHGlobal(ptr);
             }
 
-            throw new OpenCLException(CLError.MapFailure);
-
             return result;
         }
         #endregion
