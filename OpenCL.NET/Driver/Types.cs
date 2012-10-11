@@ -157,6 +157,7 @@ namespace CASS.OpenCL
     }
 
     // cl_device_type - bitfield
+    [Flags]
     public enum CLDeviceType : ulong
     {
         Default = (1 << 0),
@@ -236,6 +237,7 @@ namespace CASS.OpenCL
     }
 
     // cl_device_address_info - bitfield
+    [Flags]
     public enum CLDeviceAddressInfo : ulong
     {
         Address32Bits = (1 << 0),
@@ -243,6 +245,7 @@ namespace CASS.OpenCL
     }
 
     // cl_device_fp_config - bitfield
+    [Flags]
     public enum CLDeviceFPConfig : ulong
     {
         Denorm = (1 << 0),
@@ -271,6 +274,7 @@ namespace CASS.OpenCL
     }
 
     // cl_device_exec_capabilities - bitfield
+    [Flags]
     public enum CLDeviceExecCapabilities : ulong
     {
         Kernel = (1 << 0),
@@ -278,6 +282,7 @@ namespace CASS.OpenCL
     }
     
     // cl_command_queue_properties - bitfield
+    [Flags]
     public enum CLCommandQueueProperties : ulong
     {
         OutOfOrderExecModeEnable = (1 << 0),
@@ -441,6 +446,7 @@ namespace CASS.OpenCL
     }
 
     // cl_map_flags - bitfield
+    [Flags]
     public enum CLMapFlags : ulong
     {
         Read = (1 << 0),
