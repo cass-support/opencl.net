@@ -8,8 +8,119 @@ namespace CASS.OpenCL
     /// This class provides object oriented access to OpenCL(TM) driver API 
     /// and further utilities for simpler programming.
     /// </summary>
-    public class OpenCL
+    public class OpenCL : IDisposable
     {
+        #region Constructors
+        /// <summary>
+        /// Creates a new instance, with an OpenCL(TM) context created using the given 
+        /// platform and device.
+        /// </summary>
+        /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
+        /// <param name="device">Device to include in OpenCL(TM) context.</param>
+        public OpenCL(CLPlatformID platform, CLDeviceID device) : 
+            this(platform, new CLDeviceID[] { device })
+        { }
+
+        /// <summary>
+        /// Creates a new instance, with an OpenCL(TM) context created using the given 
+        /// platform and multiple devices.
+        /// </summary>
+        /// <param name="platform">Platform for OpenCL(TM) context creation.</param>
+        /// <param name="devices">Devices to include in OpenCL(TM) context.</param>
+        public OpenCL(CLPlatformID platform, CLDeviceID[] devices)
+        {
+            IntPtr[] ctxProperties = new IntPtr[3];
+            ctxProperties[0] = new IntPtr((int)CLContextProperties.Platform);
+            ctxProperties[1] = platform.Value;
+            ctxProperties[2] = IntPtr.Zero;
+
+            // Create OpenCL context from given platform and device.
+            ctx = OpenCLDriver.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
+            ThrowCLException(clError);
+        }
+
+        /// <summary>
+        /// Creates a new instance from already existing OpenCL(TM) context.
+        /// Perform a retain of the context.
+        /// </summary>
+        /// <param name="ctx">OpenCL(TM) context to use.</param>
+        public OpenCL(CLContext ctx)
+        {
+            this.ctx = ctx;
+            clError = OpenCLDriver.clRetainContext(ctx);
+            ThrowCLException(clError);
+        }
+        #endregion
+
+        #region Destructor / IDisposable
+        /// <summary>
+        /// Disposes OpenCL(TM) context (release).
+        /// </summary>
+        public void Dispose()
+        {
+            clError = OpenCLDriver.clReleaseContext(ctx);
+            ThrowCLException(clError);
+        }
+
+        /// <summary>
+        /// Destructor.
+        /// </summary>
+        ~OpenCL()
+        {
+            Dispose();
+        }
+        #endregion
+
+        #region Context Functions
+        public object GetContextInfo(CLContextInfo info)
+        {
+            return GetContextInfo(ctx, info);
+        }
+        #endregion
+
+        #region Queue Functions
+        public CLCommandQueue CreateCommandQueue(CLDeviceID device)
+        {
+            return CreateCommandQueue(device, 0);
+        }
+
+        public CLCommandQueue CreateCommandQueue(CLDeviceID device, CLCommandQueueProperties properties)
+        {
+            CLCommandQueue queue = OpenCLDriver.clCreateCommandQueue(ctx, device, properties, ref clError);
+            ThrowCLException(clError);
+
+            return queue;
+        }
+
+        public void RetainCommandQueue(CLCommandQueue command_queue)
+        {
+            clError = OpenCLDriver.clRetainCommandQueue(command_queue);
+            ThrowCLException(clError);
+        }
+
+        public void ReleaseCommandQueue(CLCommandQueue command_queue)
+        {
+            clError = OpenCLDriver.clReleaseCommandQueue(command_queue);
+            ThrowCLException(clError);
+        }
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Gets last OpenCL(TM) error that occured when calling an API function.
+        /// </summary>
+        public CLError LastCLError
+        {
+            get { return clError; }
+            set { clError = value; }
+        }
+        #endregion
+
+        #region Internal Variables
+        private CLError clError;
+        private CLContext ctx;
+        #endregion
+
         #region Platform Utilities
         /// <summary>
         /// Returns an array of available platforms in the system.
@@ -388,6 +499,132 @@ namespace CASS.OpenCL
             }
 
             return result;
+        }
+        #endregion
+
+        #region Context Utilities
+        public static object GetContextInfo(CLContext ctx, CLContextInfo info)
+        {
+            CLError error = CLError.Success;
+
+            // Define variables to store native information.
+            SizeT param_value_size_ret = 0;
+            IntPtr ptr = IntPtr.Zero;
+            object result = null;
+
+            // Get initial size of buffer to allocate.
+            error = OpenCLDriver.clGetContextInfo(ctx, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            ThrowCLException(error);
+
+            if (param_value_size_ret < 1)
+            {
+                return result;
+            }
+
+            // Allocate native memory to store value.
+            ptr = Marshal.AllocHGlobal(param_value_size_ret);
+
+            // Protect following statements with try-finally in case something 
+            // goes wrong.
+            try
+            {
+                // Get actual value.
+                error = OpenCLDriver.clGetContextInfo(ctx, info,
+                param_value_size_ret, ptr, ref param_value_size_ret);
+
+                switch (info)
+                {
+                    case CLContextInfo.ReferenceCount:
+                        result = (uint)Marshal.ReadInt32(ptr);
+                        break;
+                    case CLContextInfo.Devices:
+                        break;
+                    case CLContextInfo.Properties:
+                        break;
+                    case CLContextInfo.NumDevices:
+                        result = (uint)Marshal.ReadInt32(ptr);
+                        break;
+                    case CLContextInfo.D3D10Device:
+                        break;
+                    case CLContextInfo.D3D10PreferSharedResources:
+                        break;
+                }
+            }
+            finally
+            {
+                // Free native buffer.
+                Marshal.FreeHGlobal(ptr);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region Command Queue Utilities
+        public static object GetCommandQueueInfo(CLCommandQueue command_queue, CLCommandQueueInfo info)
+        {
+            CLError error = CLError.Success;
+
+            // Define variables to store native information.
+            SizeT param_value_size_ret = 0;
+            IntPtr ptr = IntPtr.Zero;
+            object result = null;
+
+            // Get initial size of buffer to allocate.
+            error = OpenCLDriver.clGetCommandQueueInfo(command_queue, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            ThrowCLException(error);
+
+            if (param_value_size_ret < 1)
+            {
+                return result;
+            }
+
+            // Allocate native memory to store value.
+            ptr = Marshal.AllocHGlobal(param_value_size_ret);
+
+            // Protect following statements with try-finally in case something 
+            // goes wrong.
+            try
+            {
+                // Get actual value.
+                error = OpenCLDriver.clGetCommandQueueInfo(command_queue, info,
+                param_value_size_ret, ptr, ref param_value_size_ret);
+
+                switch (info)
+                {
+                    case CLCommandQueueInfo.Context:
+                        result = Marshal.PtrToStructure(ptr, typeof(CLContext));
+                        break;
+                    case CLCommandQueueInfo.Device:
+                        result = Marshal.PtrToStructure(ptr, typeof(CLDeviceID));
+                        break;
+                    case CLCommandQueueInfo.ReferenceCount:
+                        result = (uint)Marshal.ReadInt32(ptr);
+                        break;
+                    case CLCommandQueueInfo.Properties:
+                        result = (CLCommandQueueProperties)Marshal.ReadInt64(ptr);
+                        break;
+                }
+            }
+            finally
+            {
+                // Free native buffer.
+                Marshal.FreeHGlobal(ptr);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region Helper Functions
+        private static void ThrowCLException(CLError error)
+        {
+            if (error == CLError.Success)
+            {
+                return;
+            }
+
+            throw new OpenCLException(error);
         }
         #endregion
     }
