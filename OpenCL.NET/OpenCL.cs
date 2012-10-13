@@ -72,6 +72,11 @@ namespace CASS.OpenCL
         #endregion
 
         #region Context Functions
+        /// <summary>
+        /// Returns requested information about the context of the instance.
+        /// </summary>
+        /// <param name="info">Requested information.</param>
+        /// <returns>Value which depends on the type of information requested.</returns>
         public object GetContextInfo(CLContextInfo info)
         {
             return GetContextInfo(ctx, info);
@@ -522,6 +527,12 @@ namespace CASS.OpenCL
         #endregion
 
         #region Context Utilities
+        /// <summary>
+        /// Returns requested information about a context.
+        /// </summary>
+        /// <param name="ctx">Context to get information for.</param>
+        /// <param name="info">Requested information.</param>
+        /// <returns>Value which depends on the type of information requested.</returns>
         public static object GetContextInfo(CLContext ctx, CLContextInfo info)
         {
             CLError error = CLError.Success;
@@ -551,6 +562,7 @@ namespace CASS.OpenCL
                 error = OpenCLDriver.clGetContextInfo(ctx, info,
                 param_value_size_ret, ptr, ref param_value_size_ret);
 
+                //TODO: Add implementation to missing cases.
                 switch (info)
                 {
                     case CLContextInfo.ReferenceCount:
