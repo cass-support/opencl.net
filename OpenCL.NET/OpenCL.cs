@@ -243,6 +243,108 @@ namespace CASS.OpenCL
         }
         #endregion
 
+        #region Kernel Functions
+        public CLKernel CreateKernel(CLProgram program, string kernelName)
+        {
+            CLKernel kernel = OpenCLDriver.clCreateKernel(program, kernelName, ref clError);
+            ThrowCLException(clError);
+
+            return kernel;
+        }
+
+        public void RetainKernel(CLKernel kernel)
+        {
+            clError = OpenCLDriver.clRetainKernel(kernel);
+            ThrowCLException(clError);
+        }
+
+        public void ReleaseKernel(CLKernel kernel)
+        {
+            clError = OpenCLDriver.clReleaseKernel(kernel);
+            ThrowCLException(clError);
+        }
+
+        #region SetKernelArg
+        public void SetKernelArg(CLKernel kernel, uint index, byte value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(byte), ref value);
+            ThrowCLException(clError);
+        }
+
+        public void SetKernelArg(CLKernel kernel, uint index, short value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(short), ref value);
+            ThrowCLException(clError);
+        }
+
+        public void SetKernelArg(CLKernel kernel, uint index, int value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(int), ref value);
+            ThrowCLException(clError);
+        }
+
+        public void SetKernelArg(CLKernel kernel, uint index, long value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(long), ref value);
+            ThrowCLException(clError);
+        }
+
+        public void SetKernelArg(CLKernel kernel, uint index, float value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(float), ref value);
+            ThrowCLException(clError);
+        }
+
+        public void SetKernelArg(CLKernel kernel, uint index, double value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(double), ref value);
+            ThrowCLException(clError);
+        }
+
+        public void SetKernelArg(CLKernel kernel, uint index, CLMem value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, Marshal.SizeOf(value), ref value);
+            ThrowCLException(clError);
+        }
+
+        public void SetKernelArg(CLKernel kernel, uint index, byte[] value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(byte) * value.Length, value);
+            ThrowCLException(clError);
+        }
+
+        public void SetKernelArg(CLKernel kernel, uint index, short[] value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(short) * value.Length, value);
+            ThrowCLException(clError);
+        }
+
+        public void SetKernelArg(CLKernel kernel, uint index, int[] value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(int) * value.Length, value);
+            ThrowCLException(clError);
+        }
+
+        public void SetKernelArg(CLKernel kernel, uint index, long[] value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(long) * value.Length, value);
+            ThrowCLException(clError);
+        }
+
+        public void SetKernelArg(CLKernel kernel, uint index, float[] value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(float) * value.Length, value);
+            ThrowCLException(clError);
+        }
+
+        public void SetKernelArg(CLKernel kernel, uint index, double[] value)
+        {
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(double) * value.Length, value);
+            ThrowCLException(clError);
+        }
+        #endregion
+        #endregion
+
         #region Properties
         /// <summary>
         /// Gets last OpenCL(TM) error that occured when calling an API function.
