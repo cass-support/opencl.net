@@ -202,6 +202,47 @@ namespace CASS.OpenCL
         }
         #endregion
 
+        #region Program Functions
+        public CLProgram CreateProgramWithSource(string source)
+        {
+            return CreateProgramWithSource(new string[] { source });
+        }
+
+        public CLProgram CreateProgramWithSource(string[] sources)
+        {
+            SizeT[] lengths = new SizeT[sources.Length];
+            for (int i = 0; i < sources.Length; i++)
+			{
+                lengths[i] = sources[i].Length;
+			}
+
+            CLProgram program = OpenCLDriver.clCreateProgramWithSource(ctx, 
+                (uint)sources.Length, sources, lengths, ref clError);
+            ThrowCLException(clError);
+
+            return program;
+        }
+
+        public void RetainProgram(CLProgram program)
+        {
+            clError = OpenCLDriver.clRetainProgram(program);
+            ThrowCLException(clError);
+        }
+
+        public void ReleaseProgram(CLProgram program)
+        {
+            clError = OpenCLDriver.clReleaseProgram(program);
+            ThrowCLException(clError);
+        }
+
+        public void BuildProgram(CLProgram program, CLDeviceID[] devices, string options)
+        {
+            clError = OpenCLDriver.clBuildProgram(program, (uint)devices.Length, 
+                devices, options, null, IntPtr.Zero);
+            ThrowCLException(clError);
+        }
+        #endregion
+
         #region Properties
         /// <summary>
         /// Gets last OpenCL(TM) error that occured when calling an API function.
@@ -873,6 +914,129 @@ namespace CASS.OpenCL
         {
             CLError error = OpenCLDriver.clSetMemObjectDestructorCallback(memobj, function, userData);
             ThrowCLException(error);
+        }
+        #endregion
+
+        #region Program Utilities
+        public static void UnloadCompiler()
+        {
+            ThrowCLException(OpenCLDriver.clUnloadCompiler());
+        }
+
+        public static object GetProgramInfo(CLProgram program, CLProgramInfo info)
+        {
+            CLError error = CLError.Success;
+
+            // Define variables to store native information.
+            SizeT param_value_size_ret = 0;
+            IntPtr ptr = IntPtr.Zero;
+            object result = null;
+
+            // Get initial size of buffer to allocate.
+            error = OpenCLDriver.clGetProgramInfo(program, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            ThrowCLException(error);
+
+            if (param_value_size_ret < 1)
+            {
+                return result;
+            }
+
+            // Allocate native memory to store value.
+            ptr = Marshal.AllocHGlobal(param_value_size_ret);
+
+            // Protect following statements with try-finally in case something 
+            // goes wrong.
+            try
+            {
+                // Get actual value.
+                error = OpenCLDriver.clGetProgramInfo(program, info,
+                    param_value_size_ret, ptr, ref param_value_size_ret);
+
+                //TODO: Add missing cases.
+
+                switch (info)
+                {
+                    case CLProgramInfo.ReferenceCount:
+                        result = (uint)Marshal.ReadInt32(ptr);
+                        break;
+                    case CLProgramInfo.Context:
+                        result = Marshal.PtrToStructure(ptr, typeof(CLContext));
+                        break;
+                    case CLProgramInfo.NumDevices:
+                        result = (uint)Marshal.ReadInt32(ptr);
+                        break;
+                    case CLProgramInfo.Devices:
+                        break;
+                    case CLProgramInfo.Source:
+                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
+                        break;
+                    case CLProgramInfo.BinarySizes:
+                        break;
+                    case CLProgramInfo.Binaries:
+                        break;
+                }
+            }
+            finally
+            {
+                // Free native buffer.
+                Marshal.FreeHGlobal(ptr);
+            }
+
+            return result;
+        }
+
+        public static object GetProgramBuildInfo(CLProgram program, CLDeviceID device,
+            CLProgramBuildInfo info)
+        {
+            CLError error = CLError.Success;
+
+            // Define variables to store native information.
+            SizeT param_value_size_ret = 0;
+            IntPtr ptr = IntPtr.Zero;
+            object result = null;
+
+            // Get initial size of buffer to allocate.
+            error = OpenCLDriver.clGetProgramBuildInfo(program, device, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            ThrowCLException(error);
+
+            if (param_value_size_ret < 1)
+            {
+                return result;
+            }
+
+            // Allocate native memory to store value.
+            ptr = Marshal.AllocHGlobal(param_value_size_ret);
+
+            // Protect following statements with try-finally in case something 
+            // goes wrong.
+            try
+            {
+                // Get actual value.
+                error = OpenCLDriver.clGetProgramBuildInfo(program, device, info,
+                    param_value_size_ret, ptr, ref param_value_size_ret);
+
+                //TODO: Add missing cases.
+
+                switch (info)
+                {
+                    case CLProgramBuildInfo.Status:
+                        result = (CLBuildStatus)Marshal.ReadInt32(ptr);
+                        break;
+                    case CLProgramBuildInfo.Options:
+                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
+                        break;
+                    case CLProgramBuildInfo.Log:
+                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
+                        break;
+                }
+            }
+            finally
+            {
+                // Free native buffer.
+                Marshal.FreeHGlobal(ptr);
+            }
+
+            return result;
         }
         #endregion
 
