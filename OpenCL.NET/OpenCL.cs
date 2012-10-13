@@ -124,7 +124,14 @@ namespace CASS.OpenCL
         public CLError LastCLError
         {
             get { return clError; }
-            set { clError = value; }
+        }
+
+        /// <summary>
+        /// Gets OpenCL(TM) context used by this instance.
+        /// </summary>
+        public CLContext CLContext
+        {
+            get { return ctx; }
         }
         #endregion
 
