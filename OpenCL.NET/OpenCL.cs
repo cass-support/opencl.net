@@ -345,6 +345,12 @@ namespace CASS.OpenCL
         #endregion
         #endregion
 
+        #region Event Functions
+        //TODO: Add event functions.
+        #endregion
+
+
+
         #region Properties
         /// <summary>
         /// Gets last OpenCL(TM) error that occured when calling an API function.
@@ -1117,8 +1123,6 @@ namespace CASS.OpenCL
                 error = OpenCLDriver.clGetProgramBuildInfo(program, device, info,
                     param_value_size_ret, ptr, ref param_value_size_ret);
 
-                //TODO: Add missing cases.
-
                 switch (info)
                 {
                     case CLProgramBuildInfo.Status:
@@ -1129,6 +1133,62 @@ namespace CASS.OpenCL
                         break;
                     case CLProgramBuildInfo.Log:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
+                        break;
+                }
+            }
+            finally
+            {
+                // Free native buffer.
+                Marshal.FreeHGlobal(ptr);
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region Event Utilities
+        public static object GetEventProfilingInfo(CLEvent e, CLProfilingInfo info)
+        {
+            CLError error = CLError.Success;
+
+            // Define variables to store native information.
+            SizeT param_value_size_ret = 0;
+            IntPtr ptr = IntPtr.Zero;
+            object result = null;
+
+            // Get initial size of buffer to allocate.
+            error = OpenCLDriver.clGetEventProfilingInfo(e, info, 0, IntPtr.Zero, ref param_value_size_ret);
+            ThrowCLException(error);
+
+            if (param_value_size_ret < 1)
+            {
+                return result;
+            }
+
+            // Allocate native memory to store value.
+            ptr = Marshal.AllocHGlobal(param_value_size_ret);
+
+            // Protect following statements with try-finally in case something 
+            // goes wrong.
+            try
+            {
+                // Get actual value.
+                error = OpenCLDriver.clGetEventProfilingInfo(e, info,
+                    param_value_size_ret, ptr, ref param_value_size_ret);
+
+                switch (info)
+                {
+                    case CLProfilingInfo.Queued:
+                        result = (ulong)Marshal.ReadInt64(ptr);
+                        break;
+                    case CLProfilingInfo.Submit:
+                        result = (ulong)Marshal.ReadInt64(ptr);
+                        break;
+                    case CLProfilingInfo.Start:
+                        result = (ulong)Marshal.ReadInt64(ptr);
+                        break;
+                    case CLProfilingInfo.End:
+                        result = (ulong)Marshal.ReadInt64(ptr);
                         break;
                 }
             }
