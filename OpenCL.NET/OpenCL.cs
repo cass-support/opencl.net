@@ -103,6 +103,18 @@ namespace CASS.OpenCL
             clError = OpenCLDriver.clReleaseCommandQueue(command_queue);
             ThrowCLException(clError);
         }
+
+        public void Flush(CLCommandQueue command_queue)
+        {
+            clError = OpenCLDriver.clFlush(command_queue);
+            ThrowCLException(clError);
+        }
+
+        public void Finish(CLCommandQueue command_queue)
+        {
+            clError = OpenCLDriver.clFinish(command_queue);
+            ThrowCLException(clError);
+        }
         #endregion
 
         #region Properties
