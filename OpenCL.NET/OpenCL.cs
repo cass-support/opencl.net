@@ -7,6 +7,16 @@ namespace CASS.OpenCL
     /// <summary>
     /// This class provides object oriented access to OpenCL(TM) driver API 
     /// and further utilities for simpler programming.
+    /// 
+    /// There are three ways to instantiate this class:
+    /// 1. Specify a single device - a context will be created with given 
+    /// information.
+    /// 2. Specify multiple devices - a context will be created with given 
+    /// information and sharing of listed devices.
+    /// 3. Specify a previously created context. A new context will not be 
+    /// created, but the reference count of the specified context will be incremented by 1.
+    /// 
+    /// Throughout the lifetime of an instance, a single context can be created.
     /// </summary>
     public class OpenCL : IDisposable
     {
@@ -89,7 +99,8 @@ namespace CASS.OpenCL
             return CreateCommandQueue(device, 0);
         }
 
-        public CLCommandQueue CreateCommandQueue(CLDeviceID device, CLCommandQueueProperties properties)
+        public CLCommandQueue CreateCommandQueue(CLDeviceID device, 
+            CLCommandQueueProperties properties)
         {
             CLCommandQueue queue = OpenCLDriver.clCreateCommandQueue(ctx, device, properties, ref clError);
             ThrowCLException(clError);
