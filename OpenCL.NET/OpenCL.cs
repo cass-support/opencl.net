@@ -68,8 +68,15 @@ namespace CASS.OpenCL
         /// </summary>
         public void Dispose()
         {
+            if (disposed)
+            {
+                return;
+            }
+
             clError = OpenCLDriver.clReleaseContext(ctx);
             ThrowCLException(clError);
+
+            disposed = true;
         }
 
         /// <summary>
@@ -349,7 +356,48 @@ namespace CASS.OpenCL
         //TODO: Add event functions.
         #endregion
 
+        #region Enqueue Functions
+        public void ReadBuffer<T>(CLCommandQueue queue, CLMem buffer, CLBool blocking, SizeT offset, SizeT cb, T[] dst)
+        {
+            GCHandle h = GCHandle.Alloc(dst, GCHandleType.Pinned);
 
+            try
+            {
+                clError = OpenCLDriver.clEnqueueReadBuffer(queue, buffer, blocking, offset, cb, h.AddrOfPinnedObject(), 0, null, IntPtr.Zero);
+                ThrowCLException(clError);
+            }
+            finally
+            {
+                h.Free();
+            }
+        }
+
+        public void WriteBuffer<T>(CLCommandQueue queue, CLMem buffer, CLBool blocking, SizeT offset, SizeT cb, T[] src)
+        {
+            GCHandle h = GCHandle.Alloc(src, GCHandleType.Pinned);
+
+            try
+            {
+                clError = OpenCLDriver.clEnqueueWriteBuffer(queue, buffer, blocking, offset, cb, h.AddrOfPinnedObject(), 0, null, IntPtr.Zero);
+                ThrowCLException(clError);
+            }
+            finally
+            {
+                h.Free();
+            }
+        }
+
+        public CLEvent NDRangeKernel(CLCommandQueue queue, CLKernel kernel, uint work_dim,
+            SizeT[] global_work_offset, SizeT[] global_work_size, SizeT[] local_work_size)
+        {
+            CLEvent e = new CLEvent();
+
+            clError = OpenCLDriver.clEnqueueNDRangeKernel(queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, 0, null, ref e);
+            ThrowCLException(clError);
+
+            return e;
+        }
+        #endregion
 
         #region Properties
         /// <summary>
@@ -372,6 +420,8 @@ namespace CASS.OpenCL
         #region Internal Variables
         private CLError clError;
         private CLContext ctx;
+
+        private bool disposed = false;
         #endregion
 
         #region Platform Utilities
