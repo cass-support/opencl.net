@@ -284,7 +284,6 @@ namespace CASS.OpenCL
             [In] IntPtr[] binaries,
             [In, Out] int[] binary_status,
             ref CLError errcode_ret);
-        [DllImport(OPENCL_DLL_NAME)]
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainProgram(CLProgram program);
