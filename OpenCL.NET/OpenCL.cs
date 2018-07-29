@@ -1,6 +1,7 @@
 ﻿using System;
-using CASS.Types;
 using System.Runtime.InteropServices;
+
+using CASS.Types;
 
 namespace CASS.OpenCL
 {
@@ -45,8 +46,11 @@ namespace CASS.OpenCL
             ctxProperties[2] = IntPtr.Zero;
 
             // Create OpenCL context from given platform and device.
-            ctx = OpenCLDriver.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
+            CLContext ctx = OpenCLDriver.clCreateContext(ctxProperties, (uint)devices.Length, devices, null, IntPtr.Zero, ref clError);
             ThrowCLException(clError);
+
+            Context = ctx;
+            Devices = devices;
         }
 
         /// <summary>
@@ -56,9 +60,10 @@ namespace CASS.OpenCL
         /// <param name="ctx">OpenCL(TM) context to use.</param>
         public OpenCL(CLContext ctx)
         {
-            this.ctx = ctx;
             clError = OpenCLDriver.clRetainContext(ctx);
             ThrowCLException(clError);
+
+            Context = ctx;
         }
         #endregion
 
@@ -228,6 +233,50 @@ namespace CASS.OpenCL
             ThrowCLException(clError);
 
             return program;
+        }
+
+        public CLProgram CreateProgramWithBinary(byte[] binary)
+        {
+            return CreateProgramWithBinary(new byte[][] { binary });
+        }
+
+        public CLProgram CreateProgramWithBinary(byte[][] binaries)
+        {
+            SizeT[] lengths = new SizeT[binaries.Length];
+            for (int i = 0; i < binaries.Length; i++)
+            {
+                lengths[i] = binaries[i].Length;
+            }
+
+            // Allocate native pointers for binaries and copy data.
+            IntPtr[] ptrToBinaries = new IntPtr[binaries.Length];
+            try
+            {
+                for (int i = 0; i < binaries.Length; i++)
+                {
+                    ptrToBinaries[i] = Marshal.AllocHGlobal(lengths[i]);
+
+                    Marshal.Copy(binaries[i], 0, ptrToBinaries[i], lengths[i]);
+                }
+            
+                int[] binaryStatus = new int[binaries.Length];
+
+                CLProgram program = OpenCLDriver.clCreateProgramWithBinary(ctx,
+                    (uint)Devices.Length, Devices, lengths, ptrToBinaries, binaryStatus, ref clError);
+                ThrowCLException(clError);
+
+                return program;
+            }
+            finally
+            {
+                for (int i = 0; i < ptrToBinaries.Length; i++)
+                {
+                    if (ptrToBinaries[i] != IntPtr.Zero)
+                    {
+                        Marshal.FreeHGlobal(ptrToBinaries[i]);
+                    }
+                }
+            }
         }
 
         public void RetainProgram(CLProgram program)
@@ -411,10 +460,16 @@ namespace CASS.OpenCL
         /// <summary>
         /// Gets OpenCL(TM) context used by this instance.
         /// </summary>
-        public CLContext CLContext
+        public CLContext Context
         {
             get { return ctx; }
+            private set { ctx = value; }
         }
+
+        /// <summary>
+        /// Gets devices attached to the current context.
+        /// </summary>
+        public CLDeviceID[] Devices { get; private set; }
         #endregion
 
         #region Internal Variables
@@ -1106,11 +1161,12 @@ namespace CASS.OpenCL
             // goes wrong.
             try
             {
-                // Get actual value.
-                error = OpenCLDriver.clGetProgramInfo(program, info,
-                    param_value_size_ret, ptr, ref param_value_size_ret);
-
-                //TODO: Add missing cases.
+                // Get actual value for normal scalars and arrays.
+                if (info != CLProgramInfo.Binaries)
+                {
+                    error = OpenCLDriver.clGetProgramInfo(program, info,
+                        param_value_size_ret, ptr, ref param_value_size_ret);
+                }
 
                 switch (info)
                 {
@@ -1124,13 +1180,74 @@ namespace CASS.OpenCL
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
                     case CLProgramInfo.Devices:
+                        {
+                            // Get number of devices.
+                            uint numDevices = (uint)GetProgramInfo(program, CLProgramInfo.NumDevices);
+
+                            // Read device IDs.
+                            CLDeviceID[] devices = new CLDeviceID[numDevices];
+                            for (int i = 0; i < numDevices; i++)
+                            {
+                                devices[i] = new CLDeviceID { Value = Marshal.ReadIntPtr(ptr, i * IntPtr.Size) };
+                            }
+
+                            result = devices;
+                        }
                         break;
                     case CLProgramInfo.Source:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
                         break;
                     case CLProgramInfo.BinarySizes:
+                        {
+                            // Get number of devices.
+                            uint numDevices = (uint)GetProgramInfo(program, CLProgramInfo.NumDevices);
+
+                            // Read binary sizes.
+                            SizeT[] binarySizes = new SizeT[numDevices];
+                            for (int i = 0; i < numDevices; i++)
+                            {
+                                binarySizes[i] = (long)Marshal.ReadIntPtr(ptr, i * IntPtr.Size);
+                            }
+
+                            result = binarySizes;
+                        }
                         break;
                     case CLProgramInfo.Binaries:
+                        {
+                            // Get number of devices.
+                            uint numDevices = (uint)GetProgramInfo(program, CLProgramInfo.NumDevices);
+
+                            // Get binary size for each device.
+                            SizeT[] binarySizes = (SizeT[])GetProgramInfo(program, CLProgramInfo.BinarySizes);
+
+                            // Allocate native pointers to store binary data for each device.
+                            for (int i = 0; i < numDevices; i++)
+                            {
+                                Marshal.WriteIntPtr(ptr, i * IntPtr.Size, Marshal.AllocHGlobal(binarySizes[i]));
+                            }
+
+                            // Get actual value for normal scalars and arrays.
+                            error = OpenCLDriver.clGetProgramInfo(program, info,
+                                    param_value_size_ret, ptr, ref param_value_size_ret);
+
+                            // Read program binaries.
+                            byte[][] binaries = new byte[numDevices][];
+                            for (int i = 0; i < numDevices; i++)
+                            {
+                                binaries[i] = new byte[binarySizes[i]];
+
+                                IntPtr binarySourcePtr = Marshal.ReadIntPtr(ptr, i * IntPtr.Size);
+                                if (binarySourcePtr != IntPtr.Zero)
+                                {
+                                    Marshal.Copy(binarySourcePtr, binaries[i], 0, binarySizes[i]);
+
+                                    // Free native pointer for binary data.
+                                    Marshal.FreeHGlobal(binarySourcePtr);
+                                }
+                            }
+
+                            result = binaries;
+                        }
                         break;
                 }
             }
