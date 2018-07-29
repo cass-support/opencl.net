@@ -285,14 +285,6 @@ namespace CASS.OpenCL
             [In, Out] int[] binary_status,
             ref CLError errcode_ret);
         [DllImport(OPENCL_DLL_NAME)]
-        public static extern CLProgram clCreateProgramWithBinary(
-            CLContext context,
-            uint num_devices,
-            [In] CLDeviceID[] device_list,
-            [In] SizeT[] lengths,
-            [In] string[] binaries,
-            [In, Out] int[] binary_status,
-            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainProgram(CLProgram program);
