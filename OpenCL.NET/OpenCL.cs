@@ -51,6 +51,7 @@ namespace CASS.OpenCL
 
             Context = ctx;
             Devices = devices;
+            LastOperationEvent = new CLEvent();
         }
 
         /// <summary>
@@ -412,7 +413,7 @@ namespace CASS.OpenCL
 
             try
             {
-                clError = OpenCLDriver.clEnqueueReadBuffer(queue, buffer, blocking, offset, cb, h.AddrOfPinnedObject(), 0, null, IntPtr.Zero);
+                clError = OpenCLDriver.clEnqueueReadBuffer(queue, buffer, blocking, offset, cb, h.AddrOfPinnedObject(), 0, null, ref lastOperationEvent);
                 ThrowCLException(clError);
             }
             finally
@@ -427,7 +428,7 @@ namespace CASS.OpenCL
 
             try
             {
-                clError = OpenCLDriver.clEnqueueWriteBuffer(queue, buffer, blocking, offset, cb, h.AddrOfPinnedObject(), 0, null, IntPtr.Zero);
+                clError = OpenCLDriver.clEnqueueWriteBuffer(queue, buffer, blocking, offset, cb, h.AddrOfPinnedObject(), 0, null, ref lastOperationEvent);
                 ThrowCLException(clError);
             }
             finally
@@ -436,15 +437,11 @@ namespace CASS.OpenCL
             }
         }
 
-        public CLEvent NDRangeKernel(CLCommandQueue queue, CLKernel kernel, uint work_dim,
+        public void NDRangeKernel(CLCommandQueue queue, CLKernel kernel, uint work_dim,
             SizeT[] global_work_offset, SizeT[] global_work_size, SizeT[] local_work_size)
         {
-            CLEvent e = new CLEvent();
-
-            clError = OpenCLDriver.clEnqueueNDRangeKernel(queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, 0, null, ref e);
+            clError = OpenCLDriver.clEnqueueNDRangeKernel(queue, kernel, work_dim, global_work_offset, global_work_size, local_work_size, 0, null, ref lastOperationEvent);
             ThrowCLException(clError);
-
-            return e;
         }
         #endregion
 
@@ -470,6 +467,22 @@ namespace CASS.OpenCL
         /// Gets devices attached to the current context.
         /// </summary>
         public CLDeviceID[] Devices { get; private set; }
+
+        /// <summary>
+        /// Gets the event associated with the last enqueue operation.
+        /// </summary>
+        public CLEvent LastOperationEvent
+        {
+            get
+            {
+                return lastOperationEvent;
+            }
+
+            private set
+            {
+                lastOperationEvent = value;
+            }
+        }
         #endregion
 
         #region Internal Variables
@@ -1379,6 +1392,10 @@ namespace CASS.OpenCL
 
             throw new OpenCLException(error);
         }
+        #endregion
+
+        #region Internal Variables
+        private CLEvent lastOperationEvent;
         #endregion
     }
 }
