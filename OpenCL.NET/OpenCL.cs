@@ -51,7 +51,7 @@ namespace CASS.OpenCL
 
             Context = ctx;
             Devices = devices;
-            LastOperationEvent = new CLEvent();
+            LastEnqueueEvent = new CLEvent();
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace CASS.OpenCL
         /// <summary>
         /// Gets the event associated with the last enqueue operation.
         /// </summary>
-        public CLEvent LastOperationEvent
+        public CLEvent LastEnqueueEvent
         {
             get
             {
