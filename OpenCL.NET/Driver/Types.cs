@@ -538,7 +538,7 @@ namespace CASS.OpenCL
     }
 
     // command execution status
-    public enum CLExecutionStatus : uint
+    public enum CLExecutionStatus : int
     {
         Complete = 0x0,
         Running = 0x1,
