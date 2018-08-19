@@ -40,7 +40,6 @@ namespace CASS.OpenCL.OpenGL
             uint bufobj,
             ref CLError errcode_ret);
 
-        [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clCreateFromGLTexture2D(
             CLContext context,
@@ -50,7 +49,6 @@ namespace CASS.OpenCL.OpenGL
             uint texture,
             ref CLError errcode_ret);
 
-        [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clCreateFromGLTexture3D(
             CLContext context,
