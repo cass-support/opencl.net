@@ -42,5 +42,14 @@ namespace CASS.OpenCL.OpenGL
         CurrentDeviceForGLContext = 0x2006,
         DevicesForGLContext = 0x2007,
     }
+
+    public enum CLGLContextProperties
+    {
+        GLContextKHR = 0x2008,
+        EGLDisplayKHR = 0x2009,
+        GLXDisplayKHR = 0x200A,
+        WGL_HDC_KHR = 0x200B,
+        CGLShareGroupKHR = 0x200C
+    }
     #endregion
 }

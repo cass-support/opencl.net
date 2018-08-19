@@ -40,6 +40,7 @@ namespace CASS.OpenCL.OpenGL
             uint bufobj,
             ref CLError errcode_ret);
 
+        [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clCreateFromGLTexture2D(
             CLContext context,
@@ -49,6 +50,7 @@ namespace CASS.OpenCL.OpenGL
             uint texture,
             ref CLError errcode_ret);
 
+        [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clCreateFromGLTexture3D(
             CLContext context,
@@ -96,21 +98,5 @@ namespace CASS.OpenCL.OpenGL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
-
-        /* cl_khr_gl_sharing extension */
-        [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
-        public static extern CLError clGetGLContextInfoKHR(
-            [In] IntPtr[] properties,
-            CLGLContextInfo param_name,
-            SizeT param_value_size,
-            IntPtr param_value,
-            ref SizeT param_value_size_ret);
-
-        /* cl_khr_gl_event extension */
-        [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
-        public static extern CLEvent clCreateEventFromGLsyncKHR(
-            CLContext context,
-            IntPtr cl_GLsync,
-            ref CLError errcode_ret);
     }
 }
