@@ -80,6 +80,23 @@ namespace CASS.OpenCL
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
+
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clCreateSubDevices(
+            CLDeviceID in_device,
+            [In] IntPtr[] properties,
+            uint num_devices,
+            [In, Out] CLDeviceID[] out_devices,
+            ref uint num_devices_ret);
+
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clRetainDevice(CLDeviceID device);
+
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clReleaseDevice(CLDeviceID device);
         #endregion
 
         #region Context APIs
@@ -143,7 +160,8 @@ namespace CASS.OpenCL
             IntPtr param_value,
             ref SizeT param_value_size_ret);
 
-        [DllImport(OPENCL_DLL_NAME), Obsolete("These APIs are unsupported and untested in OpenCL 1.1!")]
+        [Obsolete("Deprecated since OpenCL 1.1")]
+        [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetCommandQueueProperty(
             CLCommandQueue command_queue,
             CLCommandQueueProperties properties,
@@ -160,6 +178,7 @@ namespace CASS.OpenCL
             IntPtr host_ptr,
             ref CLError errcode_ret);
 
+        /* 1.1 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLMem clCreateSubBuffer(
             CLMem buffer,
@@ -176,6 +195,7 @@ namespace CASS.OpenCL
             CLBufferRegion buffer_create_info,
             ref CLError errcode_ret);
 
+        [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLMem clCreateImage2D(
             CLContext context,
@@ -187,6 +207,7 @@ namespace CASS.OpenCL
             IntPtr host_ptr,
             ref CLError errcode_ret);
 
+        [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLMem clCreateImage3D(
             CLContext context,
@@ -199,6 +220,28 @@ namespace CASS.OpenCL
             SizeT image_slice_pitch,
             IntPtr host_ptr,
             ref CLError errcode_ret);
+
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLMem clCreateImage(
+            CLContext context,
+            CLMemFlags flags,
+            [MarshalAs(UnmanagedType.LPStruct)]
+            CLImageFormat image_format,
+            [MarshalAs(UnmanagedType.LPStruct)]
+            CLImageDesc image_desc,
+            IntPtr host_ptr,
+            ref CLError errcode_ret);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLMem clCreateImage(
+            CLContext context,
+            CLMemFlags flags,
+            [MarshalAs(UnmanagedType.LPStruct)]
+            CLImageFormat image_format,
+            [MarshalAs(UnmanagedType.LPStruct)]
+            CLImageDesc image_desc,
+            IntPtr host_ptr,
+            IntPtr errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainMemObject(CLMem memobj);
@@ -307,6 +350,15 @@ namespace CASS.OpenCL
             [In, Out] int[] binary_status,
             ref CLError errcode_ret);
 
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLProgram clCreateProgramWithBuiltInKernels(
+            CLContext context,
+            uint num_devices,
+            [In] CLDeviceID[] device_list,
+            string kernel_names,
+            ref CLError errcode_ret);
+
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainProgram(CLProgram program);
 
@@ -333,8 +385,50 @@ namespace CASS.OpenCL
             NotifyFunction func,
             IntPtr user_data);
 
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clCompileProgram(
+            CLProgram program,
+            uint num_devices,
+            [In] CLDeviceID[] device_list,
+            string options,
+            uint num_input_headers,
+            [In] CLProgram[] input_headers,
+            [In] IntPtr[] header_include_names,
+            NotifyFunction pfn_notify,
+            IntPtr user_data);
+
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLProgram clLinkProgram(
+            CLContext context,
+            uint num_devices,
+            [In] CLDeviceID[] device_list,
+            string options,
+            uint num_input_programs,
+            [In] CLProgram[] input_programs,
+            NotifyFunction pfn_notify,
+            IntPtr user_data,
+            ref CLError errcode_ret);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLProgram clLinkProgram(
+            CLContext context,
+            uint num_devices,
+            [In] CLDeviceID[] device_list,
+            string options,
+            uint num_input_programs,
+            [In] CLProgram[] input_programs,
+            NotifyFunction pfn_notify,
+            IntPtr user_data,
+            IntPtr errcode_ret);
+
+        [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clUnloadCompiler();
+
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clUnloadPlatformCompiler(CLPlatformID platform);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetProgramInfo(
@@ -467,6 +561,16 @@ namespace CASS.OpenCL
             IntPtr param_value,
             ref SizeT param_value_size_ret);
 
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clGetKernelArgInfo(
+            CLKernel kernel,
+            uint arg_indx,
+            CLKernelArgInfo param_name,
+            SizeT param_value_size,
+            IntPtr param_value,
+            ref SizeT param_value_size_ret);
+
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelWorkGroupInfo(
             CLKernel kernel,
@@ -570,6 +674,7 @@ namespace CASS.OpenCL
             [In] CLEvent[] event_wait_list,
             IntPtr e);
 
+        /* 1.1 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueReadBufferRect(
             CLCommandQueue command_queue,
@@ -626,6 +731,7 @@ namespace CASS.OpenCL
             [In] CLEvent[] event_wait_list,
             IntPtr e);
 
+        /* 1.1 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWriteBufferRect(
             CLCommandQueue command_queue,
@@ -655,6 +761,30 @@ namespace CASS.OpenCL
             SizeT host_row_pitch,
             SizeT host_slice_pitch,
             IntPtr ptr,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
+
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueFillBuffer(
+            CLCommandQueue command_queue,
+            CLMem buffer,
+            IntPtr pattern,
+            SizeT pattern_size,
+            SizeT offset,
+            SizeT size,
+            uint  num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueFillBuffer(
+            CLCommandQueue command_queue,
+            CLMem buffer,
+            IntPtr pattern,
+            SizeT pattern_size,
+            SizeT offset,
+            SizeT size,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             IntPtr e);
@@ -763,6 +893,28 @@ namespace CASS.OpenCL
             SizeT input_row_pitch,
             SizeT input_slice_pitch,
             IntPtr ptr,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
+
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueFillImage(
+            CLCommandQueue command_queue,
+            CLMem image,
+            IntPtr fill_color,
+            [In] SizeT[] origin,
+            [In] SizeT[] region,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueFillImage(
+            CLCommandQueue command_queue,
+            CLMem image,
+            IntPtr fill_color,
+            [In] SizeT[] origin,
+            [In] SizeT[] region,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             IntPtr e);
@@ -903,6 +1055,26 @@ namespace CASS.OpenCL
             CLCommandQueue command_queue,
             CLMem memobj,
             IntPtr mapped_ptr,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            IntPtr e);
+
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueMigrateMemObjects(
+            CLCommandQueue command_queue,
+            uint num_mem_objects,
+            [In] CLMem[] mem_objects,
+            CLMemMigrationFlags flags,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            ref CLEvent e);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueMigrateMemObjects(
+            CLCommandQueue command_queue,
+            uint num_mem_objects,
+            [In] CLMem[] mem_objects,
+            CLMemMigrationFlags flags,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             IntPtr e);
@@ -972,24 +1144,50 @@ namespace CASS.OpenCL
             [In] CLEvent[] event_wait_list,
             IntPtr e);
 
+        [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueMarker(
             CLCommandQueue command_queue,
             ref CLEvent e);
 
+        [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueWaitForEvents(
             CLCommandQueue command_queue,
             uint num_events,
             [In] CLEvent[] event_list);
 
+        [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueBarrier(CLCommandQueue command_queue);
+
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueMarkerWithWaitList(
+            CLCommandQueue command_queue,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            ref CLEvent e);
+
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueBarrierWithWaitList(
+            CLCommandQueue command_queue,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            ref CLEvent e);
         #endregion
 
         #region Extension function access
+        [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern IntPtr clGetExtensionFunctionAddress(string func_name);
+
+        /* 1.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern IntPtr clGetExtensionFunctionAddressForPlatform(
+            CLPlatformID platform,
+            string func_name);
         #endregion
     }
 }
