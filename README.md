@@ -1,5 +1,5 @@
 # OpenCL.NET
-The original OpenCL(TM) library for .NET by CASS.
+The original OpenCL<sup>TM</sup> library for .NET by CASS.
 
 General information is available [here](http://www.cass-hpc.com/solutions/libraries/opencl-net).
 
