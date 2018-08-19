@@ -944,10 +944,6 @@ namespace CASS.OpenCL
                     case CLContextInfo.NumDevices:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLContextInfo.D3D10Device:
-                        break;
-                    case CLContextInfo.D3D10PreferSharedResources:
-                        break;
                 }
             }
             finally
@@ -1077,8 +1073,6 @@ namespace CASS.OpenCL
                     case CLMemInfo.Offset:
                         result = new SizeT(Marshal.ReadIntPtr(ptr).ToInt64());
                         break;
-                    case CLMemInfo.D3D10Resource:
-                        break;
                 }
             }
             finally
@@ -1143,8 +1137,6 @@ namespace CASS.OpenCL
                         break;
                     case CLImageInfo.Depth:
                         result = new SizeT(Marshal.ReadIntPtr(ptr).ToInt64());
-                        break;
-                    case CLImageInfo.D3D10SubResource:
                         break;
                 }
             }

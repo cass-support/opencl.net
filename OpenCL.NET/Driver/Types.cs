@@ -310,23 +310,12 @@ namespace CASS.OpenCL
         Properties = 0x1082,
         /* 1.1 */
         NumDevices = 0x1083,
-
-        /* cl_khr_d3d10_sharing */
-        D3D10Device = 0x4014,
-        D3D10PreferSharedResources = 0x402C,
     }
 
     // cl_context_properties
     public enum CLContextProperties : uint
     {
         Platform = 0x1084,
-
-        /* cl_khr_gl_sharing extension */
-        GLContext = 0x2008,
-        EGLDisplay = 0x2009,
-        GLXDisplay = 0x200A,
-        WGLHDC = 0x200B,
-        CGLShareGroup = 0x200C,
     }
 
     // cl_command_queue_info
@@ -410,9 +399,6 @@ namespace CASS.OpenCL
         /* 1.1 */
         AssociatedMemObject = 0x1107,
         Offset = 0x1108,
-
-        /* cl_khr_d3d10_sharing */
-        D3D10Resource = 0x4015,
     }
 
     // cl_image_info
@@ -425,9 +411,6 @@ namespace CASS.OpenCL
         Width = 0x1114,
         Height = 0x1115,
         Depth = 0x1116,
-
-        /* cl_khr_d3d10_sharing */
-        D3D10SubResource = 0x4016,
     }
 
     // cl_addressing_mode
@@ -552,13 +535,6 @@ namespace CASS.OpenCL
         WriteBufferRect = 0x1202,
         CopyBufferRect = 0x1203,
         User = 0x1204,
-
-        /* cl_khr_gl_event extension */
-        GLFenceSyncObject = 0x200D,
-
-        /* cl_khr_d3d10_sharing */
-        AcquireD3D10Objects = 0x4017,
-        ReleaseD3D10Objects = 0x4018,
     }
 
     // command execution status
