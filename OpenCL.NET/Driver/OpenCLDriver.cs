@@ -492,6 +492,15 @@ namespace CASS.OpenCL
             ref SizeT param_value_size_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLEvent clCreateUserEvent(
+            CLContext context,
+            IntPtr errcode_ret);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLEvent clCreateUserEvent(
+            CLContext context,
+            ref CLError errcode_ret);
+
+        [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainEvent(CLEvent e);
 
         [DllImport(OPENCL_DLL_NAME)]
@@ -501,6 +510,10 @@ namespace CASS.OpenCL
         public static extern CLError clSetUserEventStatus(
             CLEvent e,
             int execution_status);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clSetUserEventStatus(
+            CLEvent e,
+            CLExecutionStatus execution_status);
 
         public delegate void EventCallback(
             CLEvent e,
@@ -510,7 +523,7 @@ namespace CASS.OpenCL
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetEventCallback(
             CLEvent e,
-            int command_exec_callback_type,
+            CLExecutionStatus command_exec_callback_type,
             EventCallback pfn_notify,
             IntPtr user_data);
         #endregion
