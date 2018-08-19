@@ -1,6 +1,6 @@
 ﻿/*
- * Copyright 2018 Mordechai Botrashvily (support@cass-hpc.com)
- * Company for Advanced Supercomputing Solutions LTD
+ * Copyright (c) 2008-2018 Company for Advanced Supercomputing Solutions LTD
+ * Author: Mordechai Botrashvily (support@cass-hpc.com)
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to 
@@ -22,8 +22,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-
-using CASS.Types;
 
 namespace CASS.OpenCL.D3D10
 {

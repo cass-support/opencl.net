@@ -20,7 +20,7 @@ With the only addition of the last field (revision in .NET terminology), which
 denotes internal updates of the library still compatible with same API level.
 
 # License Agreement, rights and privacy
-OpenCL.NET is provided under the MIT License.
+OpenCL.NET is provided under the MIT License, see [LICENSE](LICENSE).
 This means it is free of charge for all possible usage.
 
 For support or development services: support@cass-hpc.com.
