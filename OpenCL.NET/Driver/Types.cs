@@ -143,15 +143,6 @@ namespace CASS.OpenCL
         InvalidGlobalWorkSize = -63,
         /* 1.1 */
         InvalidProperty = -64,
-
-        /* cl_khr_gl_sharing extension */
-        InvalidGLShareGroupReference = -1000,
-
-        /* cl_khr_d3d10_sharing */
-        InvalidD3D10Device = -1002,
-        InvalidD3D10Resource = -1003,
-        D3D10ResourceAlreadyAcquired = -1004,
-        D3D10ResourceNotAcquired = -1005,
     }
 
     // OpenCL Version    
