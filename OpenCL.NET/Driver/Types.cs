@@ -78,6 +78,23 @@ namespace CASS.OpenCL
         public CLChannelType image_channel_data_type;
     }
 
+    /* 1.2 */
+    public struct CLImageDesc
+    {
+        CLMemObjectType image_type;
+        SizeT image_width;
+        SizeT image_height;
+        SizeT image_depth;
+        SizeT image_array_size;
+        SizeT image_row_pitch;
+        SizeT image_slice_pitch;
+        uint num_mip_levels;
+        uint num_samples;
+
+        // Instead of union, buffer is represented by mem_object.
+        CLMem mem_object;
+    }
+
     /* 1.1 */
     public struct CLBufferRegion
     {
@@ -106,6 +123,12 @@ namespace CASS.OpenCL
         /* 1.1 */
         MisalignedSubBufferOffset = -13,
         ExecStatusErrorForEventsInWaitList = -14,
+        /* 1.2 */
+        CompileProgramFailure = -15,
+        LinkerNotAvailable = -16,
+        LinkProgramFailure = -17,
+        DevicePartitionFailed = -18,
+        KernelArgInfoNotAvailable = -19,
 
         InvalidValue = -30,
         InvalidDeviceType = -31,
@@ -143,6 +166,11 @@ namespace CASS.OpenCL
         InvalidGlobalWorkSize = -63,
         /* 1.1 */
         InvalidProperty = -64,
+        /* 1.2 */
+        InvalidImageDescriptor = -65,
+        InvalidCompilerOptions = -66,
+        InvalidLinkerOptions = -67,
+        InvalidDevicePartitionCount = -68,
     }
 
     // OpenCL Version    
@@ -177,6 +205,8 @@ namespace CASS.OpenCL
         CPU = (1 << 1),
         GPU = (1 << 2),
         Accelerator = (1 << 3),
+        /* 1.2 */
+        Custom = 1 << 4,
         All = 0xFFFFFFFF,
     }
 
@@ -233,6 +263,8 @@ namespace CASS.OpenCL
         Version = 0x102F,
         Extensions = 0x1030,
         Platform = 0x1031,
+        /* 1.2 */
+        DoubleFPConfig = 0x1032,
 
         /* 1.1 */
         /* 0x1032 reserved for CL_DEVICE_DOUBLE_FP_CONFIG */
@@ -247,6 +279,21 @@ namespace CASS.OpenCL
         NativeVectorWidthDouble = 0x103B,
         NativeVectorWidthHalf = 0x103C,
         OpenCLCVersion = 0x103D,
+        /* 1.2 */
+        LinkerAvailable = 0x103E,
+        BuiltInKernels = 0x103F,
+        ImageMaxBufferSize = 0x1040,
+        ImageMaxArraySize = 0x1041,
+        ParentDevice = 0x1042,
+        PartitionMaxSubDevices = 0x1043,
+        PartitionProperties = 0x1044,
+        PartitionAffinityDomain = 0x1045,
+        PartitionType = 0x1046,
+        ReferenceCount = 0x1047,
+        PreferredInteropUserSync = 0x1048,
+        PrintfBufferSize = 0x1049,
+        ImagePitchAlignment = 0x104A,
+        ImageBaseAddressAlignment = 0x104B,
     }
 
     // cl_device_address_info - bitfield
@@ -269,6 +316,8 @@ namespace CASS.OpenCL
         FMA = (1 << 5),
         /* 1.1 */
         SoftFloat = (1 << 6),
+        /* 1.2 */
+        CorrectlyRoundedDivideSqrt = 1 << 7,
     }
 
     // cl_device_mem_cache_type
@@ -316,6 +365,31 @@ namespace CASS.OpenCL
     public enum CLContextProperties : uint
     {
         Platform = 0x1084,
+        /* 1.2 */
+        InteropUserSync = 0x1085,
+    }
+
+    /* 1.2 */
+    // cl_device_partition_property
+    public enum CLDevicePartitionProperty : long
+    {
+        Equally = 0x1086,
+        ByCounts = 0x1087,
+        ByCountsListEnd = 0x0,
+        ByAffinityDomain = 0x1088,
+    }
+
+    /* 1.2 */
+    // cl_device_affinity_domain
+    [Flags]
+    public enum CLDeviceAffinityDomain : ulong
+    {
+        NUMA = 1 << 0,
+        L4Cache = 1 << 1,
+        L3Cache = 1 << 2,
+        L2Cache = 1 << 3,
+        L1Cache = 1 << 4,
+        NextPartitionable = 1 << 5
     }
 
     // cl_command_queue_info
@@ -337,6 +411,20 @@ namespace CASS.OpenCL
         UseHostPtr = (1 << 3),
         AllocHostPtr = (1 << 4),
         CopyHostPtr = (1 << 5),
+
+        /* 1.2 */
+        HostWriteOnly = 1 << 7,
+        HostReadOnly = 1 << 8,
+        HostNoAccess = 1 << 9,
+    }
+
+    /* 1.2 */
+    // cl_mem_migration_flags - bitfield
+    [Flags]
+    public enum CLMemMigrationFlags
+    {
+        Host = 1 << 0,
+        ContentUndefined = 1 << 1,
     }
 
     // cl_channel_order
@@ -356,6 +444,9 @@ namespace CASS.OpenCL
         Rx = 0x10BA,
         RGx = 0x10BB,
         RGBx = 0x10BC,
+        /* 1.2 */
+        Depth = 0x10BD,
+        DepthStencil = 0x10BE,
     }
 
     // cl_channel_type
@@ -376,6 +467,8 @@ namespace CASS.OpenCL
         UnSignedInt32 = 0x10DC,
         HalfFloat = 0x10DD,
         Float = 0x10DE,
+        /* 1.2 */
+        UnormInt24 = 0x10DF,
     }
 
     // cl_mem_object_type
@@ -384,6 +477,11 @@ namespace CASS.OpenCL
         Buffer = 0x10F0,
         Image2D = 0x10F1,
         Image3D = 0x10F2,
+        /* 1.2 */
+        Image2DArray = 0x10F3,
+        Image1D = 0x10F4,
+        Image1DArray = 0x10F5,
+        Image1DBuffer = 0x10F6,
     }
 
     // cl_mem_info
@@ -411,6 +509,11 @@ namespace CASS.OpenCL
         Width = 0x1114,
         Height = 0x1115,
         Depth = 0x1116,
+        /* 1.2 */
+        ArraySize = 0x1117,
+        Buffer = 0x1118,
+        NumMIPLevels = 0x1119,
+        NumSamples = 0x111A,
     }
 
     // cl_addressing_mode
@@ -445,8 +548,10 @@ namespace CASS.OpenCL
     [Flags]
     public enum CLMapFlags : ulong
     {
-        Read = (1 << 0),
-        Write = (1 << 1),
+        Read = 1 << 0,
+        Write = 1 << 1,
+        /* 1.2 */
+        WriteInvalidateRegion = 1 << 2,
     }
 
     // cl_program_info
@@ -459,6 +564,9 @@ namespace CASS.OpenCL
         Source = 0x1164,
         BinarySizes = 0x1165,
         Binaries = 0x1166,
+        /* 1.2 */
+        NumKernels = 0x1167,
+        KernelNames = 0x1168,
     }
 
     // cl_program_build_info
@@ -467,6 +575,18 @@ namespace CASS.OpenCL
         Status = 0x1181,
         Options = 0x1182,
         Log = 0x1183,
+        /* 1.2 */
+        BinaryType = 0x1184,
+    }
+
+    /* 1.2 */
+    // cl_program_binary_type
+    public enum CLProgramBinaryType : uint
+    {
+        None = 0x0,
+        CompiledObject = 0x1,
+        Library = 0x2,
+        Executable = 0x4,
     }
 
     // cl_build_status
@@ -486,6 +606,50 @@ namespace CASS.OpenCL
         ReferenceCount = 0x1192,
         Context = 0x1193,
         Program = 0x1194,
+        /* 1.2 */
+        Attributes = 0x1195,
+    }
+
+    /* 1.2 */
+    /* cl_kernel_arg_info */
+    public enum CLKernelArgInfo : uint
+    {
+        AddressQualifier = 0x1196,
+        AccessQualifier = 0x1197,
+        TypeName = 0x1198,
+        TypeQualifier = 0x1199,
+        Name = 0x119A,
+    }
+
+    /* 1.2 */
+    /* cl_kernel_arg_address_qualifier */
+    public enum CLKernelArgAddressQualifier : uint
+    {
+        Global = 0x119B,
+        Local = 0x119C,
+        Constant = 0x119D,
+        Private = 0x119E,
+    }
+
+    /* 1.2 */
+    /* cl_kernel_arg_access_qualifier */
+    public enum CLKernelArgAccessQualifier : uint
+    {
+        ReadOnly = 0x11A0,
+        WriteOnly = 0x11A1,
+        ReadWrite = 0x11A2,
+        None = 0x11A3,
+    }
+
+    /* 1.2 */
+    /* cl_kernel_arg_type_qualifier */
+    [Flags]
+    public enum CLKernelArgTypeQualifier : ulong
+    {
+        None = 0,
+        Const = 1 << 0,
+        Restrict = 1 << 1,
+        Volatile = 1 << 2,
     }
 
     // cl_kernel_work_group_info
@@ -497,6 +661,8 @@ namespace CASS.OpenCL
         /* 1.1 */
         PreferredWorkGroupSizeMultiple = 0x11B3,
         PrivateMemSize = 0x11B4,
+        /* 1.2 */
+        GlobalWorkSize = 0x11B5,
     }
 
     // cl_event_info
@@ -535,6 +701,11 @@ namespace CASS.OpenCL
         WriteBufferRect = 0x1202,
         CopyBufferRect = 0x1203,
         User = 0x1204,
+        /* 1.2 */
+        Barrier = 0x1205,
+        MigrateMemObjects = 0x1206,
+        FillBuffer = 0x1207,
+        FillImage = 0x1208,
     }
 
     // command execution status
