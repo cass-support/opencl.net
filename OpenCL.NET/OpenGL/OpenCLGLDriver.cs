@@ -34,36 +34,85 @@ namespace CASS.OpenCL.OpenGL
     public class OpenCLGLDriver
     {
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
-        public static extern CLError clCreateFromGLBuffer(
+        public static extern CLMem clCreateFromGLBuffer(
             CLContext context,
             CLMemFlags flags,
             uint bufobj,
             ref CLError errcode_ret);
+        [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
+        public static extern CLMem clCreateFromGLBuffer(
+            CLContext context,
+            CLMemFlags flags,
+            uint bufobj,
+            IntPtr errcode_ret);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
-        public static extern CLError clCreateFromGLTexture2D(
+        public static extern CLMem clCreateFromGLTexture(
             CLContext context,
             CLMemFlags flags,
             int target,
             int miplevel,
             uint texture,
             ref CLError errcode_ret);
-
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
-        public static extern CLError clCreateFromGLTexture3D(
+        public static extern CLMem clCreateFromGLTexture(
+            CLContext context,
+            CLMemFlags flags,
+            int target,
+            int miplevel,
+            uint texture,
+            IntPtr errcode_ret);
+
+        [Obsolete("Deprecated since OpenCL 1.2")]
+        [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
+        public static extern CLMem clCreateFromGLTexture2D(
             CLContext context,
             CLMemFlags flags,
             int target,
             int miplevel,
             uint texture,
             ref CLError errcode_ret);
+        [Obsolete("Deprecated since OpenCL 1.2")]
+        [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
+        public static extern CLMem clCreateFromGLTexture2D(
+            CLContext context,
+            CLMemFlags flags,
+            int target,
+            int miplevel,
+            uint texture,
+            IntPtr errcode_ret);
+
+        [Obsolete("Deprecated since OpenCL 1.2")]
+        [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
+        public static extern CLMem clCreateFromGLTexture3D(
+            CLContext context,
+            CLMemFlags flags,
+            int target,
+            int miplevel,
+            uint texture,
+            ref CLError errcode_ret);
+        [Obsolete("Deprecated since OpenCL 1.2")]
+        [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
+        public static extern CLMem clCreateFromGLTexture3D(
+            CLContext context,
+            CLMemFlags flags,
+            int target,
+            int miplevel,
+            uint texture,
+            IntPtr errcode_ret);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
-        public static extern CLError clCreateFromGLRenderbuffer(
+        public static extern CLMem clCreateFromGLRenderbuffer(
             CLContext context,
             CLMemFlags flags,
             uint renderbuffer,
             ref CLError errcode_ret);
+        [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
+        public static extern CLMem clCreateFromGLRenderbuffer(
+            CLContext context,
+            CLMemFlags flags,
+            uint renderbuffer,
+            IntPtr errcode_ret);
 
         [DllImport(OpenCLDriver.OPENCL_DLL_NAME)]
         public static extern CLError clGetGLObjectInfo(

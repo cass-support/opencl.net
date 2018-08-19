@@ -29,27 +29,17 @@ namespace CASS.OpenCL.OpenGL
         Texture2D = 0x2001,
         Texture3D = 0x2002,
         RenderBuffer = 0x2003,
+        Texture2DArray = 0x200E,
+        Texture1D = 0x200F,
+        Texture1DArray = 0x2010,
+        TextureBuffer = 0x2011
     }
 
     public enum CLGLTextureInfo
     {
         TextureTarget = 0x2004,
         MipMapLevel = 0x2005,
-    }
-
-    public enum CLGLContextInfo
-    {
-        CurrentDeviceForGLContext = 0x2006,
-        DevicesForGLContext = 0x2007,
-    }
-
-    public enum CLGLContextProperties
-    {
-        GLContextKHR = 0x2008,
-        EGLDisplayKHR = 0x2009,
-        GLXDisplayKHR = 0x200A,
-        WGL_HDC_KHR = 0x200B,
-        CGLShareGroupKHR = 0x200C
+        NumSamples = 0x2012
     }
     #endregion
 }
