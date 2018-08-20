@@ -139,12 +139,27 @@ namespace CASS.OpenCL
         #endregion
 
         #region Command Queue APIs
+        [Obsolete("Deprecated since OpenCL 2.0")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLCommandQueue clCreateCommandQueue(
             CLContext context,
             CLDeviceID device,
             CLCommandQueueProperties properties,
             ref CLError errcode_ret);
+
+        /* 2.0 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLCommandQueue clCreateCommandQueueWithProperties(
+            CLContext context,
+            CLDeviceID device,
+            [In] IntPtr[] properties,
+            ref CLError errcode_ret);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLCommandQueue clCreateCommandQueueWithProperties(
+            CLContext context,
+            CLDeviceID device,
+            [In] IntPtr[] properties,
+            IntPtr errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainCommandQueue(CLCommandQueue command_queue);
@@ -243,6 +258,24 @@ namespace CASS.OpenCL
             IntPtr host_ptr,
             IntPtr errcode_ret);
 
+        /* 2.0 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLMem clCreatePipe(
+            CLContext context,
+            CLMemFlags flags,
+            uint pipe_packet_size,
+            uint pipe_max_packets,
+            [In] IntPtr[] properties,
+            ref CLError errcode_ret);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLMem clCreatePipe(
+            CLContext context,
+            CLMemFlags flags,
+            uint pipe_packet_size,
+            uint pipe_max_packets,
+            [In] IntPtr[] properties,
+            IntPtr errcode_ret);
+
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainMemObject(CLMem memobj);
 
@@ -282,10 +315,19 @@ namespace CASS.OpenCL
             IntPtr param_value,
             ref SizeT param_value_size_ret);
 
+        /* 2.0 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clGetPipeInfo(
+            CLMem pipe,
+            CLPipeInfo param_name,
+            SizeT param_value_size,
+            IntPtr param_value,
+            ref SizeT param_value_size_ret);
+
+        /* 1.1 */
         public delegate void DestructionFunction(
             CLMem memobj, 
             IntPtr user_data);
-
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clSetMemObjectDestructorCallback(
             CLMem memobj,
@@ -293,7 +335,23 @@ namespace CASS.OpenCL
             IntPtr user_data);
         #endregion
 
+        /* 2.0 */
+        #region SVM Allocation APIs
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern IntPtr clSVMAlloc(
+            CLContext context,
+            CLSVMMemFlags flags,
+            SizeT size,
+            uint alignment);
+
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern void clSVMFree(
+            CLContext context,
+            IntPtr svm_pointer);
+        #endregion
+
         #region Sampler APIs
+        [Obsolete("Deprecated since OpenCL 2.0")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLSampler clCreateSampler(
             CLContext context,
@@ -301,6 +359,18 @@ namespace CASS.OpenCL
             CLAddressingMode addressing_mode,
             CLFilterMode filter_mode,
             ref CLError errcode_ret);
+
+        /* 2.0 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLSampler clCreateSamplerWithProperties(
+            CLContext context,
+            [In] IntPtr[] sampler_properties,
+            ref CLError errcode_ret);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLSampler clCreateSamplerWithProperties(
+            CLContext context,
+            [In] IntPtr[] sampler_properties,
+            IntPtr errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainSampler(CLSampler sampler);
@@ -552,6 +622,33 @@ namespace CASS.OpenCL
             uint arg_index,
             SizeT arg_size,
             [In] double[] arg_value);
+
+        /* 2.0 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clSetKernelArgSVMPointer(
+            CLKernel kernel,
+            uint arg_index,
+            IntPtr arg_value);
+
+        /* 2.0 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clSetKernelExecInfo(
+            CLKernel kernel,
+            CLKernelExecInfo param_name,
+            SizeT param_value_size,
+            IntPtr param_value);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clSetKernelExecInfo(
+            CLKernel kernel,
+            CLKernelExecInfo param_name,
+            SizeT param_value_size,
+            [In] IntPtr[] param_value);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clSetKernelExecInfo(
+            CLKernel kernel,
+            CLKernelExecInfo param_name,
+            SizeT param_value_size,
+            ref bool param_value);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelInfo(
@@ -1102,6 +1199,7 @@ namespace CASS.OpenCL
             [In] CLEvent[] event_wait_list,
             IntPtr e);
 
+        [Obsolete("Deprecated since OpenCL 2.0")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueTask(
             CLCommandQueue command_queue,
@@ -1109,6 +1207,7 @@ namespace CASS.OpenCL
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
+        [Obsolete("Deprecated since OpenCL 2.0")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueTask(
             CLCommandQueue command_queue,
@@ -1173,6 +1272,64 @@ namespace CASS.OpenCL
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueBarrierWithWaitList(
             CLCommandQueue command_queue,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            ref CLEvent e);
+
+        /* 2.0 */
+        public delegate void SVMFreeFunction(CLCommandQueue queue, uint num_svm_pointers, IntPtr[] svm_pointers, IntPtr user_data);
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueSVMFree(
+            CLCommandQueue command_queue,
+            uint num_svm_pointers,
+            [In] IntPtr[] svm_pointers,
+            SVMFreeFunction pfn_free_func,
+            IntPtr user_data,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            ref CLEvent e);
+
+        /* 2.0 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueSVMMemcpy(
+            CLCommandQueue command_queue,
+            bool blocking_copy,
+            IntPtr dst_ptr,
+            IntPtr src_ptr,
+            SizeT size,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            ref CLEvent e);
+
+        /* 2.0 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueSVMMemFill(
+            CLCommandQueue command_queue,
+            IntPtr svm_ptr,
+            IntPtr pattern,
+            SizeT pattern_size,
+            SizeT size,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            ref CLEvent e);
+
+        /* 2.0 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueSVMMap(
+            CLCommandQueue command_queue,
+            bool blocking_map,
+            CLMapFlags flags,
+            IntPtr svm_ptr,
+            SizeT size,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            ref CLEvent e);
+
+        /* 2.0 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueSVMUnmap(
+            CLCommandQueue command_queue,
+            IntPtr svm_ptr,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
