@@ -97,6 +97,26 @@ namespace CASS.OpenCL
         /* 1.2 */
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clReleaseDevice(CLDeviceID device);
+
+        /* 2.1 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clSetDefaultDeviceCommandQueue(
+            CLContext context,
+            CLDeviceID device,
+            CLCommandQueue command_queue);
+
+        /* 2.1 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clGetDeviceAndHostTimer(
+            CLDeviceID device,
+            ref ulong device_timestamp,
+            ref ulong host_timestamp);
+
+        /* 2.1 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clGetHostTimer(
+            CLDeviceID device,
+            ref ulong host_timestamp);
         #endregion
 
         #region Context APIs
@@ -429,6 +449,14 @@ namespace CASS.OpenCL
             string kernel_names,
             ref CLError errcode_ret);
 
+        /* 2.1 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLProgram clCreateProgramWithIL(
+            CLContext context,
+            IntPtr il,
+            SizeT length,
+            ref CLError errcode_ret);
+
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainProgram(CLProgram program);
 
@@ -531,6 +559,12 @@ namespace CASS.OpenCL
             uint num_kernels,
             [Out] CLKernel[] kernels,
             ref uint num_kernels_ret);
+
+        /* 2.1 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLKernel clCloneKernel(
+            CLKernel source_kernel,
+            ref CLError errcode_ret);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clRetainKernel(CLKernel kernel);
@@ -673,6 +707,18 @@ namespace CASS.OpenCL
             CLKernel kernel,
             CLDeviceID device,
             CLKernelWorkGroupInfo param_name,
+            SizeT param_value_size,
+            IntPtr param_value,
+            ref SizeT param_value_size_ret);
+
+        /* 2.1 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clGetKernelSubGroupInfo(
+            CLKernel kernel,
+            CLDeviceID device,
+            CLKernelSubGroupInfo param_name,
+            SizeT input_value_size,
+            IntPtr input_value,
             SizeT param_value_size,
             IntPtr param_value,
             ref SizeT param_value_size_ret);
@@ -1330,6 +1376,18 @@ namespace CASS.OpenCL
         public static extern CLError clEnqueueSVMUnmap(
             CLCommandQueue command_queue,
             IntPtr svm_ptr,
+            uint num_events_in_wait_list,
+            [In] CLEvent[] event_wait_list,
+            ref CLEvent e);
+
+        /* 2.1 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clEnqueueSVMMigrateMem(
+            CLCommandQueue command_queue,
+            uint num_svm_pointers,
+            [In] IntPtr[] svm_pointers,
+            [In] SizeT[] sizes,
+            CLMemMigrationFlags flags,
             uint num_events_in_wait_list,
             [In] CLEvent[] event_wait_list,
             ref CLEvent e);
