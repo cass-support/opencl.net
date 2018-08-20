@@ -520,6 +520,21 @@ namespace CASS.OpenCL
             IntPtr user_data,
             IntPtr errcode_ret);
 
+        /* 2.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clSetProgramReleaseCallback(
+            CLProgram program,
+            NotifyFunction pfn_notify,
+            IntPtr user_data);
+
+        /* 2.2 */
+        [DllImport(OPENCL_DLL_NAME)]
+        public static extern CLError clSetProgramSpecializationConstant(
+            CLProgram program,
+            uint spec_id,
+            SizeT spec_size,
+            IntPtr spec_value);
+
         [Obsolete("Deprecated since OpenCL 1.2")]
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clUnloadCompiler();
@@ -682,7 +697,7 @@ namespace CASS.OpenCL
             CLKernel kernel,
             CLKernelExecInfo param_name,
             SizeT param_value_size,
-            ref bool param_value);
+            ref CLBool param_value);
 
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clGetKernelInfo(
@@ -1339,7 +1354,7 @@ namespace CASS.OpenCL
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueSVMMemcpy(
             CLCommandQueue command_queue,
-            bool blocking_copy,
+            CLBool blocking_copy,
             IntPtr dst_ptr,
             IntPtr src_ptr,
             SizeT size,
@@ -1363,7 +1378,7 @@ namespace CASS.OpenCL
         [DllImport(OPENCL_DLL_NAME)]
         public static extern CLError clEnqueueSVMMap(
             CLCommandQueue command_queue,
-            bool blocking_map,
+            CLBool blocking_map,
             CLMapFlags flags,
             IntPtr svm_ptr,
             SizeT size,
