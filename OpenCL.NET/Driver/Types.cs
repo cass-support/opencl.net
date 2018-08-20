@@ -174,13 +174,9 @@ namespace CASS.OpenCL
         /* 2.0 */
         InvalidPipeSize = -69,
         InvalidDeviceQueue = -70,
-    }
-
-    // OpenCL Version    
-    public enum OpenCLVersion : uint
-    {
-        Version_1_0 = 1,
-        Version_1_1 = 1,
+        /* 2.2 */
+        InvalidSpecID = -71,
+        MaxSizeRestrictionExceeded = -72,
     }
 
     // cl_bool
@@ -657,6 +653,9 @@ namespace CASS.OpenCL
         KernelNames = 0x1168,
         /* 2.1 */
         IL = 0x1169,
+        /* 2.2 */
+        ScopeGlobalCtorsPresent = 0x116A,
+        ScopeGlobalDtorsPresent = 0x116B,
     }
 
     // cl_program_build_info
