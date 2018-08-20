@@ -198,6 +198,8 @@ namespace CASS.OpenCL
         Name = 0x0902,
         Vendor = 0x0903,
         Extensions = 0x0904,
+        /* 2.1 */
+        HostTimerResolution = 0x0905,
     }
 
     // cl_device_type - bitfield
@@ -317,6 +319,10 @@ namespace CASS.OpenCL
         PreferredPlatformAtomicAlignment = 0x1058,
         PreferredGlobalAtomicAlignment = 0x1059,
         PreferredLocalAtomicAlignment = 0x105A,
+        /* 2.1 */
+        ILVersion = 0x105B,
+        MaxNumSubGroups = 0x105C,
+        SubGroupIndependentForwardProgress = 0x105D,
     }
 
     // cl_device_address_info - bitfield
@@ -438,6 +444,8 @@ namespace CASS.OpenCL
         Properties = 0x1093,
         /* 2.0 */
         Size = 0x1094,
+        /* 2.1 */
+        DeviceDefault = 0x1095,
     }
 
     // cl_mem_flags - bitfield
@@ -531,6 +539,8 @@ namespace CASS.OpenCL
         Float = 0x10DE,
         /* 1.2 */
         UnormInt24 = 0x10DF,
+        /* 2.1 */
+        UnormInt101010_2 = 0x10E0,
     }
 
     // cl_mem_object_type
@@ -645,6 +655,8 @@ namespace CASS.OpenCL
         /* 1.2 */
         NumKernels = 0x1167,
         KernelNames = 0x1168,
+        /* 2.1 */
+        IL = 0x1169,
     }
 
     // cl_program_build_info
@@ -688,6 +700,9 @@ namespace CASS.OpenCL
         Program = 0x1194,
         /* 1.2 */
         Attributes = 0x1195,
+        /* 2.1 */
+        MaxNumSubGroups = 0x11B9,
+        CompileNumSubGroups = 0x11BA,
     }
 
     /* 1.2 */
@@ -745,6 +760,15 @@ namespace CASS.OpenCL
         PrivateMemSize = 0x11B4,
         /* 1.2 */
         GlobalWorkSize = 0x11B5,
+    }
+
+    /* 2.1 */
+    // cl_kernel_sub_group_info
+    public enum CLKernelSubGroupInfo : uint
+    {
+        MaxSubGroupSizeForNDRange = 0x2033,
+        SubGroupCountForNDRange = 0x2034,
+        LocalSizeForSubGroupCount = 0x11B8,
     }
 
     /* 2.0 */
