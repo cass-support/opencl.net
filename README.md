@@ -10,7 +10,7 @@ oriented) interface that simplifies coding.
 The library uses standard .NET facilities, and therefore can be used on 
 Windows, Linux, Mac and other .NET capable operating systems.
 
-The library currently contains definitions for OpenCL API 2.0 (up to), with 
+The library currently contains definitions for OpenCL API 2.1 (up to), with 
 plans to add support for newer revisions.
 
 # Assembly Versions
