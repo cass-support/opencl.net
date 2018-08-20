@@ -171,6 +171,9 @@ namespace CASS.OpenCL
         InvalidCompilerOptions = -66,
         InvalidLinkerOptions = -67,
         InvalidDevicePartitionCount = -68,
+        /* 2.0 */
+        InvalidPipeSize = -69,
+        InvalidDeviceQueue = -70,
     }
 
     // OpenCL Version    
@@ -255,7 +258,11 @@ namespace CASS.OpenCL
         Available = 0x1027,
         CompilerAvailable = 0x1028,
         ExecutionCapabilities = 0x1029,
+        [Obsolete("Deprecated since OpenCL 2.0")]
         QueueProperties = 0x102A,
+        /* 2.0 */
+        QueueOnHostProperties = 0x102A,
+
         Name = 0x102B,
         Vendor = 0x102C,
         DriverVersion = 0x102D,
@@ -294,6 +301,22 @@ namespace CASS.OpenCL
         PrintfBufferSize = 0x1049,
         ImagePitchAlignment = 0x104A,
         ImageBaseAddressAlignment = 0x104B,
+        /* 2.0 */
+        MaxReadWriteImageArgs = 0x104C,
+        MaxGlobalVaribleSize = 0x104D,
+        QueueOnDeviceProperties = 0x104E,
+        QueueOnDevicePreferredSize = 0x104F,
+        QueueOnDeviceMaxSize = 0x1050,
+        MaxOnDeviceQueues = 0x1051,
+        MaxOnDeviceEvents = 0x1052,
+        SVMCapabilities = 0x1053,
+        GlobalVariablePreferredTotalSize = 0x1054,
+        MaxPipeArgs = 0x1055,
+        PipeMaxActiveReservations = 0x1056,
+        PipeMaxPacketSize = 0x1057,
+        PreferredPlatformAtomicAlignment = 0x1058,
+        PreferredGlobalAtomicAlignment = 0x1059,
+        PreferredLocalAtomicAlignment = 0x105A,
     }
 
     // cl_device_address_info - bitfield
@@ -347,8 +370,11 @@ namespace CASS.OpenCL
     [Flags]
     public enum CLCommandQueueProperties : ulong
     {
-        OutOfOrderExecModeEnable = (1 << 0),
-        ProfilingEnable = (1 << 1),
+        OutOfOrderExecModeEnable = 1 << 0,
+        ProfilingEnable = 1 << 1,
+        /* 2.0 */
+        OnDevice = 1 << 2,
+        OnDeviceDefault = 1 << 3,
     }
     
     // cl_context_info
@@ -392,6 +418,17 @@ namespace CASS.OpenCL
         NextPartitionable = 1 << 5
     }
 
+    /* 2.0 */
+    // cl_device_svm_capabilities - bitfield
+    [Flags]
+    public enum CLDeviceSVMCapabilities : ulong
+    {
+        CoarseGrainBuffer = 1 << 0,
+        FineGrainBuffer = 1 << 1,
+        FineGrainSystem = 1 << 2,
+        Atomics = 1 << 3,
+    }
+
     // cl_command_queue_info
     public enum CLCommandQueueInfo : uint
     {
@@ -399,29 +436,36 @@ namespace CASS.OpenCL
         Device = 0x1091,
         ReferenceCount = 0x1092,
         Properties = 0x1093,
+        /* 2.0 */
+        Size = 0x1094,
     }
 
     // cl_mem_flags - bitfield
     [Flags]
     public enum CLMemFlags : ulong
     {
-        ReadWrite = (1 << 0),
-        WriteOnly = (1 << 1),
-        ReadOnly = (1 << 2),
-        UseHostPtr = (1 << 3),
-        AllocHostPtr = (1 << 4),
-        CopyHostPtr = (1 << 5),
+        ReadWrite = 1 << 0,
+        WriteOnly = 1 << 1,
+        ReadOnly = 1 << 2,
+        UseHostPtr = 1 << 3,
+        AllocHostPtr = 1 << 4,
+        CopyHostPtr = 1 << 5,
 
         /* 1.2 */
         HostWriteOnly = 1 << 7,
         HostReadOnly = 1 << 8,
         HostNoAccess = 1 << 9,
+
+        /* 2.0 */
+        SVMFineGrainBuffer = 1 << 10,   /* used by cl_svm_mem_flags only */
+        SVMAtomics = 1 << 11,           /* used by cl_svm_mem_flags only */
+        KernelReadAndWrite = 1 << 12,
     }
 
     /* 1.2 */
     // cl_mem_migration_flags - bitfield
     [Flags]
-    public enum CLMemMigrationFlags
+    public enum CLMemMigrationFlags : ulong
     {
         Host = 1 << 0,
         ContentUndefined = 1 << 1,
@@ -447,6 +491,12 @@ namespace CASS.OpenCL
         /* 1.2 */
         Depth = 0x10BD,
         DepthStencil = 0x10BE,
+        /* 2.0 */
+        sRGB = 0x10BF,
+        sRGBx = 0x10C0,
+        sRGBA = 0x10C1,
+        sBGRA = 0x10C2,
+        ABGR = 0x10C3,
     }
 
     // cl_channel_type
@@ -482,6 +532,8 @@ namespace CASS.OpenCL
         Image1D = 0x10F4,
         Image1DArray = 0x10F5,
         Image1DBuffer = 0x10F6,
+        /* 2.0 */
+        Pipe = 0x10F7,
     }
 
     // cl_mem_info
@@ -497,6 +549,8 @@ namespace CASS.OpenCL
         /* 1.1 */
         AssociatedMemObject = 0x1107,
         Offset = 0x1108,
+        /* 2.0 */
+        UsesSVMPointer = 0x1109,
     }
 
     // cl_image_info
@@ -514,6 +568,14 @@ namespace CASS.OpenCL
         Buffer = 0x1118,
         NumMIPLevels = 0x1119,
         NumSamples = 0x111A,
+    }
+
+    /* 2.0 */
+    // cl_pipe_info
+    public enum CLPipeInfo : uint
+    {
+        PacketSize = 0x1120,
+        MaxPackets = 0x1121,
     }
 
     // cl_addressing_mode
@@ -542,6 +604,10 @@ namespace CASS.OpenCL
         NormalizedCoords = 0x1152,
         AddressingMode = 0x1153,
         FilterMode = 0x1154,
+        /* 2.0 */
+        MIPFilterMode = 0x1155,
+        LODMin = 0x1156,
+        LODMax = 0x1157,
     }
 
     // cl_map_flags - bitfield
@@ -577,6 +643,8 @@ namespace CASS.OpenCL
         Log = 0x1183,
         /* 1.2 */
         BinaryType = 0x1184,
+        /* 2.0 */
+        BuildGlobalVariableTotalSize = 0x1185,
     }
 
     /* 1.2 */
@@ -590,7 +658,7 @@ namespace CASS.OpenCL
     }
 
     // cl_build_status
-    public enum CLBuildStatus : int
+    public enum CLBuildStatus
     {
         Success = 0,
         None = -1,
@@ -650,6 +718,8 @@ namespace CASS.OpenCL
         Const = 1 << 0,
         Restrict = 1 << 1,
         Volatile = 1 << 2,
+        /* 2.0 */
+        Pipe = 1 << 3,
     }
 
     // cl_kernel_work_group_info
@@ -663,6 +733,14 @@ namespace CASS.OpenCL
         PrivateMemSize = 0x11B4,
         /* 1.2 */
         GlobalWorkSize = 0x11B5,
+    }
+
+    /* 2.0 */
+    // cl_kernel_exec_info
+    public enum CLKernelExecInfo : uint
+    {
+        SVMPtrs = 0x11B6,
+        SVMFineGrainSystem = 0x11B7,
     }
 
     // cl_event_info
@@ -706,10 +784,16 @@ namespace CASS.OpenCL
         MigrateMemObjects = 0x1206,
         FillBuffer = 0x1207,
         FillImage = 0x1208,
+        /* 2.0 */
+        SVMFree = 0x1209,
+        SVMMemcpy = 0x120A,
+        SVMMemFill = 0x120B,
+        SVMMap = 0x120C,
+        SVMUnmap = 0x120D,
     }
 
     // command execution status
-    public enum CLExecutionStatus : int
+    public enum CLExecutionStatus
     {
         Complete = 0x0,
         Running = 0x1,
@@ -717,7 +801,8 @@ namespace CASS.OpenCL
         Queued = 0x3,
     }
 
-    /* cl_buffer_create_type */
+    /* 1.1 */
+    // cl_buffer_create_type
     public enum CLBufferCreateType : uint
     {
         Region = 0x1220,
@@ -730,6 +815,8 @@ namespace CASS.OpenCL
         Submit = 0x1281,
         Start = 0x1282,
         End = 0x1283,
+        /* 2.0 */
+        Complete = 0x1284,
     }
     #endregion
 }
