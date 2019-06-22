@@ -661,8 +661,6 @@ namespace CASS.OpenCL
         /// <returns>Value which depends on the type of information requested.</returns>
         public static object GetDeviceInfo(CLDeviceID device, CLDeviceInfo info)
         {
-            //OpenCLDriver.clGetDeviceInfo(device, info, 
-
             CLError err = CLError.Success;
 
             // Define variables to store native information.
@@ -703,6 +701,8 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.Available:
                     case CLDeviceInfo.CompilerAvailable:
                     case CLDeviceInfo.HostUnifiedMemory:
+                    case CLDeviceInfo.LinkerAvailable:
+                    case CLDeviceInfo.PreferredInteropUserSync:
                         if (param_value_size_ret != 4)
                             throw new InvalidOperationException($"param_value_size_ret is {param_value_size_ret}. Expected 4.");
                         result = (CLBool)Marshal.ReadInt32(ptr);
@@ -735,6 +735,12 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.NativeVectorWidthFloat:
                     case CLDeviceInfo.NativeVectorWidthDouble:
                     case CLDeviceInfo.NativeVectorWidthHalf:
+                    case CLDeviceInfo.PartitionMaxSubDevices:
+                    case CLDeviceInfo.ReferenceCount:
+                    case CLDeviceInfo.QueueOnDevicePreferredSize:
+                    case CLDeviceInfo.QueueOnDeviceMaxSize:
+                    case CLDeviceInfo.MaxOnDeviceQueues:
+                    case CLDeviceInfo.MaxOnDeviceEvents:
                         if (param_value_size_ret != 4)
                             throw new InvalidOperationException($"param_value_size_ret is {param_value_size_ret}. Expected 4.");
                         result = (uint)Marshal.ReadInt32(ptr);
@@ -760,6 +766,9 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.Image3DMaxDepth:
                     case CLDeviceInfo.MaxParameterSize:
                     case CLDeviceInfo.ProfilingTimerResolution:
+                    case CLDeviceInfo.ImageMaxArraySize:
+                    case CLDeviceInfo.ImageMaxBufferSize:
+                    case CLDeviceInfo.PrintfBufferSize:
                         if (param_value_size_ret != IntPtr.Size)
                             throw new InvalidOperationException($"param_value_size_ret is {param_value_size_ret}. Expected {IntPtr.Size}.");
                         result = Marshal.PtrToStructure(ptr, typeof(SizeT));
@@ -773,6 +782,7 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.Version:
                     case CLDeviceInfo.Extensions:
                     case CLDeviceInfo.OpenCLCVersion:
+                    case CLDeviceInfo.BuiltInKernels:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret).TrimEnd(' ', '\0');
                         break;
 
@@ -791,6 +801,7 @@ namespace CASS.OpenCL
                         result = sizes;
                         break;
                     case CLDeviceInfo.SingleFPConfig:
+                    case CLDeviceInfo.DoubleFPConfig:
                         result = (CLDeviceFPConfig)Marshal.ReadInt64(ptr);
                         break;
                     case CLDeviceInfo.GlobalMemCacheType:
@@ -805,8 +816,31 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.QueueProperties:
                         result = (CLCommandQueueProperties)Marshal.ReadInt64(ptr);
                         break;
+                    case CLDeviceInfo.PartitionAffinityDomain:
+                        result = (CLDeviceAffinityDomain)Marshal.ReadInt64(ptr);
+                        break;
+                    case CLDeviceInfo.QueueOnDeviceProperties:
+                        result = (CLCommandQueueProperties)Marshal.ReadInt64(ptr);
+                        break;
+                    case CLDeviceInfo.SVMCapabilities:
+                        result = (CLDeviceSVMCapabilities)Marshal.ReadInt64(ptr);
+                        break;
                     case CLDeviceInfo.Platform:
                         result = Marshal.PtrToStructure(ptr, typeof(CLPlatformID));
+                        break;
+                    case CLDeviceInfo.ParentDevice:
+                        result = Marshal.PtrToStructure(ptr, typeof(CLDeviceID));
+                        break;
+                    case CLDeviceInfo.PartitionType:
+                    case CLDeviceInfo.PartitionProperties:
+                        var partitionPropertiesIntPtrs = new IntPtr[param_value_size_ret / IntPtr.Size];
+                        Marshal.Copy(ptr, partitionPropertiesIntPtrs, 0, partitionPropertiesIntPtrs.Length);
+                        
+                        var partitionProperties = new CLDevicePartitionProperty[partitionPropertiesIntPtrs.Length];
+                        for (var i = 0; i < partitionProperties.Length; i++)
+                            partitionProperties[i] = (CLDevicePartitionProperty) partitionPropertiesIntPtrs[i].ToInt64();
+
+                        result = partitionProperties;
                         break;
 
                     default:
