@@ -658,8 +658,9 @@ namespace CASS.OpenCL
         /// </summary>
         /// <param name="device">Device ID to query.</param>
         /// <param name="info">Requested information.</param>
+        /// <param name="silent">False - throw exception on on incorrect <paramref name="info"/> value. True - don't throw exception on incorrect <paramref name="info"/> value and return null. Default false.</param>
         /// <returns>Value which depends on the type of information requested.</returns>
-        public static object GetDeviceInfo(CLDeviceID device, CLDeviceInfo info)
+        public static object GetDeviceInfo(CLDeviceID device, CLDeviceInfo info, bool silent = false)
         {
             CLError err = CLError.Success;
 
@@ -673,6 +674,8 @@ namespace CASS.OpenCL
 
             if (err != CLError.Success)
             {
+                if (silent && err == CLError.InvalidValue)
+                    return null;
                 throw new OpenCLException(err);
             }
 
@@ -703,8 +706,16 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.HostUnifiedMemory:
                     case CLDeviceInfo.LinkerAvailable:
                     case CLDeviceInfo.PreferredInteropUserSync:
+                    case CLDeviceInfo.GpuOverlapNv:
+                    case CLDeviceInfo.KernelExecTimeoutNv:
+                    case CLDeviceInfo.IntegratedMemoryNv:
+                    case CLDeviceInfo.PciBusIdNv:
+                    case CLDeviceInfo.PciSlotIdNv:
                         if (param_value_size_ret != 4)
                             throw new InvalidOperationException($"param_value_size_ret is {param_value_size_ret}. Expected 4.");
+                        var value = Marshal.ReadInt32(ptr);
+                        if (value != 0 && value != 1)
+                            throw new InvalidOperationException($"value of {info} is {value}. Expected bool.");
                         result = (CLBool)Marshal.ReadInt32(ptr);
                         break;
 
@@ -741,6 +752,11 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.QueueOnDeviceMaxSize:
                     case CLDeviceInfo.MaxOnDeviceQueues:
                     case CLDeviceInfo.MaxOnDeviceEvents:
+                    case CLDeviceInfo.ComputeCapabilityMajorNv:
+                    case CLDeviceInfo.ComputeCapabilityMinorNv:
+                    case CLDeviceInfo.RegistersPerBlockNv:
+                    case CLDeviceInfo.WarpSizeNv:
+                    case CLDeviceInfo.AttributeAsyncEngineCountNv:
                         if (param_value_size_ret != 4)
                             throw new InvalidOperationException($"param_value_size_ret is {param_value_size_ret}. Expected 4.");
                         result = (uint)Marshal.ReadInt32(ptr);
@@ -871,8 +887,9 @@ namespace CASS.OpenCL
             {
                 try
                 {
-                    var value = OpenCL.GetDeviceInfo(device, clDeviceInfo);
-                    deviceInfos[clDeviceInfo] = value;
+                    var value = GetDeviceInfo(device, clDeviceInfo, true);
+                    if (value != null)
+                        deviceInfos[clDeviceInfo] = value;
                 }
                 catch (OpenCLException)
                 { }

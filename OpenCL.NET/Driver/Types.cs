@@ -319,6 +319,21 @@ namespace CASS.OpenCL
         ILVersion = 0x105B,
         MaxNumSubGroups = 0x105C,
         SubGroupIndependentForwardProgress = 0x105D,
+
+        /* cl_nv_device_attribute_query extension - https://www.khronos.org/registry/OpenCL/extensions/nv/cl_nv_device_attribute_query.txt */
+        ComputeCapabilityMajorNv = 0x4000,
+        ComputeCapabilityMinorNv = 0x4001,
+        RegistersPerBlockNv = 0x4002,
+        WarpSizeNv = 0x4003,
+        GpuOverlapNv = 0x4004,
+        KernelExecTimeoutNv = 0x4005,
+        IntegratedMemoryNv = 0x4006,
+
+        /* cl_nv_device_attribute_query extension */
+        /* these clGetDeviceInfo param_names are not included in the official headers */
+        AttributeAsyncEngineCountNv  = 0x4007,
+        PciBusIdNv                   = 0x4008,
+        PciSlotIdNv                  = 0x4009
     }
 
     // cl_device_address_info - bitfield
