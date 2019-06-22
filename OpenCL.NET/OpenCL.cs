@@ -711,6 +711,9 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.IntegratedMemoryNv:
                     case CLDeviceInfo.PciBusIdNv:
                     case CLDeviceInfo.PciSlotIdNv:
+                    case CLDeviceInfo.SubGroupIndependentForwardProgress:
+                    case CLDeviceInfo.AvcMeSupportsTextureSamplerUseIntel:
+                    case CLDeviceInfo.AvcMeSupportsPreemptionIntel:
                         if (param_value_size_ret != 4)
                             throw new InvalidOperationException($"param_value_size_ret is {param_value_size_ret}. Expected 4.");
                         var value = Marshal.ReadInt32(ptr);
@@ -757,6 +760,19 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.RegistersPerBlockNv:
                     case CLDeviceInfo.WarpSizeNv:
                     case CLDeviceInfo.AttributeAsyncEngineCountNv:
+                    case CLDeviceInfo.ImagePitchAlignment:
+                    case CLDeviceInfo.ImageBaseAddressAlignment:
+                    case CLDeviceInfo.MaxReadWriteImageArgs:
+                    case CLDeviceInfo.MaxPipeArgs:
+                    case CLDeviceInfo.PipeMaxActiveReservations:
+                    case CLDeviceInfo.PipeMaxPacketSize:
+                    case CLDeviceInfo.PreferredPlatformAtomicAlignment:
+                    case CLDeviceInfo.PreferredGlobalAtomicAlignment:
+                    case CLDeviceInfo.PreferredLocalAtomicAlignment:
+                    case CLDeviceInfo.MaxNumSubGroups:
+                    case CLDeviceInfo.NumSimultaneousInteropsIntel:
+                    case CLDeviceInfo.MeVersionIntel:
+                    case CLDeviceInfo.AvcMeVersionIntel:
                         if (param_value_size_ret != 4)
                             throw new InvalidOperationException($"param_value_size_ret is {param_value_size_ret}. Expected 4.");
                         result = (uint)Marshal.ReadInt32(ptr);
@@ -785,6 +801,10 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.ImageMaxArraySize:
                     case CLDeviceInfo.ImageMaxBufferSize:
                     case CLDeviceInfo.PrintfBufferSize:
+                    case CLDeviceInfo.GlobalVariablePreferredTotalSize:
+                    case CLDeviceInfo.MaxGlobalVaribleSize:
+                    case CLDeviceInfo.PlanarYuvMaxWidthIntel:
+                    case CLDeviceInfo.PlanarYuvMaxHeightIntel:
                         if (param_value_size_ret != IntPtr.Size)
                             throw new InvalidOperationException($"param_value_size_ret is {param_value_size_ret}. Expected {IntPtr.Size}.");
                         result = Marshal.PtrToStructure(ptr, typeof(SizeT));
@@ -799,6 +819,8 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.Extensions:
                     case CLDeviceInfo.OpenCLCVersion:
                     case CLDeviceInfo.BuiltInKernels:
+                    case CLDeviceInfo.ILVersion:
+                    case CLDeviceInfo.SpirVersions:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret).TrimEnd(' ', '\0');
                         break;
 
@@ -807,7 +829,8 @@ namespace CASS.OpenCL
                         result = (CLDeviceType)Marshal.ReadInt64(ptr);
                         break;
                     case CLDeviceInfo.MaxWorkItemSizes:
-                        uint dims = (uint)GetDeviceInfo(device, CLDeviceInfo.MaxWorkItemDimensions);
+                    {
+                        uint dims = (uint) GetDeviceInfo(device, CLDeviceInfo.MaxWorkItemDimensions);
                         SizeT[] sizes = new SizeT[dims];
                         for (int i = 0; i < dims; i++)
                         {
@@ -815,7 +838,17 @@ namespace CASS.OpenCL
                         }
 
                         result = sizes;
+                    }
                         break;
+                    case CLDeviceInfo.SubGroupSizesIntel:
+                    {
+                        var sizes = new SizeT[param_value_size_ret / IntPtr.Size];
+                        for (var i = 0; i < sizes.Length; i++)
+                            sizes[i] = new SizeT(Marshal.ReadIntPtr(ptr, i * IntPtr.Size).ToInt64());
+                        result = sizes;
+                    }
+                        break;
+                    case CLDeviceInfo.HalfFpConfig:
                     case CLDeviceInfo.SingleFPConfig:
                     case CLDeviceInfo.DoubleFPConfig:
                         result = (CLDeviceFPConfig)Marshal.ReadInt64(ptr);
@@ -858,6 +891,14 @@ namespace CASS.OpenCL
 
                         result = partitionProperties;
                         break;
+                    case CLDeviceInfo.SimultaneousInteropsIntel:
+                        var resultIntArr = new int[param_value_size_ret / 4];
+                        var resultUintArr = new uint[param_value_size_ret / 4];
+                        Marshal.Copy(ptr, resultIntArr, 0, param_value_size_ret / 4);
+                        for (var i = 0; i < resultIntArr.Length; i++)
+                            resultUintArr[i] = (uint) resultIntArr[i];
+                        result = resultUintArr;
+                        break;
 
                     default:
                         var resultArr = new byte[param_value_size_ret];
@@ -883,7 +924,7 @@ namespace CASS.OpenCL
         {
             var deviceInfos = new Dictionary<CLDeviceInfo, object>();
 
-            foreach (var clDeviceInfo in Enum.GetValues(typeof(CLDeviceInfo)).Cast<CLDeviceInfo>())
+            foreach (var clDeviceInfo in Enum.GetValues(typeof(CLDeviceInfo)).Cast<CLDeviceInfo>()) // Enumerable.Range(0, 0x100_000).Select(x => (CLDeviceInfo)x)
             {
                 try
                 {

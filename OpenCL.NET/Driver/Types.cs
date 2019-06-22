@@ -331,9 +331,45 @@ namespace CASS.OpenCL
 
         /* cl_nv_device_attribute_query extension */
         /* these clGetDeviceInfo param_names are not included in the official headers */
-        AttributeAsyncEngineCountNv  = 0x4007,
-        PciBusIdNv                   = 0x4008,
-        PciSlotIdNv                  = 0x4009
+        AttributeAsyncEngineCountNv = 0x4007,
+        PciBusIdNv = 0x4008,
+        PciSlotIdNv = 0x4009,
+
+        /* cl_khr_fp16 extension */
+        HalfFpConfig = 0x1033,
+
+        /* cl_intel_advanced_motion_estimation extension - https://www.khronos.org/registry/OpenCL/extensions/intel/cl_intel_advanced_motion_estimation.txt */
+
+        MeVersionIntel = 0x407E,
+        
+        /*
+         * Extension: cl_khr_spir
+         *
+         * This extension adds support to create an OpenCL program object from a
+         * Standard Portable Intermediate Representation (SPIR) instance
+         */
+
+        SpirVersions = 0x40E0,
+
+        /* cl_intel_simultaneous_sharing extension - https://www.khronos.org/registry/OpenCL/extensions/intel/cl_intel_simultaneous_sharing.txt */
+
+        SimultaneousInteropsIntel = 0x4104,
+        NumSimultaneousInteropsIntel = 0x4105,
+
+        /* cl_intel_required_subgroup_size extension - https://www.khronos.org/registry/OpenCL/extensions/intel/cl_intel_required_subgroup_size.html*/
+
+        SubGroupSizesIntel = 0x4108,
+
+        /* cl_intel_device_side_avc_motion_estimation extension - https://www.khronos.org/registry/OpenCL/extensions/intel/cl_intel_device_side_avc_motion_estimation.txt */
+
+        AvcMeVersionIntel = 0x410B,
+        AvcMeSupportsTextureSamplerUseIntel = 0x410C,
+        AvcMeSupportsPreemptionIntel = 0x410D,
+
+        /* cl_intel_planar_yuv extension */
+
+        PlanarYuvMaxWidthIntel = 0x417E,
+        PlanarYuvMaxHeightIntel = 0x417F,
     }
 
     // cl_device_address_info - bitfield
@@ -382,7 +418,7 @@ namespace CASS.OpenCL
         Kernel = (1 << 0),
         NativeKernel = (1 << 1),
     }
-    
+
     // cl_command_queue_properties - bitfield
     [Flags]
     public enum CLCommandQueueProperties : ulong
@@ -393,7 +429,7 @@ namespace CASS.OpenCL
         OnDevice = 1 << 2,
         OnDeviceDefault = 1 << 3,
     }
-    
+
     // cl_context_info
     public enum CLContextInfo : uint
     {
