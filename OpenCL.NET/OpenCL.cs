@@ -696,6 +696,75 @@ namespace CASS.OpenCL
 
                 switch (info)
                 {
+                    // Read bool.
+                    case CLDeviceInfo.ImageSupport:
+                    case CLDeviceInfo.ErrorCorrectionSupport:
+                    case CLDeviceInfo.EndianLittle:
+                    case CLDeviceInfo.Available:
+                    case CLDeviceInfo.CompilerAvailable:
+                    case CLDeviceInfo.HostUnifiedMemory:
+                        if (param_value_size_ret != 4)
+                            throw new InvalidOperationException($"param_value_size_ret is {param_value_size_ret}. Expected 4.");
+                        result = (CLBool)Marshal.ReadInt32(ptr);
+                        break;
+
+                    // Read uint.
+                    case CLDeviceInfo.VendorID:
+                    case CLDeviceInfo.MaxComputeUnits:
+                    case CLDeviceInfo.MaxWorkItemDimensions:
+                    case CLDeviceInfo.PreferredVectorWidthChar:
+                    case CLDeviceInfo.PreferredVectorWidthShort:
+                    case CLDeviceInfo.PreferredVectorWidthInt:
+                    case CLDeviceInfo.PreferredVectorWidthLong:
+                    case CLDeviceInfo.PreferredVectorWidthFloat:
+                    case CLDeviceInfo.PreferredVectorWidthDouble:
+                    case CLDeviceInfo.MaxClockFrequency:
+                    case CLDeviceInfo.AddressBits:
+                    case CLDeviceInfo.MaxReadImageArgs:
+                    case CLDeviceInfo.MaxWriteImageArgs:
+                    case CLDeviceInfo.MaxSamplers:
+                    case CLDeviceInfo.MemBaseAddrAlign:
+                    case CLDeviceInfo.MinDataTypeAlignSize:
+                    case CLDeviceInfo.GlobalMemCacheLineSize:
+                    case CLDeviceInfo.MaxConstantArgs:
+                    case CLDeviceInfo.PreferredVectorWidthHalf:
+                    case CLDeviceInfo.NativeVectorWidthChar:
+                    case CLDeviceInfo.NativeVectorWidthShort:
+                    case CLDeviceInfo.NativeVectorWidthInt:
+                    case CLDeviceInfo.NativeVectorWidthLong:
+                    case CLDeviceInfo.NativeVectorWidthFloat:
+                    case CLDeviceInfo.NativeVectorWidthDouble:
+                    case CLDeviceInfo.NativeVectorWidthHalf:
+                        if (param_value_size_ret != 4)
+                            throw new InvalidOperationException($"param_value_size_ret is {param_value_size_ret}. Expected 4.");
+                        result = (uint)Marshal.ReadInt32(ptr);
+                        break;
+
+                    // Read ulong.
+                    case CLDeviceInfo.MaxMemAllocSize:
+                    case CLDeviceInfo.GlobalMemCacheSize:
+                    case CLDeviceInfo.GlobalMemSize:
+                    case CLDeviceInfo.MaxConstantBufferSize:
+                    case CLDeviceInfo.LocalMemSize:
+                        if (param_value_size_ret != 8)
+                            throw new InvalidOperationException($"param_value_size_ret is {param_value_size_ret}. Expected 8.");
+                        result = (ulong)Marshal.ReadInt64(ptr);
+                        break;
+
+                    // Read SizeT.
+                    case CLDeviceInfo.MaxWorkGroupSize:
+                    case CLDeviceInfo.Image2DMaxWidth:
+                    case CLDeviceInfo.Image2DMaxHeight:
+                    case CLDeviceInfo.Image3DMaxWidth:
+                    case CLDeviceInfo.Image3DMaxHeight:
+                    case CLDeviceInfo.Image3DMaxDepth:
+                    case CLDeviceInfo.MaxParameterSize:
+                    case CLDeviceInfo.ProfilingTimerResolution:
+                        if (param_value_size_ret != IntPtr.Size)
+                            throw new InvalidOperationException($"param_value_size_ret is {param_value_size_ret}. Expected {IntPtr.Size}.");
+                        result = Marshal.PtrToStructure(ptr, typeof(SizeT));
+                        break;
+
                     // Read string.
                     case CLDeviceInfo.Name:
                     case CLDeviceInfo.Vendor:
@@ -707,20 +776,9 @@ namespace CASS.OpenCL
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret).TrimEnd(' ', '\0');
                         break;
 
+                    // Read other.
                     case CLDeviceInfo.Type:
                         result = (CLDeviceType)Marshal.ReadInt64(ptr);
-                        break;
-                    case CLDeviceInfo.VendorID:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.MaxComputeUnits:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.MaxWorkItemDimensions:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.MaxWorkGroupSize:
-                        result = Marshal.PtrToStructure(ptr, typeof(SizeT));
                         break;
                     case CLDeviceInfo.MaxWorkItemSizes:
                         uint dims = (uint)GetDeviceInfo(device, CLDeviceInfo.MaxWorkItemDimensions);
@@ -732,110 +790,14 @@ namespace CASS.OpenCL
 
                         result = sizes;
                         break;
-                    case CLDeviceInfo.PreferredVectorWidthChar:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.PreferredVectorWidthShort:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.PreferredVectorWidthInt:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.PreferredVectorWidthLong:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.PreferredVectorWidthFloat:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.PreferredVectorWidthDouble:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.MaxClockFrequency:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.AddressBits:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.MaxReadImageArgs:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.MaxWriteImageArgs:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.MaxMemAllocSize:
-                        result = (ulong)Marshal.ReadInt64(ptr);
-                        break;
-                    case CLDeviceInfo.Image2DMaxWidth:
-                        result = Marshal.PtrToStructure(ptr, typeof(SizeT));
-                        break;
-                    case CLDeviceInfo.Image2DMaxHeight:
-                        result = Marshal.PtrToStructure(ptr, typeof(SizeT));
-                        break;
-                    case CLDeviceInfo.Image3DMaxWidth:
-                        result = Marshal.PtrToStructure(ptr, typeof(SizeT));
-                        break;
-                    case CLDeviceInfo.Image3DMaxHeight:
-                        result = Marshal.PtrToStructure(ptr, typeof(SizeT));
-                        break;
-                    case CLDeviceInfo.Image3DMaxDepth:
-                        result = Marshal.PtrToStructure(ptr, typeof(SizeT));
-                        break;
-                    case CLDeviceInfo.ImageSupport:
-                        result = (CLBool)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.MaxParameterSize:
-                        result = Marshal.PtrToStructure(ptr, typeof(SizeT));
-                        break;
-                    case CLDeviceInfo.MaxSamplers:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.MemBaseAddrAlign:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.MinDataTypeAlignSize:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
                     case CLDeviceInfo.SingleFPConfig:
                         result = (CLDeviceFPConfig)Marshal.ReadInt64(ptr);
                         break;
                     case CLDeviceInfo.GlobalMemCacheType:
                         result = (CLDeviceMemCacheType)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.GlobalMemCacheLineSize:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.GlobalMemCacheSize:
-                        result = (ulong)Marshal.ReadInt64(ptr);
-                        break;
-                    case CLDeviceInfo.GlobalMemSize:
-                        result = (ulong)Marshal.ReadInt64(ptr);
-                        break;
-                    case CLDeviceInfo.MaxConstantBufferSize:
-                        result = (ulong)Marshal.ReadInt64(ptr);
-                        break;
-                    case CLDeviceInfo.MaxConstantArgs:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
                     case CLDeviceInfo.LocalMemType:
                         result = (CLDeviceLocalMemType)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.LocalMemSize:
-                        result = (ulong)Marshal.ReadInt64(ptr);
-                        break;
-                    case CLDeviceInfo.ErrorCorrectionSupport:
-                        result = (CLBool)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.ProfilingTimerResolution:
-                        result = Marshal.PtrToStructure(ptr, typeof(SizeT));
-                        break;
-                    case CLDeviceInfo.EndianLittle:
-                        result = (CLBool)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.Available:
-                        result = (CLBool)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.CompilerAvailable:
-                        result = (CLBool)Marshal.ReadInt32(ptr);
                         break;
                     case CLDeviceInfo.ExecutionCapabilities:
                         result = (CLDeviceExecCapabilities)Marshal.ReadInt64(ptr);
@@ -845,33 +807,6 @@ namespace CASS.OpenCL
                         break;
                     case CLDeviceInfo.Platform:
                         result = Marshal.PtrToStructure(ptr, typeof(CLPlatformID));
-                        break;
-                    case CLDeviceInfo.PreferredVectorWidthHalf:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.HostUnifiedMemory:
-                        result = (CLBool)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.NativeVectorWidthChar:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.NativeVectorWidthShort:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.NativeVectorWidthInt:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.NativeVectorWidthLong:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.NativeVectorWidthFloat:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.NativeVectorWidthDouble:
-                        result = (uint)Marshal.ReadInt32(ptr);
-                        break;
-                    case CLDeviceInfo.NativeVectorWidthHalf:
-                        result = (uint)Marshal.ReadInt32(ptr);
                         break;
 
                     default:
