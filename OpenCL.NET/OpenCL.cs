@@ -21,6 +21,9 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 using CASS.Types;
@@ -585,19 +588,16 @@ namespace CASS.OpenCL
                 switch (info)
                 {
                     case CLPlatformInfo.Profile:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
-                        break;
                     case CLPlatformInfo.Version:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
-                        break;
                     case CLPlatformInfo.Name:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
-                        break;
                     case CLPlatformInfo.Vendor:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
-                        break;
                     case CLPlatformInfo.Extensions:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
+                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret).TrimEnd(' ', '\0');
+                        break;
+                    default:
+                        var resultArr = new byte[param_value_size_ret];
+                        Marshal.Copy(ptr, resultArr, 0, param_value_size_ret);
+                        result = resultArr;
                         break;
                 }
             }
@@ -696,6 +696,17 @@ namespace CASS.OpenCL
 
                 switch (info)
                 {
+                    // Read string.
+                    case CLDeviceInfo.Name:
+                    case CLDeviceInfo.Vendor:
+                    case CLDeviceInfo.DriverVersion:
+                    case CLDeviceInfo.Profile:
+                    case CLDeviceInfo.Version:
+                    case CLDeviceInfo.Extensions:
+                    case CLDeviceInfo.OpenCLCVersion:
+                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret).TrimEnd(' ', '\0');
+                        break;
+
                     case CLDeviceInfo.Type:
                         result = (CLDeviceType)Marshal.ReadInt64(ptr);
                         break;
@@ -832,24 +843,6 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.QueueProperties:
                         result = (CLCommandQueueProperties)Marshal.ReadInt64(ptr);
                         break;
-                    case CLDeviceInfo.Name:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
-                        break;
-                    case CLDeviceInfo.Vendor:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
-                        break;
-                    case CLDeviceInfo.DriverVersion:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
-                        break;
-                    case CLDeviceInfo.Profile:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
-                        break;
-                    case CLDeviceInfo.Version:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
-                        break;
-                    case CLDeviceInfo.Extensions:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
-                        break;
                     case CLDeviceInfo.Platform:
                         result = Marshal.PtrToStructure(ptr, typeof(CLPlatformID));
                         break;
@@ -880,8 +873,11 @@ namespace CASS.OpenCL
                     case CLDeviceInfo.NativeVectorWidthHalf:
                         result = (uint)Marshal.ReadInt32(ptr);
                         break;
-                    case CLDeviceInfo.OpenCLCVersion:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
+
+                    default:
+                        var resultArr = new byte[param_value_size_ret];
+                        Marshal.Copy(ptr, resultArr, 0, param_value_size_ret);
+                        result = resultArr;
                         break;
                 }
             }
@@ -1222,7 +1218,7 @@ namespace CASS.OpenCL
                         }
                         break;
                     case CLProgramInfo.Source:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
+                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret).TrimEnd(' ', '\0');
                         break;
                     case CLProgramInfo.BinarySizes:
                         {
@@ -1323,10 +1319,8 @@ namespace CASS.OpenCL
                         result = (CLBuildStatus)Marshal.ReadInt32(ptr);
                         break;
                     case CLProgramBuildInfo.Options:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
-                        break;
                     case CLProgramBuildInfo.Log:
-                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret);
+                        result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret).TrimEnd(' ', '\0');
                         break;
                 }
             }
