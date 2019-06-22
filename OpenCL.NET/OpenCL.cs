@@ -889,6 +889,29 @@ namespace CASS.OpenCL
 
             return result;
         }
+
+        /// <summary>
+        /// Returns all information about a device.
+        /// </summary>
+        /// <param name="device">Device ID to query.</param>
+        public static Dictionary<CLDeviceInfo, object> GetDeviceInfos(CLDeviceID device)
+        {
+            var deviceInfos = new Dictionary<CLDeviceInfo, object>();
+
+            foreach (var clDeviceInfo in Enum.GetValues(typeof(CLDeviceInfo)).Cast<CLDeviceInfo>())
+            {
+                try
+                {
+                    var value = OpenCL.GetDeviceInfo(device, clDeviceInfo);
+                    deviceInfos[clDeviceInfo] = value;
+                }
+                catch (OpenCLException)
+                { }
+            }
+
+            return deviceInfos;
+        }
+
         #endregion
 
         #region Context Utilities
