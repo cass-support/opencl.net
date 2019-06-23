@@ -196,6 +196,9 @@ namespace CASS.OpenCL
         Extensions = 0x0904,
         /* 2.1 */
         HostTimerResolution = 0x0905,
+
+        /* cl_khr_icd extension */
+        IcdSuffixKhr = 0x0920
     }
 
     // cl_device_type - bitfield

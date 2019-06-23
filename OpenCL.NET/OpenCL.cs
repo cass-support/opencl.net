@@ -551,8 +551,9 @@ namespace CASS.OpenCL
         /// </summary>
         /// <param name="platform">Platform ID to query.</param>
         /// <param name="info">Requested information.</param>
+        /// <param name="silent">False - throw exception on on incorrect <paramref name="info"/> value. True - don't throw exception on incorrect <paramref name="info"/> value and return null. Default false.</param>
         /// <returns>Value which depends on the type of information requested.</returns>
-        public static object GetPlatformInfo(CLPlatformID platform, CLPlatformInfo info)
+        public static object GetPlatformInfo(CLPlatformID platform, CLPlatformInfo info, bool silent = false)
         {
             CLError err = CLError.Success;
 
@@ -566,6 +567,8 @@ namespace CASS.OpenCL
 
             if (err != CLError.Success)
             {
+                if (silent && err == CLError.InvalidValue)
+                    return null;
                 throw new OpenCLException(err);
             }
 
@@ -592,6 +595,7 @@ namespace CASS.OpenCL
                     case CLPlatformInfo.Name:
                     case CLPlatformInfo.Vendor:
                     case CLPlatformInfo.Extensions:
+                    case CLPlatformInfo.IcdSuffixKhr:
                         result = Marshal.PtrToStringAnsi(ptr, param_value_size_ret).TrimEnd(' ', '\0');
                         break;
                     default:
@@ -608,6 +612,29 @@ namespace CASS.OpenCL
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Returns all information about a platform.
+        /// </summary>
+        /// <param name="platform">Platform ID to query.</param>
+        public static Dictionary<CLPlatformInfo, object> GetPlatformInfos(CLPlatformID platform)
+        {
+            var infos = new Dictionary<CLPlatformInfo, object>();
+            
+            foreach (var clPlatformInfo in Enum.GetValues(typeof(CLPlatformInfo)).Cast<CLPlatformInfo>()) //Enumerable.Range(0, 0x10_0000).Select(x => (CLPlatformInfo)x))
+            {
+                try
+                {
+                    var value = GetPlatformInfo(platform, clPlatformInfo, true);
+                    if (value != null)
+                        infos[clPlatformInfo] = value;
+                }
+                catch (OpenCLException)
+                { }
+            }
+
+            return infos;
         }
         #endregion
 
@@ -922,21 +949,21 @@ namespace CASS.OpenCL
         /// <param name="device">Device ID to query.</param>
         public static Dictionary<CLDeviceInfo, object> GetDeviceInfos(CLDeviceID device)
         {
-            var deviceInfos = new Dictionary<CLDeviceInfo, object>();
+            var infos = new Dictionary<CLDeviceInfo, object>();
 
-            foreach (var clDeviceInfo in Enum.GetValues(typeof(CLDeviceInfo)).Cast<CLDeviceInfo>()) // Enumerable.Range(0, 0x100_000).Select(x => (CLDeviceInfo)x)
+            foreach (var clDeviceInfo in Enum.GetValues(typeof(CLDeviceInfo)).Cast<CLDeviceInfo>()) // Enumerable.Range(0, 0x10_0000).Select(x => (CLDeviceInfo)x)
             {
                 try
                 {
                     var value = GetDeviceInfo(device, clDeviceInfo, true);
                     if (value != null)
-                        deviceInfos[clDeviceInfo] = value;
+                        infos[clDeviceInfo] = value;
                 }
                 catch (OpenCLException)
                 { }
             }
 
-            return deviceInfos;
+            return infos;
         }
 
         #endregion
