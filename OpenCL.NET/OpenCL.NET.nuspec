@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
-    <id>$id$</id>
+    <id>OpenCL_NET</id>
     <version>$version$</version>
     <title>$title$</title>
     <authors>$author$</authors>
@@ -13,5 +13,8 @@
     <releaseNotes>Support for OpenCL(TM) 2.2 API.</releaseNotes>
     <copyright>Copyright 2020</copyright>
     <tags>OpenCL</tags>
+    <dependencies>
+        <group targetFramework=".NETFramework4.6.1" />
+    </dependencies>
   </metadata>
 </package>
