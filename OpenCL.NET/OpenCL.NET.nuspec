@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>http://www.cass-hpc.com/solutions/libraries/opencl-net/</projectUrl>
+    <description>$description$</description>
+    <releaseNotes>Support for OpenCL(TM) 2.2 API.</releaseNotes>
+    <copyright>Copyright 2020</copyright>
+    <tags>OpenCL</tags>
+  </metadata>
+</package>
