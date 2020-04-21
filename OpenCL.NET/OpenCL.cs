@@ -388,37 +388,79 @@ namespace CASS.OpenCL
 
         public void SetKernelArg(CLKernel kernel, uint index, byte[] value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(byte) * value.Length, value);
+            int alignment = value.Length;
+            // According to OpenCL documentation, 3 component vectors are 
+            // aligned on 4 component boundary.
+            if (alignment == 3)
+            {
+                alignment = 4;
+            }
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(byte) * alignment, value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(CLKernel kernel, uint index, short[] value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(short) * value.Length, value);
+            int alignment = value.Length;
+            // According to OpenCL documentation, 3 component vectors are 
+            // aligned on 4 component boundary.
+            if (alignment == 3)
+            {
+                alignment = 4;
+            }
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(short) * alignment, value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(CLKernel kernel, uint index, int[] value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(int) * value.Length, value);
+            int alignment = value.Length;
+            // According to OpenCL documentation, 3 component vectors are 
+            // aligned on 4 component boundary.
+            if (alignment == 3)
+            {
+                alignment = 4;
+            }
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(int) * alignment, value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(CLKernel kernel, uint index, long[] value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(long) * value.Length, value);
+            int alignment = value.Length;
+            // According to OpenCL documentation, 3 component vectors are 
+            // aligned on 4 component boundary.
+            if (alignment == 3)
+            {
+                alignment = 4;
+            }
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(long) * alignment, value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(CLKernel kernel, uint index, float[] value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(float) * value.Length, value);
+            int alignment = value.Length;
+            // According to OpenCL documentation, 3 component vectors are 
+            // aligned on 4 component boundary.
+            if (alignment == 3)
+            {
+                alignment = 4;
+            }
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(float) * alignment, value);
             ThrowCLException(clError);
         }
 
         public void SetKernelArg(CLKernel kernel, uint index, double[] value)
         {
-            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(double) * value.Length, value);
+            int alignment = value.Length;
+            // According to OpenCL documentation, 3 component vectors are 
+            // aligned on 4 component boundary.
+            if (alignment == 3)
+            {
+                alignment = 4;
+            }
+            clError = OpenCLDriver.clSetKernelArg(kernel, index, sizeof(double) * alignment, value);
             ThrowCLException(clError);
         }
         #endregion
