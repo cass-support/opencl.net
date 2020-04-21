@@ -13,6 +13,7 @@
     <releaseNotes>Support for OpenCL(TM) 2.2 API.</releaseNotes>
     <copyright>Copyright 2020</copyright>
     <tags>OpenCL</tags>
+    <repository type="git" url="https://github.com/cass-support/opencl.net" branch="master" commit="5511a7340ced4b755fcf45690d6f3391fdbc71dd" />
     <dependencies>
         <group targetFramework=".NETFramework4.6.1" />
     </dependencies>
