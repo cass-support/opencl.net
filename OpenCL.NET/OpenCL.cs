@@ -501,6 +501,22 @@ namespace CASS.OpenCL
             }
         }
 
+        public void FillBuffer<T>(CLCommandQueue queue, CLMem buffer, SizeT offset, SizeT cb, T value)
+        {
+            T[] pattern = new T[] { value };
+            GCHandle h = GCHandle.Alloc(pattern, GCHandleType.Pinned);
+
+            try
+            {
+                clError = OpenCLDriver.clEnqueueFillBuffer(queue, buffer, h.AddrOfPinnedObject(), Marshal.SizeOf<T>(), offset, cb, 0, null, ref lastOperationEvent);
+                ThrowCLException(clError);
+            }
+            finally
+            {
+                h.Free();
+            }
+        }
+
         public void NDRangeKernel(CLCommandQueue queue, CLKernel kernel, uint work_dim,
             SizeT[] global_work_offset, SizeT[] global_work_size, SizeT[] local_work_size)
         {
