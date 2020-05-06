@@ -517,6 +517,21 @@ namespace CASS.OpenCL
             }
         }
 
+        public void FillBuffer<T>(CLCommandQueue queue, CLMem buffer, SizeT offset, SizeT cb, T[] pattern)
+        {
+            GCHandle h = GCHandle.Alloc(pattern, GCHandleType.Pinned);
+
+            try
+            {
+                clError = OpenCLDriver.clEnqueueFillBuffer(queue, buffer, h.AddrOfPinnedObject(), Marshal.SizeOf<T>() * pattern.Length, offset, cb, 0, null, ref lastOperationEvent);
+                ThrowCLException(clError);
+            }
+            finally
+            {
+                h.Free();
+            }
+        }
+
         public void NDRangeKernel(CLCommandQueue queue, CLKernel kernel, uint work_dim,
             SizeT[] global_work_offset, SizeT[] global_work_size, SizeT[] local_work_size)
         {
@@ -1399,14 +1414,14 @@ namespace CASS.OpenCL
         #endregion
 
         #region Event Utilities
-        public static object GetEventProfilingInfo(CLEvent e, CLProfilingInfo info)
+        public static long GetEventProfilingInfo(CLEvent e, CLProfilingInfo info)
         {
             CLError error = CLError.Success;
 
             // Define variables to store native information.
             SizeT param_value_size_ret = 0;
             IntPtr ptr = IntPtr.Zero;
-            object result = null;
+            long result = -1;
 
             // Get initial size of buffer to allocate.
             error = OpenCLDriver.clGetEventProfilingInfo(e, info, 0, IntPtr.Zero, ref param_value_size_ret);
@@ -1431,16 +1446,16 @@ namespace CASS.OpenCL
                 switch (info)
                 {
                     case CLProfilingInfo.Queued:
-                        result = (ulong)Marshal.ReadInt64(ptr);
+                        result = Marshal.ReadInt64(ptr);
                         break;
                     case CLProfilingInfo.Submit:
-                        result = (ulong)Marshal.ReadInt64(ptr);
+                        result = Marshal.ReadInt64(ptr);
                         break;
                     case CLProfilingInfo.Start:
-                        result = (ulong)Marshal.ReadInt64(ptr);
+                        result = Marshal.ReadInt64(ptr);
                         break;
                     case CLProfilingInfo.End:
-                        result = (ulong)Marshal.ReadInt64(ptr);
+                        result = Marshal.ReadInt64(ptr);
                         break;
                 }
             }
